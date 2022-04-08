@@ -8,13 +8,6 @@ from slugify import slugify
 import configparser
 import IPython
 
-def config():
-  import configparser
-  import IPython
-  config_file = "/content/config.ini"
-  config = configparser.ConfigParser()
-  config.read(config_file)
-
 def setup(renderer):
     from dirsync import sync
     localDir = '/content/in'
