@@ -18,9 +18,11 @@ def img(image,px):
 def setup(renderer):
     from dirsync import sync
     localDir = '/content/in'
+    localDirOut = '/content/in'
     remoteDir = f'/mnt/drive/MyDrive/aida/renderer/{renderer}/setup'
     drive.mount('/mnt/drive')
     os.makedirs(localDir, exist_ok="True")
+    os.makedirs(localDirOut, exist_ok="True")
     sync(remoteDir, localDir, 'sync', create=True)
 
 def txt(action, details):
