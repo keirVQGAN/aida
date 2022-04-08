@@ -1,0 +1,4 @@
+rich[jupyter]
+dirsync
+scipy<=1.2.1
+python-slugify
