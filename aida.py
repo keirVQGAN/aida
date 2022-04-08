@@ -79,12 +79,3 @@ def filename(file):
         return ''.join(parts[:-1]).rstrip('.') if parts[0] else file
     else:
         return file
-
-def img(image, scale):
-    image_show = cv2.imread(image, cv2.IMREAD_UNCHANGED)
-    scale_percent = scale  # percent of original size
-    width_show = int(image_show.shape[1] * scale_percent / 100)
-    height_show = int(image_show.shape[0] * scale_percent / 100)
-    dim = (width_show, height_show)
-    resized = cv2.resize(image_show, dim, interpolation=cv2.INTER_AREA)
-    cv2_imshow(resized)
