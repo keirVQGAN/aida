@@ -11,8 +11,8 @@ import IPython
 def setup(renderer):
     from dirsync import sync
     localDir = '/content/in'
-    remoteDir = f'/content/drive/MyDrive/aida/renderer/{renderer}/setup'
-    drive.mount('/content/drive')
+    remoteDir = f'/mnt/drive/MyDrive/aida/renderer/{renderer}/setup'
+    drive.mount('/mnt/drive')
     os.makedirs(localDir, exist_ok="True")
     sync(remoteDir, localDir, 'sync', create=True)
 
@@ -32,7 +32,7 @@ def txtB(action, details):
     console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
 
 def mount():
-    drive.mount('/content/drive')
+    drive.mount('/mnt/drive')
 
 def syncDir(source, target):  
     sync(source, target, 'sync', create=True)
