@@ -8,6 +8,34 @@ from slugify import slugify
 import configparser
 import IPython
 
+def configIN():
+  import configparser
+  import IPython
+  config_file = "/content/config.ini"
+  config = configparser.ConfigParser()
+  config.read(config_file)
+
+  #Set config values
+  _weight     = config.getfloat("DEFAULT", "WEIGHT")
+  _tv_weight  = config.getint("DEFAULT", "SMOOTH")
+  _size       = config.getint("DEFAULT", "SIZE")
+  _iterations = config.getint("DEFAULT", "RUN")
+  _run_ini    = config.getint("DEFAULT", "RUN_INI")
+  _save       = config.getint("DEFAULT", "SAVE")
+  _rate       = config.getfloat("DEFAULT", "RATE")
+  _decay      = config.getfloat("DEFAULT", "DECAY")
+  _name       = config.get("DEFAULT", "NAME")
+  _int_img_ls    = aida.lsDir('/content/in/int')
+  _int_img    = " ".join(_int_img_ls)
+  _styles_ls    = aida.lsDir('/content/in/styles')
+  _styles    = "\n".join(_styles_ls)
+
+  setupMess3 = ['WEIGHT', 'SMOOTH', 'SIZE', 'RUN', 'RUN_INI', 'SAVE', 'RATE', 'DECAY']
+  configValues = [_weight,_tv_weight,_size,_iterations,_run_ini,_save,_rate,_decay]
+
+  for x,y in zip(setupMess3,configValues):
+    aida.txt(x,y)
+
 def setup(renderer):
     from dirsync import sync
     localDir = '/content/in'
