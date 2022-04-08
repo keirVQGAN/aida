@@ -29,9 +29,6 @@ def configIN():
   setupMess3 = ['WEIGHT', 'SMOOTH', 'SIZE', 'RUN', 'RUN_INI', 'SAVE', 'RATE', 'DECAY']
   configValues = [_weight,_tv_weight,_size,_iterations,_run_ini,_save,_rate,_decay]
 
-  for x,y in zip(setupMess3,configValues):
-    aida.txt(x,y)
-
 def setup(renderer):
     from dirsync import sync
     localDir = '/content/in'
