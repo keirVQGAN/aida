@@ -76,18 +76,7 @@ def filename(file):
         return ''.join(parts[:-1]).rstrip('.') if parts[0] else file
     else:
         return file
-    
-def gpu():
-    !nvidia - smi
 
-
-def cpu():
-    info = ["Model name:", "L3 cache:"]
-    for ob in info:
-        !lscpu | grep
-        "$ob"
-    !nvidia - smi
-    
 def img(image, scale):
     image_show = cv2.imread(image, cv2.IMREAD_UNCHANGED)
     scale_percent = scale  # percent of original size
