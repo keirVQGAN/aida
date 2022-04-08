@@ -9,8 +9,11 @@ from slugify import slugify
 import configparser
 import IPython
 import tarfile
-
 import shutil
+from IPython.display import Image
+
+def img(image,px):
+    return Image(filename = image, width = px)
 
 def setup(renderer):
     from dirsync import sync
