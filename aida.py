@@ -25,10 +25,6 @@ def configIN():
   _rate       = config.getfloat("DEFAULT", "RATE")
   _decay      = config.getfloat("DEFAULT", "DECAY")
   _name       = config.get("DEFAULT", "NAME")
-  _int_img_ls    = aida.lsDir('/content/in/int')
-  _int_img    = " ".join(_int_img_ls)
-  _styles_ls    = aida.lsDir('/content/in/styles')
-  _styles    = "\n".join(_styles_ls)
 
   setupMess3 = ['WEIGHT', 'SMOOTH', 'SIZE', 'RUN', 'RUN_INI', 'SAVE', 'RATE', 'DECAY']
   configValues = [_weight,_tv_weight,_size,_iterations,_run_ini,_save,_rate,_decay]
