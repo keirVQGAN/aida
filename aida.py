@@ -8,26 +8,12 @@ from slugify import slugify
 import configparser
 import IPython
 
-def configIN():
+def config():
   import configparser
   import IPython
   config_file = "/content/config.ini"
   config = configparser.ConfigParser()
   config.read(config_file)
-
-  #Set config values
-  _weight     = config.getfloat("DEFAULT", "WEIGHT")
-  _tv_weight  = config.getint("DEFAULT", "SMOOTH")
-  _size       = config.getint("DEFAULT", "SIZE")
-  _iterations = config.getint("DEFAULT", "RUN")
-  _run_ini    = config.getint("DEFAULT", "RUN_INI")
-  _save       = config.getint("DEFAULT", "SAVE")
-  _rate       = config.getfloat("DEFAULT", "RATE")
-  _decay      = config.getfloat("DEFAULT", "DECAY")
-  _name       = config.get("DEFAULT", "NAME")
-
-  setupMess3 = ['WEIGHT', 'SMOOTH', 'SIZE', 'RUN', 'RUN_INI', 'SAVE', 'RATE', 'DECAY']
-  configValues = [_weight,_tv_weight,_size,_iterations,_run_ini,_save,_rate,_decay]
 
 def setup(renderer):
     from dirsync import sync
