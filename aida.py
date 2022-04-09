@@ -28,6 +28,12 @@ def clone():
   
 def img(image,px):
     return Image(filename = image, width = px)
+  
+def _ls(dir):
+    return [os.path.join(dir, file) for file in os.listdir(dir)]
+
+def _ls2str(ls):
+    return " ".join(ls)
 
 def txtH(action, details):
     console.print(f"[bold_white]{action}[/bold_white]")
