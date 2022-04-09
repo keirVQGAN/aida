@@ -80,14 +80,3 @@ def ls2str(ls):
 
 def name(path):
     return os.path.basename(path)
-
-def name_time(file):
-    times = time.strftime("%H-%M-%S")
-    file = f'{file}_{times}'
-    return file
-
-def slug(path):
-    path_file = os.path.basename(path)
-    times = time.strftime("%H-%M-%S")
-    path_file_time = f'{path_file}_{times}'
-    return path_file_time
