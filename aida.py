@@ -90,20 +90,7 @@ def slug(path):
     path_file = os.path.basename(path)
     times = time.strftime("%H-%M-%S")
     path_file_time = f'{path_file}_{times}'
-    return path_file_time
-    
-
-# */ Clean -> Get file as slug *\
-def slug(text):
-    t = slugify(text, entities=True, decimal=True, hexadecimal=True, max_length=0, word_boundary=False, separator='_',
+    path_file_time_slug = slugify(path_file_time, entities=True, decimal=True, hexadecimal=True, max_length=0, word_boundary=False, separator='_',
                 save_order=False, stopwords=(), regex_pattern=None, lowercase=True, replacements=(),
                 allow_unicode=False)
-    return t
-
-# */ Clean -> Get files without path *\
-def filename(file):
-    parts = file.rpartition('.')
-    if len(parts) > 1:
-        return ''.join(parts[:-1]).rstrip('.') if parts[0] else file
-    else:
-        return file
+    return path_file_time
