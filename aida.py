@@ -11,6 +11,7 @@ import IPython
 import tarfile
 import shutil
 from IPython.display import Image
+import time
 
 def config(file='/content/configAida.ini'):
   import configparser
