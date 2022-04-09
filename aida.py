@@ -89,4 +89,5 @@ def name_time(file):
 def slug(path):
     path_file = os.path.basename(path)
     times = time.strftime("%H-%M-%S")
+    path_file_time = f'{path_file}_{times}'
     return path_file_time
