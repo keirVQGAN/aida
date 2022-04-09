@@ -28,7 +28,7 @@ def clone():
       shutil.rmtree('/content/sample_data') 
 
 def txtH(action):
-    console.print(f"[bold_white]{action}[/bold_white]")
+    console.print(f"[bright_white]{action}[/bright_white]")
 
 def txt(action, details):
     console.print(f"[bright_white]{action}[/bright_white] -> [r black]{details}[/r black]")
