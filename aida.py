@@ -18,6 +18,12 @@ def config(file='/content/configAida.ini'):
   config = configparser.ConfigParser()
   config.read(config_file)
 
+def clone():
+  sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
+  os.makedirs('/content/out/complete', exist_ok="True")
+  if sample_data==1:
+      shutil.rmtree('/content/sample_data')
+  
 def img(image,px):
     return Image(filename = image, width = px)
 
