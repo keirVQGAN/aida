@@ -19,6 +19,7 @@ def config(file='/content/configAida.ini'):
   config.read(config_file)
 
 def clone():
+  drive.mount('/content/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/complete', exist_ok="True")
   if sample_data==1:
