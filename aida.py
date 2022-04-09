@@ -25,16 +25,7 @@ def clone():
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/complete', exist_ok="True")
   if sample_data==1:
-      shutil.rmtree('/content/sample_data')
-  
-def img(image,px):
-    return Image(filename = image, width = px)
-  
-def _ls(dir):
-    return [os.path.join(dir, file) for file in os.listdir(dir)]
-
-def _ls2str(ls):
-    return " ".join(ls)
+      shutil.rmtree('/content/sample_data') 
 
 def txtH(action, details):
     console.print(f"[bold_white]{action}[/bold_white]")
@@ -80,6 +71,27 @@ def uzip(filename, target):
     my_tar = tarfile.open(filename)
     my_tar.extract(target)
     my_tar.close()
+    
+def ls(dir):
+    return [os.path.join(dir, file) for file in os.listdir(dir)]
+
+def ls2str(ls):
+    return " ".join(ls)
+
+def name(path):
+    return os.path.basename(path)
+
+def name_time(file):
+    times = time.strftime("%H-%M-%S")
+    file = f'{file}_{times}'
+    return file
+
+def slug(path):
+    path_file = os.path.basename(path)
+    times = time.strftime("%H-%M-%S")
+    path_file_time = f'{path_file}_{times}'
+    return path_file_time
+    
 
 # */ Clean -> Get file as slug *\
 def slug(text):
