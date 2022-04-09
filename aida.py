@@ -27,7 +27,7 @@ def clone():
   if sample_data==1:
       shutil.rmtree('/content/sample_data') 
 
-def txtH(action, details):
+def txtH(action):
     console.print(f"[bold_white]{action}[/bold_white]")
 
 def txt(action, details):
