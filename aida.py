@@ -29,6 +29,9 @@ def clone():
 def img(image,px):
     return Image(filename = image, width = px)
 
+def txtH(action, details):
+    console.print(f"[bold_white]{action}[/bold_white]")
+
 def txt(action, details):
     console.print(f"[bright_white]{action}[/bright_white] -> [r black]{details}[/r black]")
 
