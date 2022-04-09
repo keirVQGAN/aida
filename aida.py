@@ -32,6 +32,9 @@ def clone():
 def txtH(action):
     console.print(f"[bright_white]{action}[/bright_white]")
 
+def txtL(action):
+    console.print(f"[r black]{action}[/r black]")
+
 def txt(action, details):
     console.print(f"[bright_white]{action}[/bright_white] -> [r black]{details}[/r black]")
 
