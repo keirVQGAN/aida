@@ -78,7 +78,7 @@ def ls(dir):
 def ls2str(ls):
     return " ".join(ls)
 
-def namefile_path):
+def namefile_path():
   basename = os.path.basename(file_path)
   file_name = os.path.splitext(basename)[0]
   return file_name
