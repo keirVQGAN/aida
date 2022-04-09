@@ -12,19 +12,14 @@ import tarfile
 import shutil
 from IPython.display import Image
 
+def config(file='/content/configAida.ini'):
+  import configparser
+  config_file = file
+  config = configparser.ConfigParser()
+  config.read(config_file)
+
 def img(image,px):
     return Image(filename = image, width = px)
-
-def setup(renderer):
-    from dirsync import sync
-    localDir = '/content/in'
-    localDirOut = '/content/out'
-    localDirContact = f'{localDirOut}/contact'
-    remoteDir = f'/mnt/drive/MyDrive/aida/renderer/{renderer}/setup'
-    drive.mount('/mnt/drive')
-    os.makedirs(localDir, exist_ok="True")
-    os.makedirs(localDirOut, exist_ok="True")
-    sync(remoteDir, localDir, 'sync', create=True)
 
 def txt(action, details):
     console.print(f"[bright_white]{action}[/bright_white] -> [r black]{details}[/r black]")
