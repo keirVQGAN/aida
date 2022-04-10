@@ -64,10 +64,6 @@ def rm(dir):
     
 def cp(filename,target):
     shutil.copyfile(file,dest)
-    
-def gif(lists,out,delay,scale):
-  gifOut = f'/content/out/gifs/{out}.gif'
-  !convert -delay $delay -resize $scale -loop 0 $lists $gifOut
 
 def gifShow(Path):
   with open(Path,'rb') as f:
