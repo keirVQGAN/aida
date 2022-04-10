@@ -15,6 +15,7 @@ import shutil
 from IPython.display import Image
 import time
 
+
 def config(file='/content/configAida.ini'):
   import configparser
   config_file = file
@@ -67,6 +68,11 @@ def cp(filename,target):
 def gif(lists,out,delay,scale):
   gifOut = f'/content/out/gifs/{out}.gif'
   !convert -delay $delay -resize $scale -loop 0 $lists $gifOut
+
+def gifShow(Path):
+  with open(Path,'rb') as f:
+      a = display.Image(data=f.read(), format='png')
+      return a
 
 def mk(dir):
     os.makedirs(dir, exist_ok="True")
