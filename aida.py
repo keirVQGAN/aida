@@ -60,6 +60,13 @@ def syncDir(source, target):
 
 def rm(dir):
     shutil.rmtree(dir)
+    
+def cp(filename,target):
+    shutil.copyfile(file,dest)
+    
+def gif(lists,out,delay,scale):
+  gifOut = f'/content/{out}.gif'
+  !convert -delay $delay -resize $scale -loop 0 $lists $gifOut
 
 def mk(dir):
     os.makedirs(dir, exist_ok="True")
