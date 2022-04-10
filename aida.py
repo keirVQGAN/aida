@@ -56,6 +56,10 @@ def mount():
 def syncDir(source, target):  
     sync(source, target, 'sync', create=True)
 
+def conf(val):
+    for y in (val):
+    return y 
+    
 def rm(dir):
     shutil.rmtree(dir)
 
