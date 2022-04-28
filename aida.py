@@ -14,7 +14,26 @@ import tarfile
 import shutil
 from IPython.display import Image
 import time
+from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
+import re
+import pandas as pd
 
+def soupURL(req):
+  csvName = 'list-soup.csv'
+  html_page = urlopen(req)
+  soup = BeautifulSoup(html_page, "lxml")
+  links = []
+  for link in soup.findAll('a'):
+      links.append(link.get('href'))
+  links = [x for x in links if x.startswith('https')]
+  links = [x for x in links if not x.startswith('https://www.google')]
+  df = pd.DataFrame(links, columns=["url"])
+  df.to_csv(csvName, index=False)
+  
+def urlName(url):
+  head, tail = os.path.split(url)
+  return(tail)
 
 def config(file='/content/configAida.ini'):
   import configparser
