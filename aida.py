@@ -20,7 +20,7 @@ import re
 import pandas as pd
 
 def soupURL(req):
-  csvName = '/content/url.csv'
+  csvName = '/content/urls.csv'
   html_page = urlopen(req)
   soup = BeautifulSoup(html_page, "lxml")
   links = []
