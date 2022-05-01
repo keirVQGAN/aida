@@ -30,6 +30,7 @@ def soupURL(req):
   links = [x for x in links if not x.startswith('https://www.google')]
   df = pd.DataFrame(links, columns=["url"])
   df.to_csv(csvName, index=False)
+  return df
   
 def urlName(url):
   head, tail = os.path.split(url)
