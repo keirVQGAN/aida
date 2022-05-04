@@ -42,7 +42,7 @@ def urlName(url):
 def confRead(file='content/config_aida.ini'):
   import configparser
   config_file = file
-  config = configparser.ConfigParser()
+  config = configparser.configParser()
   config.read(config_file)
 
 def confDict(section):
