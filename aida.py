@@ -68,7 +68,7 @@ def confPrint(section):
 
 
 def clone():
-  sample_data='/content/sample_data'
+  sample_data=os.path.isdir("/content/sample_data")
   drive.mount('/mnt/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/', exist_ok="True")
