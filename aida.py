@@ -36,21 +36,44 @@ def urlName(url):
   head, tail = os.path.split(url)
   return(tail)
 
-def config(file='/content/configAida.ini'):
+#Functions
+##Map config section to dictionary
+
+def confRead(file='content/config_aida.ini'):
   import configparser
   config_file = file
   config = configparser.ConfigParser()
   config.read(config_file)
 
+def confDict(section):
+  dict1 = {}
+  options = config.options(section)
+  for option in options:
+      try:
+          dict1[option] = config.get(section, option)
+          if dict1[option] == -1:
+              DebugPrint("skip: %s" % option)
+              
+      except:
+          print("exception on %s!" % option)
+          dict1[option] = None
+  return dict1
+##Print config (section) to console
+
+def confPrint(section):
+  confDict = confDict(section)
+  confPrint = "\n".join("{}\t{}".format(k, v) for k, v in confDict.items())
+  print(f'[{section}]')
+  print(confPrint)
+
+
 def clone():
   sample_data='/content/sample_data'
   drive.mount('/mnt/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
-  os.makedirs('/content/out/contacts', exist_ok="True")
-  os.makedirs('/content/out/archive', exist_ok="True")
-  os.makedirs('/content/out/images', exist_ok="True")
+  os.makedirs('/content/out/', exist_ok="True")
   if sample_data==1:
-      shutil.rmtree('/content/sample_data') 
+    shutil.rmtree('/content/sample_data')
 
 def txtH(action):
     console.print(f"[bright_white]{action}[/bright_white]")
