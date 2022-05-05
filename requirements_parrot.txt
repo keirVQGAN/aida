@@ -1,5 +1,0 @@
-sentence-splitter
-transformers
-SentencePiece
-JPype1
-chardet
