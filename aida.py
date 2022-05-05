@@ -29,7 +29,7 @@ def soupURL(req):
       links.append(link.get('href'))
   links = [x for x in links if x.startswith('https')]
   df = pd.DataFrame(links, columns=["url"])
-  dc = soupUrlPd.append(df)
+  dc = df.append(df)
   return dc
   
 def urlName(url):
