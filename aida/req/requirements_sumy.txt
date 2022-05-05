@@ -1,0 +1,4 @@
+#requirements_sumy.txt
+nltk
+sumy
+gensim
