@@ -20,17 +20,17 @@ import re
 import pandas as pd
 
 def soupURL(req):
-  csvName = '/content/urls.csv'
+  pdTemp = {'url': []}
   html_page = urlopen(req)
+  soupUrlPd = pd.DataFrame(data=pdTemp)
   soup = BeautifulSoup(html_page, "lxml")
   links = []
   for link in soup.findAll('a'):
       links.append(link.get('href'))
   links = [x for x in links if x.startswith('https')]
-  links = [x for x in links if not x.startswith('https://www.google')]
   df = pd.DataFrame(links, columns=["url"])
-  df.to_csv(csvName, index=False)
-  return df
+  dc = soupUrlPd.append(df)
+  return dc
   
 def urlName(url):
   head, tail = os.path.split(url)
