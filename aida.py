@@ -35,8 +35,8 @@ def soupURL(req):
   links = [x for x in links if not x.startswith('https://google')]
   links = [x for x in links if not x.startswith('https://www.google')]
   df = pd.DataFrame(links, columns=["url"])
-  df.drop_duplicates()
-  return df
+  dc = df.drop_duplicates()
+  return dc
   
 def urlName(url):
   head, tail = os.path.split(url)
