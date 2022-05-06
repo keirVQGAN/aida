@@ -20,7 +20,7 @@ import re
 import pandas as pd
 
 def soupURL(req):
-  pdTemp = {'url': []}
+  pdTemp = {req: []}
   html_page = urlopen(req)
   soupUrlPd = pd.DataFrame(data=pdTemp)
   soup = BeautifulSoup(html_page, "lxml")
