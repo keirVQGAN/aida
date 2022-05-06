@@ -1,10 +1,3 @@
-Address change myERP
-Grammerly
-Headphone lead...
-
-
-
-
 import cv2
 from glob import glob
 import shutil
