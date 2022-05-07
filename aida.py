@@ -19,17 +19,6 @@ from urllib.request import Request, urlopen
 import re
 import pandas as pd
 
-from sumy.summarizers import luhn
-from sumy.utils import get_stop_words
-from sumy.nlp.stemmers import Stemmer
-from sumy.summarizers.luhn import LuhnSummarizer 
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer as sumytoken
-from sumy.summarizers.lex_rank import LexRankSummarizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-from sumy.parsers.html import HtmlParser
-from sumy.nlp.tokenizers import Tokenizer
-
 def sumUrl(urlIn,sentences):
     LANGUAGE = "english"
     url = urlIn
