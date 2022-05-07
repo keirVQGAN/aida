@@ -33,7 +33,7 @@ from sumy.nlp.tokenizers import Tokenizer
 def lexrank_summarizer():
     print ("\n","*"*30, "LEXRANK SUMARIZER", "*"*30)
     summarizer_LexRank = LexRankSummarizer(stemmer)
-    summarizer_LexRank.stop_words = get_stop_words(LANGUAGE)
+    summarizer_LexRank.stop_words = get_stop_words("english")
 
     for sentence in summarizer_LexRank(parser.document, SENTENCES_COUNT):
         print (sentence)
@@ -41,7 +41,7 @@ def lexrank_summarizer():
 def lsa_summarizer():
     print ("\n","*"*30, "LSA SUMMARIZER", "*"*30)
     summarizer_lsa = Summarizer(stemmer)
-    summarizer_lsa.stop_words = get_stop_words(LANGUAGE)
+    summarizer_lsa.stop_words = get_stop_words("english")
 
     for sentence in summarizer_lsa(parser.document, SENTENCES_COUNT):
         print (sentence)
@@ -49,7 +49,7 @@ def lsa_summarizer():
 def luhn_summarizer():
     print ("\n","*"*30, "LUHN SUMMARIZER", "*"*30)
     summarizer_luhn = LuhnSummarizer(stemmer)
-    summarizer_luhn.stop_words = get_stop_words(LANGUAGE)
+    summarizer_luhn.stop_words = get_stop_words("english")
 
     for sentence in summarizer_luhn(parser.document, SENTENCES_COUNT):
         print (sentence)
