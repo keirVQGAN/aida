@@ -31,26 +31,25 @@ from sumy.parsers.html import HtmlParser
 from sumy.nlp.tokenizers import Tokenizer
 
 def sumUrl(urlIn,sentences):
-LANGUAGE = "english"
-url = urlIn
-parser = HtmlParser.from_url(urlIn, Tokenizer(LANGUAGE))
-stemmer = Stemmer(LANGUAGE)
-
-summarizer = Summarizer(stemmer)
-summarizer.stop_words = get_stop_words(LANGUAGE)
-for sentence in summarizer(parser.document, sentences):
-    print(sentence)
+    LANGUAGE = "english"
+    url = urlIn
+    parser = HtmlParser.from_url(urlIn, Tokenizer(LANGUAGE))
+    stemmer = Stemmer(LANGUAGE)
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+    for sentence in summarizer(parser.document, sentences):
+        print(sentence)
     
 def sumTxt(txtIn,sentences):
-LANGUAGE = "english"
-with open(txtIn, 'r') as file:
-    txt = file.read()
-stemmer = Stemmer(LANGUAGE)
-parser = PlaintextParser.from_string((txt), sumytoken(LANGUAGE))
-summarizer = Summarizer(stemmer)
-summarizer.stop_words = get_stop_words(LANGUAGE)
-for sentence in summarizer(parser.document, sentences):
-    print(sentence)
+    LANGUAGE = "english"
+    with open(txtIn, 'r') as file:
+        txt = file.read()
+    stemmer = Stemmer(LANGUAGE)
+    parser = PlaintextParser.from_string((txt), sumytoken(LANGUAGE))
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+    for sentence in summarizer(parser.document, sentences):
+        print(sentence)
 
 def soupURL(req):
   pdTemp = {req: []}
