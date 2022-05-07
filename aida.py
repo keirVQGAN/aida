@@ -18,10 +18,11 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import re
 import pandas as pd
-from sumy.parsers.html import HtmlParser
-from sumy.nlp.tokenizers import Tokenizer
+
 
 def sumUrl(urlIn,sentences):
+    from sumy.parsers.html import HtmlParser
+    from sumy.nlp.tokenizers import Tokenizer
     LANGUAGE = "english"
     url = urlIn
     parser = HtmlParser.from_url(urlIn, Tokenizer(LANGUAGE))
@@ -32,6 +33,8 @@ def sumUrl(urlIn,sentences):
         print(sentence)
     
 def sumTxt(txtIn,sentences):
+    from sumy.parsers.html import HtmlParser
+    from sumy.nlp.tokenizers import Tokenizer
     LANGUAGE = "english"
     with open(txtIn, 'r') as file:
         txt = file.read()
