@@ -23,6 +23,16 @@ import pandas as pd
 def sumUrl(urlIn,sentences):
     from sumy.parsers.html import HtmlParser
     from sumy.nlp.tokenizers import Tokenizer
+    from sumy.summarizers import luhn
+    from sumy.utils import get_stop_words
+    from sumy.nlp.stemmers import Stemmer
+    from sumy.summarizers.luhn import LuhnSummarizer 
+    from sumy.parsers.plaintext import PlaintextParser
+    from sumy.nlp.tokenizers import Tokenizer as sumytoken
+    from sumy.summarizers.lex_rank import LexRankSummarizer
+    from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+    from sumy.parsers.html import HtmlParser
+    from sumy.nlp.tokenizers import Tokenizer
     LANGUAGE = "english"
     url = urlIn
     parser = HtmlParser.from_url(urlIn, Tokenizer(LANGUAGE))
@@ -35,6 +45,17 @@ def sumUrl(urlIn,sentences):
 def sumTxt(txtIn,sentences):
     from sumy.parsers.html import HtmlParser
     from sumy.nlp.tokenizers import Tokenizer
+    from sumy.summarizers import luhn
+    from sumy.utils import get_stop_words
+    from sumy.nlp.stemmers import Stemmer
+    from sumy.summarizers.luhn import LuhnSummarizer 
+    from sumy.parsers.plaintext import PlaintextParser
+    from sumy.nlp.tokenizers import Tokenizer as sumytoken
+    from sumy.summarizers.lex_rank import LexRankSummarizer
+    from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+    from sumy.parsers.html import HtmlParser
+    from sumy.nlp.tokenizers import Tokenizer
+
     LANGUAGE = "english"
     with open(txtIn, 'r') as file:
         txt = file.read()
