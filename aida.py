@@ -19,6 +19,41 @@ from urllib.request import Request, urlopen
 import re
 import pandas as pd
 
+from sumy.summarizers import luhn
+from sumy.utils import get_stop_words
+from sumy.nlp.stemmers import Stemmer
+from sumy.summarizers.luhn import LuhnSummarizer 
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer as sumytoken
+from sumy.summarizers.lex_rank import LexRankSummarizer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.parsers.html import HtmlParser
+from sumy.nlp.tokenizers import Tokenizer
+
+def lexrank_summarizer():
+    print ("\n","*"*30, "LEXRANK SUMARIZER", "*"*30)
+    summarizer_LexRank = LexRankSummarizer(stemmer)
+    summarizer_LexRank.stop_words = get_stop_words(LANGUAGE)
+
+    for sentence in summarizer_LexRank(parser.document, SENTENCES_COUNT):
+        print (sentence)
+        
+def lsa_summarizer():
+    print ("\n","*"*30, "LSA SUMMARIZER", "*"*30)
+    summarizer_lsa = Summarizer(stemmer)
+    summarizer_lsa.stop_words = get_stop_words(LANGUAGE)
+
+    for sentence in summarizer_lsa(parser.document, SENTENCES_COUNT):
+        print (sentence)
+        
+def luhn_summarizer():
+    print ("\n","*"*30, "LUHN SUMMARIZER", "*"*30)
+    summarizer_luhn = LuhnSummarizer(stemmer)
+    summarizer_luhn.stop_words = get_stop_words(LANGUAGE)
+
+    for sentence in summarizer_luhn(parser.document, SENTENCES_COUNT):
+        print (sentence)
+
 def soupURL(req):
   pdTemp = {req: []}
   html_page = urlopen(req)
