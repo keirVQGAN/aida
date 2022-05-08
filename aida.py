@@ -19,7 +19,6 @@ from urllib.request import Request, urlopen
 import re
 import pandas as pd
 
-
 def sumUrl(urlIn,sentences):
     from sumy.parsers.html import HtmlParser
     from sumy.nlp.tokenizers import Tokenizer
@@ -67,7 +66,7 @@ def sumTxt(txtIn,sentences):
         print(sentence)
 
 def soupURL(req):
-  pdTemp = {req: []}
+  pdTemp = []
   html_page = urlopen(req)
   soupUrlPd = pd.DataFrame(data=pdTemp)
   soup = BeautifulSoup(html_page, "lxml")
