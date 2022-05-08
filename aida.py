@@ -74,8 +74,8 @@ def soupURL(req):
   links = []
   for link in soup.findAll('a'):
       links.append(link.get('href'))
-  pref_list = ['https://facebook']
-  links = [x for x in links if x.startswith(pref_list)]
+  filterList = ['https://facebook']
+  links = [x for x in links if not x.startswith(filterList)]
   links = [x for x in links if not x.startswith('https://twitter')]
   links = [x for x in links if not x.startswith('https://www.twitter')]
   links = [x for x in links if not x.startswith('https://insta')]
