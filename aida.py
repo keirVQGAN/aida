@@ -72,7 +72,7 @@ def soupURL(req):
   soupUrlPd = pd.DataFrame(data=pdTemp)
   soup = BeautifulSoup(html_page, "lxml")
   links = []
-  for link in soup.findAll('a'):
+  for link in soup.findAll('a', href=True):
       links.append(link.get('href'))
   filterList = ['https://creativecommons','https://facebook','https://www.facebook','https://twitter','https://www.twitter','https://insta','https://www.insta','https://google','https://www.google']
   for filter in filterList:
