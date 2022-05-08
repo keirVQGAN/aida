@@ -74,14 +74,18 @@ def soupURL(req):
   links = []
   for link in soup.findAll('a'):
       links.append(link.get('href'))
-  filterList = ['https://facebook']
-  links = [x for x in links if not x.startswith(filterList)]
-  links = [x for x in links if not x.startswith('https://twitter')]
-  links = [x for x in links if not x.startswith('https://www.twitter')]
-  links = [x for x in links if not x.startswith('https://insta')]
-  links = [x for x in links if not x.startswith('https://www.insta')]
-  links = [x for x in links if not x.startswith('https://google')]
-  links = [x for x in links if not x.startswith('https://www.google')]
+  filterList = ['https://facebook','https://www.facebook','https://twitter','https://www.twitter','https://insta','https://google','https://www.google']
+  for filter in filterList
+    links = [x for x in links if not x.startswith(filter)]
+#   links = [x for x in links if not x.startswith('https://www.facebook')]
+#   links = [x for x in links if not x.startswith('https://twitter')]
+#   links = [x for x in links if not x.startswith('https://www.twitter')]
+#   links = [x for x in links if not x.startswith('https://insta')]
+#   links = [x for x in links if not x.startswith('https://www.insta')]
+#   links = [x for x in links if not x.startswith('https://google')]
+#   links = [x for x in links if not x.startswith('https://www.google')]
+#   links = [x for x in links if not x.startswith('https://www.google')]
+#   links = [x for x in links if not x.startswith('https://www.google')]
 #   df = pd.DataFrame(links, columns=[req])
 #   dc = df.drop_duplicates()
   return links
