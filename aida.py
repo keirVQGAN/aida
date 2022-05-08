@@ -40,7 +40,7 @@ def sumUrl(urlIn,sentences):
     summarizer = Summarizer(stemmer)
     summarizer.stop_words = get_stop_words(LANGUAGE)
     for sentence in summarizer(parser.document, sentences):
-        print(sentence)
+        return sentence
     
 def sumTxt(txtIn,sentences):
     from sumy.parsers.html import HtmlParser
