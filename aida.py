@@ -130,6 +130,7 @@ def clone():
   drive.mount('/mnt/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/', exist_ok="True")
+  os.makedirs('/content/aida/txt2img', exist_ok="True")
   if sample_data==1:
     shutil.rmtree('/content/sample_data')
 
