@@ -18,6 +18,16 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import re
 import pandas as pd
+import sys
+
+class hideMe:
+    def __enter__(self):
+        self._original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout.close()
+        sys.stdout = self._original_stdout
 
 def sumUrl(urlIn,sentences):
     from sumy.parsers.html import HtmlParser
