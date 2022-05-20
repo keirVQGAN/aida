@@ -141,7 +141,7 @@ def txtL(action):
     console.print(f"[r black]{action}[/r black]")
 
 def txt(action, details):
-    console.print(f"[bright_white]{action}[/bright_white] -> [r black]{details}[/r black]")
+    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
 
 def txtM(action, details):
     console.print(f"[bright_magenta]{action}[/bright_magenta] -> [r black]{details}[/r black]")
