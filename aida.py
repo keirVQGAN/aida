@@ -20,6 +20,14 @@ import re
 import pandas as pd
 import sys
 
+def yaml():
+    yamlPath = f'/content/aida/txt2img/config/conf/*.yaml'
+    yamlFiles = glob.glob(yamlPath)
+    yamlClean = [os.path.splitext(os.path.basename(f))[0] for f in yamlFiles]
+    yamlClean.sort()
+    yamlStr = aida.ls2str(yamlClean)
+    return yamlStr
+
 class hideMe:
     def __enter__(self):
         self._original_stdout = sys.stdout
