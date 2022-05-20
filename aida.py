@@ -20,16 +20,6 @@ import re
 import pandas as pd
 import sys
 
-def yml():
-    yamlPath = f'/content/aida/txt2img/config/conf/*.yml'
-    yamlFiles = glob.glob(yamlPath)
-    yamlClean = [os.path.splitext(os.path.basename(f))[0] for f in yamlFiles]
-    yamlClean.sort()
-    yamlStr = aida.ls2str(yamlClean)
-    return yamlStr
-
-
-
 def sumUrl(urlIn,sentences):
     from sumy.parsers.html import HtmlParser
     from sumy.nlp.tokenizers import Tokenizer
