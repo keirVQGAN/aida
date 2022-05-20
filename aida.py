@@ -21,7 +21,7 @@ import pandas as pd
 import sys
 
 def yml():
-    yamlPath = f'/content/aida/txt2img/config/conf/*.yaml'
+    yamlPath = f'/content/aida/txt2img/config/conf/*.yml'
     yamlFiles = glob.glob(yamlPath)
     yamlClean = [os.path.splitext(os.path.basename(f))[0] for f in yamlFiles]
     yamlClean.sort()
