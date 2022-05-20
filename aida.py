@@ -20,7 +20,7 @@ import re
 import pandas as pd
 import sys
 
-def yaml():
+def yml():
     yamlPath = f'/content/aida/txt2img/config/conf/*.yaml'
     yamlFiles = glob.glob(yamlPath)
     yamlClean = [os.path.splitext(os.path.basename(f))[0] for f in yamlFiles]
