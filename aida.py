@@ -130,7 +130,7 @@ def clone():
   sample_data=os.path.isdir("/content/sample_data")
   confDef=os.path.isfile("/content/aida/txt2img/config/default.yml")
   if confDef==1:
-    shutil.rmtree('/content/aida/txt2img/config/default.yml')
+    os.remove('/content/aida/txt2img/config/default.yml')
   drive.mount('/mnt/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/', exist_ok="True")
