@@ -22,13 +22,13 @@ import sys
 
 def clone():
   sample_data=os.path.isdir("/content/sample_data")
-  confDef=os.path.isfile("/content/aida/txt2img/config/default.yml")
+  confDef=os.path.isfile("/content/aida/txt2img/config/default.yaml")
   if confDef==1:
-    os.remove('/content/aida/txt2img/config/default.yml')
+    os.remove('/content/aida/txt2img/config/default.yaml')
   drive.mount('/mnt/drive')
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/', exist_ok="True")
-  sync('/content/in/config', '/content/out/txt2img/config', 'sync', create=True)
+  sync('/content/in/config', '/content/aida/txt2img/config', 'sync', create=True)
   if sample_data==1:
     shutil.rmtree('/content/sample_data')
 
