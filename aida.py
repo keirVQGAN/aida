@@ -21,7 +21,7 @@ import pandas as pd
 import sys
 
 def clone():
-  sample_data=os.path.isdir("/content/sample_data")
+  sample_data=os.path.isdir('/content/sample_data')
   confDef=os.path.isfile("/content/aida/txt2img/config/default.yaml")
   if confDef==1:
     os.remove('/content/aida/txt2img/config/default.yaml')
@@ -29,6 +29,7 @@ def clone():
   sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
   os.makedirs('/content/out/', exist_ok="True")
   sync('/content/in/config', '/content/aida/txt2img/config', 'sync', create=True)
+  shutil.rmtree('/content/in/config')
   if sample_data==1:
     shutil.rmtree('/content/sample_data')
 
