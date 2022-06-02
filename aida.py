@@ -30,6 +30,20 @@ def clone():
   shutil.rmtree('/content/in/config')
   if sample_data==1:
     shutil.rmtree('/content/sample_data')
+    
+def install_pip_deps():
+    !pip install kornia pytorch-lightning transformers                              &> /dev/null
+    !pip install jupyter loguru einops PyGLM ftfy regex tqdm hydra-core exrex       &> /dev/null
+    !pip install seaborn adjustText bunch matplotlib-label-lines                    &> /dev/null
+    !pip install --upgrade gdown                                                    &> /dev/null
+
+def instal_gh_deps():
+  # not sure the "upgrade" arg does anything here, just feels like a good idea
+  !pip install --upgrade git+https://github.com/pytti-tools/AdaBins.git             &> /dev/null
+  !pip install --upgrade git+https://github.com/pytti-tools/GMA.git                 &> /dev/null
+  !pip install --upgrade git+https://github.com/pytti-tools/taming-transformers.git &> /dev/null
+  !pip install --upgrade git+https://github.com/openai/CLIP.git                     &> /dev/null
+  !pip install --upgrade git+https://github.com/pytti-tools/pytti-core.git          &> /dev/null
 
 def sumUrl(urlIn,sentences):
     from sumy.parsers.html import HtmlParser
