@@ -20,19 +20,22 @@ import re
 import pandas as pd
 import sys
 
-def _preProcess():
+def _preProcess(_project,_init_image,_scenes,_quality):
   #SAVE SETTING TO CSV
+  import csv
   sceneCSV='/mnt/drive/MyDrive/aida/out/scenes_master.csv'
   with open(sceneCSV, 'a') as csvFile:
       writer = csv.writer(csvFile)
       # writer.writerow(['when', 'scenes', 'image_file', 'quality']
-      writer.writerow([ timeSlug,_scenes, _init_image, _quality])
+      writer.writerow([_project,_scenes, _init_image, _quality])
   csvFile.close()
   df = pd.read_csv(sceneCSV)
   df_new = df.drop_duplicates()
   df_new.to_csv(sceneCSV, index=False)
   #-------------------------------------------------------------------------------
   #RESIZE INIT
+  from PIL import Image
+  from PIL import ImageFile
   ImageFile.LOAD_TRUNCATED_IMAGES = True
   RESIZED_IMAGE_FILE = '/content/in/init/init.tif'
   TARGET_SIZE = 2000
@@ -59,7 +62,7 @@ def draft(_scenes,_project,_style):
     img = cv2.imread('/content/in/init/init.tif')
     os.makedirs(maskPath, exist_ok="True")
     ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
-    imageio.imwrite(f'{maskPath}{_project}-mask{_thresh}.jpg',img_binary) 
+    imageio.imwrite(f'{maskPath}/{_project}-mask{_thresh}.jpg',img_binary) 
     _thresh = str(_thresh)
     _yaml = f'{confPath}/{_project}_mask{_thresh}.yaml'
     f = open(_yaml, "a")
