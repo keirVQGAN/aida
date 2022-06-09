@@ -20,6 +20,70 @@ import re
 import pandas as pd
 import sys
 
+def _preProcess():
+  #SAVE SETTING TO CSV
+  sceneCSV='/mnt/drive/MyDrive/aida/out/scenes_master.csv'
+  with open(sceneCSV, 'a') as csvFile:
+      writer = csv.writer(csvFile)
+      # writer.writerow(['when', 'scenes', 'image_file', 'quality']
+      writer.writerow([ timeSlug,_scenes, _init_image, _quality])
+  csvFile.close()
+  df = pd.read_csv(sceneCSV)
+  df_new = df.drop_duplicates()
+  df_new.to_csv(sceneCSV, index=False)
+  #-------------------------------------------------------------------------------
+  #RESIZE INIT
+  ImageFile.LOAD_TRUNCATED_IMAGES = True
+  RESIZED_IMAGE_FILE = '/content/in/init/init.tif'
+  TARGET_SIZE = 2000
+  image = Image.open(_init_image)
+  width, height = image.size
+  if width >= height:
+      new_width = TARGET_SIZE
+      new_height = (height * TARGET_SIZE) // width
+  else:
+      new_width = (width * TARGET_SIZE) // height
+      new_height = TARGET_SIZE
+  resized_image = image.resize((new_width, new_height), resample=Image.LANCZOS)
+  resized_image.save(RESIZED_IMAGE_FILE)
+  image = Image
+
+def draft(_scenes,_project):
+  _confLs=[]
+  for _thresh in range(20, 231, 20):
+    #make masks
+    maskPath=f'/content/in/mask/{_project}'
+    confPath=f'/content/out/txt2img/config/conf'
+    img = cv2.imread('/content/in/init/init.tif')
+    aida.mk(maskPath)
+    ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
+    imageio.imwrite(f'{maskPath}{_project}-mask{_thresh}.jpg',img_binary) 
+    _thresh = str(_thresh)
+    _yaml = f'{confPath}/{_project}_mask{_thresh}.yaml'
+    f = open(_yaml, "a")
+    f.write(f"""#@package _global_
+    scenes: {_scenes}
+    file_namespace: {_project}-{_scenes}_mask{_thresh}
+    scene_suffix::0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
+    direct_image_prompts: {_style}:0.8
+    steps_per_scene: 2500
+    save_every: 500
+    width: 200
+    cutouts: 200
+    cut_pow: 2.5
+    pixel_size: 3
+    gradient_accumulation_steps: 2
+    confs: f'{_project}_mask20,{_project}_mask80,{_project}_mask120,{_project}_mask140,{_project}_mask180,{_project}_mask220'
+    upscale: True""")  
+    print(f'Made: {_yaml}')
+    _confLs.append(_yaml)
+    f.close()
+  _upRun='10'
+  _conf=' '.join(_confLs)
+  _settings=(f'-m pytti.workhorse --multirun conf={_conf}')
+  
+  return _settings
+
 def clone():
   sample_data=os.path.isdir('/content/sample_data')
   drive.mount('/mnt/drive')
