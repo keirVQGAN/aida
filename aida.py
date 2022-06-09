@@ -48,14 +48,16 @@ def _preProcess():
   resized_image.save(RESIZED_IMAGE_FILE)
   image = Image
 
-def draft(_scenes,_project):
+def draft(_scenes,_project,_style):
+  import imageio
+  import csv
   _confLs=[]
   for _thresh in range(20, 231, 20):
     #make masks
     maskPath=f'/content/in/mask/{_project}'
     confPath=f'/content/out/txt2img/config/conf'
     img = cv2.imread('/content/in/init/init.tif')
-    aida.mk(maskPath)
+    os.makedirs(maskPath, exist_ok="True")
     ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
     imageio.imwrite(f'{maskPath}{_project}-mask{_thresh}.jpg',img_binary) 
     _thresh = str(_thresh)
@@ -72,13 +74,13 @@ def draft(_scenes,_project):
     cutouts: 200
     cut_pow: 2.5
     pixel_size: 3
-    gradient_accumulation_steps: 2
-    confs: f'{_project}_mask20,{_project}_mask80,{_project}_mask120,{_project}_mask140,{_project}_mask180,{_project}_mask220'
-    upscale: True""")  
+    gradient_accumulation_steps: 2""")
+    confs = f'{_project}_mask20,{_project}_mask80,{_project}_mask120,{_project}_mask140,{_project}_mask180,{_project}_mask220' 
     print(f'Made: {_yaml}')
     _confLs.append(_yaml)
     f.close()
   _upRun='10'
+  upScale=True
   _conf=' '.join(_confLs)
   _settings=(f'-m pytti.workhorse --multirun conf={_conf}')
   
