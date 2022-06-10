@@ -64,13 +64,13 @@ def merge(_imageSuperPath, _project, _scenes):
   scenes: {_scenes}
   file_namespace: {_project}_merge
   direct_image_prompts: {_imageOutStr}
-  steps_per_scene: 1000
-  save_every: 100
+  steps_per_scene: 2000
+  save_every: 2000
   width: 200
-  cutouts: 20
-  cut_pow: 2.5
+  cutouts: 200
+  cut_pow: 2.8
   pixel_size: 3
-  gradient_accumulation_steps: 1""")
+  gradient_accumulation_steps: 2""")
   f.close()
 
 #TIME TAKEN
@@ -135,7 +135,7 @@ def draft(_scenes,_project,_style):
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
     steps_per_scene: 2500
-    save_every: 500
+    save_every: 2500
     width: 200
     cutouts: 200
     cut_pow: 2.5
@@ -164,13 +164,13 @@ def test(_scenes,_project,_style):
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 50
-    save_every: 50
+    steps_per_scene: 2000
+    save_every: 2000
     width: 200
-    cutouts: 20
+    cutouts: 220
     cut_pow: 2.5
     pixel_size: 3
-    gradient_accumulation_steps: 1""")
+    gradient_accumulation_steps: 2""")
     _confLs.append(_yaml)
     f.close()
     
