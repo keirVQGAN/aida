@@ -1,80 +1,134 @@
-import cv2
-from glob import glob
-import shutil
+
+"""
+AiDa.common v0.9 | Yeti - June 2022
+"""
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------IMPORT
+#SYSTEM
 import os
 import os.path
-from google.colab import drive
-from dirsync import sync
-from rich.console import Console
-console = Console()
-from slugify import slugify
-import configparser
-import IPython
-import tarfile
+import sys
 import shutil
-from IPython.display import Image
-import time
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
+import tarfile
+#DATA
 import re
 import pandas as pd
-import sys
-
+import cv2
+import time
+#PATHS
+from glob import glob
+from dirsync import sync
+from google.colab import drive
+#CONSOLE
+import IPython
+from IPython.display import Image, clear_output
+from rich.console import Console
+console = Console()
+#--------------------------------------------------------------------FUNCTIONS
+#CONSOLE
+#-----------------------------------------------------------------------------
 def txtH(action):
-    console.print(f"[bright_white]{action}[/bright_white]")
-
+#-----------------------------------------------------------------------------
+  console.print(f"[bright_white]{action}[/bright_white]")
+#-----------------------------------------------------------------------------
 def txtL(action):
-    console.print(f"[r black]{action}[/r black]")
-
+#-----------------------------------------------------------------------------
+  console.print(f"[r black]{action}[/r black]")
+#-----------------------------------------------------------------------------
 def txt(action, details):
-    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
-
-def txtM(action, details):
-    console.print(f"[bright_magenta]{action}[/bright_magenta] -> [r black]{details}[/r black]")
-
+#-----------------------------------------------------------------------------
+  console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
+#-----------------------------------------------------------------------------
 def txtC(action, details):
-    console.print(f"[bright_cyan]{action}[/bright_cyan] -> [r black]{details}[/r black]")
-
+#-----------------------------------------------------------------------------
+  console.print(f"[bright_cyan]{action}[/bright_cyan] > [r black]{details}[/r black]") 
+#-----------------------------------------------------------------------------    
+def txtM(action, details):
+#-----------------------------------------------------------------------------
+  console.print(f"[bright_magenta]{action}[/bright_magenta] > [r black]{details}[/r black]")
+#-----------------------------------------------------------------------------
 def txtY(action, details):
-    console.print(f"[bright_yellow]{action}[/bright_yellow] -> [r black]{details}[/r black]")
-
-def txtB(action, details):
-    console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
-
-def merge(_imageSuperPath, _project, _scenes):
-  #-----------------------------------------------------------------------------
-  #GET FILE LIST OF UPSCALES IMAGES
-  _imageSuperLs = []
-  for root, dirs, files in os.walk(_imageSuperPath):
-      for name in files:
-          if name.endswith(".png"):
-            a = os.path.join(root, name)
-            _imageSuperLs.append(a)
-
-  _imageOutStr = ':0.2|'.join(_imageSuperLs)
-
-  # aida.txtY('Printing', _imageOutStr)
-  #-----------------------------------------------------------------------------
-  #MAKE YML // conf/merge.yml
-  _yaml = f'/content/out/txt2img/config/conf/{_project}_merge.yaml'
-  if os.path.isfile(_yaml):
-    os.remove(_yaml)
-  f = open(_yaml, "a")
-  f.write(f"""#@package _global_
-  scenes: {_scenes}
-  file_namespace: {_project}_merge
-  direct_image_prompts: {_imageOutStr}
-  steps_per_scene: 2000
-  save_every: 2000
-  width: 200
-  cutouts: 200
-  cut_pow: 2.8
-  pixel_size: 3
-  gradient_accumulation_steps: 2""")
-  f.close()
-
-#TIME TAKEN
+#-----------------------------------------------------------------------------
+  console.print(f"[bright_yellow]{action}[/bright_yellow] > [r black]{details}[/r black]")
+#-----------------------------------------------------------------------------
+def conSettings(scene, image, style, quality, gpu, upScale):
+#-----------------------------------------------------------------------------
+  clear_output()
+  txtC('>> Scene', scene)
+  txtC('>> Image', image)
+  txtC('>> Style', style)
+  txtC('>> Quality', quality)
+  txtY('>> CUDA GPU ', gpu[1])
+  txtM('>> Synced', 'True')
+  txtM('>> Upscaled', upScale)
+  print('')
+#-----------------------------------------------------------------------------
+def conInstall(timeSlugConsole, gpu, _scenes, _init_image, _style, _quality, _upScale):
+#-----------------------------------------------------------------------------
+  clear_output()
+  txtL(f'>> SETUP COMPLETE @ {timeSlugConsole}')
+  txtC('>> Installed ','AiDa.common')
+  txtC('>> Installed ','AiDa.txt2img')
+  txtC('>> Installed ','AiDa.super')
+  txtC('>> CUDA GPU0 ', gpu[1])
+  txtY('>> Scene',_scenes)
+  txtY('>> Image',_init_image)
+  txtY('>> Style',_style)
+  txtM('>> Quality',_quality)
+  txtM('>> Upscale ',_upScale)
+#-----------------------------------------------------------------------------
+def mount():
+#-----------------------------------------------------------------------------
+  drive.mount('/mnt/drive')
+#-----------------------------------------------------------------------------
+def syncDir(source, target):
+#-----------------------------------------------------------------------------
+  sync(source, target, 'sync', create=True)
+#-----------------------------------------------------------------------------
+def rm(dir):
+#-----------------------------------------------------------------------------
+  shutil.rmtree(dir)
+#-----------------------------------------------------------------------------
+def cp(filename,target):
+#-----------------------------------------------------------------------------
+  shutil.copyfile(file,dest)   
+#-----------------------------------------------------------------------------
+def mk(dir):
+#-----------------------------------------------------------------------------
+  os.makedirs(dir, exist_ok="True")
+#-----------------------------------------------------------------------------
+def lsDir(dir):
+#-----------------------------------------------------------------------------
+  return [os.path.join(dir, file) for file in os.listdir(dir)]
+#-----------------------------------------------------------------------------
+def ls(dir):
+#-----------------------------------------------------------------------------
+  return [os.path.join(dir, file) for file in os.listdir(dir)]
+#-----------------------------------------------------------------------------
+def ls2str(ls):
+#-----------------------------------------------------------------------------
+  return " ".join(ls)
+#-----------------------------------------------------------------------------
+def name(file_path):
+#-----------------------------------------------------------------------------
+  basename = os.path.basename(file_path)
+  file_name = os.path.splitext(basename)[0]
+  return file_name
+#-----------------------------------------------------------------------------
+def zip(filename, source):
+#-----------------------------------------------------------------------------
+  with tarfile.open(filename, "w:gz") as tar:
+      tar.add(source, arcname=os.path.basename(source))
+#-----------------------------------------------------------------------------
+def uzip(filename, target):
+#-----------------------------------------------------------------------------
+  my_tar = tarfile.open(filename)
+  my_tar.extract(target)
+  my_tar.close()
+#-----------------------------------------------------------------------------
 def timeTaken(start_time):
+#-----------------------------------------------------------------------------
   import time
   timeTakenFloat = "%s seconds" % (time.time() - start_time)
   timeTaken = timeTakenFloat
@@ -82,8 +136,21 @@ def timeTaken(start_time):
   timeTaken_split = timeTaken_str.split('.')
   timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
   txtM('>> Complete: ',f'{timeTakenShort} Seconds')
-
-def _preProcess(_project,_init_image,_scenes,_quality):
+#-----------------------------------------------------------------------------
+def clone():
+#-----------------------------------------------------------------------------
+  sample_data=os.path.isdir('/content/sample_data')
+  drive.mount('/mnt/drive')
+  sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
+  os.makedirs('/content/out/', exist_ok="True")
+  os.makedirs('/content/aida/txt2img', exist_ok="True")
+  sync('/content/in/config', '/content/out/txt2img/config', 'sync', create=True)
+  shutil.rmtree('/content/in/config')
+  if sample_data==1:
+    shutil.rmtree('/content/sample_data')
+#-----------------------------------------------------------------------------
+def preProcess(_project,_init_image,_scenes,_quality,_imageOut):
+#-----------------------------------------------------------------------------
   #SAVE SETTING TO CSV
   import csv
   sceneCSV='/mnt/drive/MyDrive/aida/out/scenes_master.csv'
@@ -95,7 +162,6 @@ def _preProcess(_project,_init_image,_scenes,_quality):
   df = pd.read_csv(sceneCSV)
   df_new = df.drop_duplicates()
   df_new.to_csv(sceneCSV, index=False)
-  #-------------------------------------------------------------------------------
   #RESIZE INIT
   from PIL import Image
   from PIL import ImageFile
@@ -113,8 +179,54 @@ def _preProcess(_project,_init_image,_scenes,_quality):
   resized_image = image.resize((new_width, new_height), resample=Image.LANCZOS)
   resized_image.save(RESIZED_IMAGE_FILE)
   image = Image
-
+  mk(_imageOut)
+#-----------------------------------------------------------------------------
+def syncOut(
+#-----------------------------------------------------------------------------
+  _imageRender,
+  _imageOut
+  ):
+  for root, dirs, files in os.walk(_imageRender):
+      for name in files:
+          if name.endswith(".png"):
+              shutil.copy(os.path.join(root, name), _imageOut)
+  syncDir('/content/out/images','/mnt/drive/MyDrive/aida/out/images/raw')
+  syncDir('/content/out/txt2img/config','/mnt/drive/MyDrive/aida/out/images/config')
+#-----------------------------------------------------------------------------
+def test(_scenes,_project,_style,_init_image):
+#-----------------------------------------------------------------------------
+  import imageio
+  import csv
+  _confLs=[]
+  for _thresh in range(20, 231, 20):
+    #make masks
+    maskPath=f'/content/in/mask/{_project}'
+    confPath=f'/content/out/txt2img/config/conf'
+    img = cv2.imread(_init_image)
+    os.makedirs(maskPath, exist_ok="True")
+    ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
+    imageio.imwrite(f'{maskPath}/{_project}_mask{_thresh}.jpg',img_binary) 
+    _thresh = str(_thresh)
+    _yaml = f'{confPath}/{_project}_mask{_thresh}.yaml'
+    f = open(_yaml, "a")
+    f.write(f"""#@package _global_
+    scenes: {_scenes}
+    init_image: {_init_image}
+    file_namespace: {_project}_mask{_thresh}
+    scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
+    direct_image_prompts: {_style}:0.6
+    steps_per_scene: 150
+    save_every: 150
+    width: 200
+    cutouts: 220
+    cut_pow: 2.7
+    pixel_size: 3
+    gradient_accumulation_steps: 2""")
+    _confLs.append(_yaml)
+    f.close()
+#-----------------------------------------------------------------------------
 def draft(_scenes,_project,_style):
+#-----------------------------------------------------------------------------
   import imageio
   import csv
   _confLs=[]
@@ -137,206 +249,67 @@ def draft(_scenes,_project,_style):
     steps_per_scene: 2500
     save_every: 2500
     width: 200
-    cutouts: 200
-    cut_pow: 2.5
-    pixel_size: 3
-    gradient_accumulation_steps: 2""")
-    _confLs.append(_yaml)
-    f.close()
-    
-def test(_scenes,_project,_style,_init_image):
-  import imageio
-  import csv
-  _confLs=[]
-  for _thresh in range(20, 231, 20):
-    #make masks
-    maskPath=f'/content/in/mask/{_project}'
-    confPath=f'/content/out/txt2img/config/conf'
-    img = cv2.imread(_init_image)
-    os.makedirs(maskPath, exist_ok="True")
-    ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
-    imageio.imwrite(f'{maskPath}/{_project}_mask{_thresh}.jpg',img_binary) 
-    _thresh = str(_thresh)
-    _yaml = f'{confPath}/{_project}_mask{_thresh}.yaml'
-    f = open(_yaml, "a")
-    f.write(f"""#@package _global_
-    scenes: {_scenes}
-    init_image: {_init_image}
-    file_namespace: {_project}_mask{_thresh}
-    scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
-    direct_image_prompts: {_style}:0.6
-    steps_per_scene: 750
-    save_every: 750
-    width: 200
-    cutouts: 220
+    cutouts: 230
     cut_pow: 2.7
     pixel_size: 3
     gradient_accumulation_steps: 2""")
     _confLs.append(_yaml)
     f.close()
-    
-def clone():
-  sample_data=os.path.isdir('/content/sample_data')
-  drive.mount('/mnt/drive')
-  sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
-  os.makedirs('/content/out/', exist_ok="True")
-  os.makedirs('/content/aida/txt2img', exist_ok="True")
-  sync('/content/in/config', '/content/out/txt2img/config', 'sync', create=True)
-  shutil.rmtree('/content/in/config')
-  if sample_data==1:
-    shutil.rmtree('/content/sample_data')
+#-------------------------------------------------------------------------------
+def merge(_imageSuperPath, _project, _scenes):
+#-----------------------------------------------------------------------------
+  #GET FILE LIST OF UPSCALES IMAGES
+  _imageSuperLs = []
+  for root, dirs, files in os.walk(_imageSuperPath):
+      for name in files:
+          if name.endswith(".png"):
+            a = os.path.join(root, name)
+            _imageSuperLs.append(a)
 
-def sumUrl(urlIn,sentences):
-    from sumy.parsers.html import HtmlParser
-    from sumy.nlp.tokenizers import Tokenizer
-    from sumy.summarizers import luhn
-    from sumy.utils import get_stop_words
-    from sumy.nlp.stemmers import Stemmer
-    from sumy.summarizers.luhn import LuhnSummarizer 
-    from sumy.parsers.plaintext import PlaintextParser
-    from sumy.nlp.tokenizers import Tokenizer as sumytoken
-    from sumy.summarizers.lex_rank import LexRankSummarizer
-    from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-    from sumy.parsers.html import HtmlParser
-    from sumy.nlp.tokenizers import Tokenizer
-    LANGUAGE = "english"
-    url = urlIn
-    parser = HtmlParser.from_url(urlIn, Tokenizer(LANGUAGE))
-    stemmer = Stemmer(LANGUAGE)
-    summarizer = Summarizer(stemmer)
-    summarizer.stop_words = get_stop_words(LANGUAGE)
-    for sentence in summarizer(parser.document, sentences):
-        return sentence
-    
-def sumTxt(txtIn,sentences):
-    from sumy.parsers.html import HtmlParser
-    from sumy.nlp.tokenizers import Tokenizer
-    from sumy.summarizers import luhn
-    from sumy.utils import get_stop_words
-    from sumy.nlp.stemmers import Stemmer
-    from sumy.summarizers.luhn import LuhnSummarizer 
-    from sumy.parsers.plaintext import PlaintextParser
-    from sumy.nlp.tokenizers import Tokenizer as sumytoken
-    from sumy.summarizers.lex_rank import LexRankSummarizer
-    from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-    from sumy.parsers.html import HtmlParser
-    from sumy.nlp.tokenizers import Tokenizer
+  _imageOutStr = ':0.2|'.join(_imageSuperLs)
+  #MAKE YML // conf/merge.yml
+  _yaml = f'/content/out/txt2img/config/conf/{_project}_merge.yaml'
+  if os.path.isfile(_yaml):
+    os.remove(_yaml)
+  f = open(_yaml, "a")
+  f.write(f"""#@package _global_
+  scenes: {_scenes}
+  file_namespace: {_project}_merge
+  direct_image_prompts: {_imageOutStr}
+  steps_per_scene: 2000
+  save_every: 2000
+  width: 200
+  cutouts: 200
+  cut_pow: 2.8
+  pixel_size: 3
+  gradient_accumulation_steps: 2""")
+  f.close()
+#-------------------------------------------------------------------------------
+def mergeTest(_imageSuperPath, _project, _scenes):
+#-----------------------------------------------------------------------------
+  #GET FILE LIST OF UPSCALES IMAGES
+  _imageSuperLs = []
+  for root, dirs, files in os.walk(_imageSuperPath):
+      for name in files:
+          if name.endswith(".png"):
+            a = os.path.join(root, name)
+            _imageSuperLs.append(a)
 
-    LANGUAGE = "english"
-    with open(txtIn, 'r') as file:
-        txt = file.read()
-    stemmer = Stemmer(LANGUAGE)
-    parser = PlaintextParser.from_string((txt), sumytoken(LANGUAGE))
-    summarizer = Summarizer(stemmer)
-    summarizer.stop_words = get_stop_words(LANGUAGE)
-    for sentence in summarizer(parser.document, sentences):
-        print(sentence)
-
-def soupURL(req):
-  pdTemp = []
-  html_page = urlopen(req)
-  soupUrlPd = pd.DataFrame(data=pdTemp)
-  soup = BeautifulSoup(html_page, "lxml")
-  links = []
-  for link in soup.findAll('a', href=True):
-      links.append(link.get('href'))
-  filterList = ['https://you','https://medium','https://www.medium','https://creativecommons','https://face','https://www.face','https://twit','https://www.twit','https://inst','https://www.inst','https://go','https://www.goo']
-  for filter in filterList:
-    links = [x for x in links if not x.startswith(filter)]
-    links = [x for x in links if x.startswith('https')]
-#   links = [x for x in links if not x.startswith('https://www.facebook')]
-#   links = [x for x in links if not x.startswith('https://twitter')]
-#   links = [x for x in links if not x.startswith('https://www.twitter')]
-#   links = [x for x in links if not x.startswith('https://insta')]
-#   links = [x for x in links if not x.startswith('https://www.insta')]
-#   links = [x for x in links if not x.startswith('https://google')]
-#   links = [x for x in links if not x.startswith('https://www.google')]
-#   links = [x for x in links if not x.startswith('https://www.google')]
-#   links = [x for x in links if not x.startswith('https://www.google')]
-#   df = pd.DataFrame(links, columns=[req])
-#   dc = df.drop_duplicates()
-  return links
-  
-def urlName(url):
-  head, tail = os.path.split(url)
-  return(tail)
-
-#Functions
-##Map config section to dictionary
-
-def confRead(file='content/config_aida.ini'):
-  import configparser
-  config_file = file
-  config = configparser.configParser()
-  config.read(config_file)
-
-def confDict(section):
-  dict1 = {}
-  options = config.options(section)
-  for option in options:
-      try:
-          dict1[option] = config.get(section, option)
-          if dict1[option] == -1:
-              DebugPrint("skip: %s" % option)
-              
-      except:
-          print("exception on %s!" % option)
-          dict1[option] = None
-  return dict1
-##Print config (section) to console
-
-def confPrint(section):
-  confDict = confDict(section)
-  confPrint = "\n".join("{}\t{}".format(k, v) for k, v in confDict.items())
-  print(f'[{section}]')
-  print(confPrint)
-
-
-
-
-
-def mount():
-    drive.mount('/mnt/drive')
-
-def syncDir(source, target):  
-    sync(source, target, 'sync', create=True)
-
-def rm(dir):
-    shutil.rmtree(dir)
-    
-def cp(filename,target):
-    shutil.copyfile(file,dest)   
-
-def gifShow(Path):
-  with open(Path,'rb') as f:
-      a = display.Image(data=f.read(), format='png')
-      return a
-
-def mk(dir):
-    os.makedirs(dir, exist_ok="True")
-    
-def lsDir(dir):
-    return [os.path.join(dir, file) for file in os.listdir(dir)]
-
-def time():
-    return [time.strftime("_%H%M%S")]
-
-def zip(filename, source):
-    with tarfile.open(filename, "w:gz") as tar:
-        tar.add(source, arcname=os.path.basename(source))
-
-def uzip(filename, target):
-    my_tar = tarfile.open(filename)
-    my_tar.extract(target)
-    my_tar.close()
-    
-def ls(dir):
-    return [os.path.join(dir, file) for file in os.listdir(dir)]
-
-def ls2str(ls):
-    return " ".join(ls)
-
-def name(file_path):
-  basename = os.path.basename(file_path)
-  file_name = os.path.splitext(basename)[0]
-  return file_name
+  _imageOutStr = ':0.2|'.join(_imageSuperLs)
+  #MAKE YML // conf/merge.yml
+  _yaml = f'/content/out/txt2img/config/conf/{_project}_merge.yaml'
+  if os.path.isfile(_yaml):
+    os.remove(_yaml)
+  f = open(_yaml, "a")
+  f.write(f"""#@package _global_
+  scenes: {_scenes}
+  file_namespace: {_project}_merge
+  direct_image_prompts: {_imageOutStr}
+  steps_per_scene: 300
+  save_every: 300
+  width: 200
+  cutouts: 32
+  cut_pow: 2.5
+  pixel_size: 3
+  gradient_accumulation_steps: 21""")
+  f.close()
