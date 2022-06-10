@@ -78,7 +78,6 @@ def draft(_scenes,_project,_style):
     cut_pow: 2.5
     pixel_size: 3
     gradient_accumulation_steps: 2""")
-    print(f'Made: {_yaml}')
     _confLs.append(_yaml)
     f.close()
     
@@ -102,14 +101,13 @@ def test(_scenes,_project,_style):
     file_namespace: {_project}-{_scenes}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 500
-    save_every: 100
+    steps_per_scene: 200
+    save_every: 200
     width: 200
     cutouts: 20
     cut_pow: 2.5
     pixel_size: 3
     gradient_accumulation_steps: 1""")
-    print(f'Made: {_yaml}')
     _confLs.append(_yaml)
     f.close()
     
