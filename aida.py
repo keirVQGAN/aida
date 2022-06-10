@@ -41,6 +41,37 @@ def txtY(action, details):
 def txtB(action, details):
     console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
 
+def merge(_imageSuperPath):
+  #-----------------------------------------------------------------------------
+  #GET FILE LIST OF UPSCALES IMAGES
+  _imageSuperLs = []
+  for root, dirs, files in os.walk(_imageSuperPath):
+      for name in files:
+          if name.endswith(".png"):
+            a = os.path.join(root, name)
+            _imageSuperLs.append(a)
+
+  _imageOutStr = ':0.2|'.join(_imageSuperLs)
+
+  # aida.txtY('Printing', _imageOutStr)
+  #-----------------------------------------------------------------------------
+  #MAKE YML // conf/merge.yml
+  _yaml = f'/content/out/txt2img/config/conf/{_project}_merge.yaml'
+  if os.path.isfile(_yaml):
+    os.remove(_yaml)
+  f = open(_yaml, "a")
+  f.write(f"""#@package _global_
+  scenes: {_scenes}
+  file_namespace: {_project}_merge
+  direct_image_prompts: {_imageOutStr}
+  steps_per_scene: 1000
+  save_every: 100
+  width: 200
+  cutouts: 20
+  cut_pow: 2.5
+  pixel_size: 3
+  gradient_accumulation_steps: 1""")
+  f.close()
 
 #TIME TAKEN
 def timeTaken(start_time):
@@ -100,7 +131,7 @@ def draft(_scenes,_project,_style):
     f = open(_yaml, "a")
     f.write(f"""#@package _global_
     scenes: {_scenes}
-    file_namespace: {_project}-{_scenes}_mask{_thresh}
+    file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
     steps_per_scene: 2500
@@ -130,11 +161,11 @@ def test(_scenes,_project,_style):
     f = open(_yaml, "a")
     f.write(f"""#@package _global_
     scenes: {_scenes}
-    file_namespace: {_project}-{_scenes}_mask{_thresh}
+    file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 150
-    save_every: 150
+    steps_per_scene: 50
+    save_every: 50
     width: 200
     cutouts: 20
     cut_pow: 2.5
