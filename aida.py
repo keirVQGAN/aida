@@ -50,7 +50,7 @@ def timeTaken(start_time):
   timeTaken_str = str(timeTaken)
   timeTaken_split = timeTaken_str.split('.')
   timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
-  txtM('Complete in:',f'{timeTakenShort} Seconds')
+  txtM('>> Complete: ',f'{timeTakenShort} Seconds')
 
 def _preProcess(_project,_init_image,_scenes,_quality):
   #SAVE SETTING TO CSV
