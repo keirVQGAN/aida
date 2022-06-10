@@ -62,14 +62,14 @@ def draft(_scenes,_project,_style):
     img = cv2.imread('/content/in/init/init.tif')
     os.makedirs(maskPath, exist_ok="True")
     ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
-    imageio.imwrite(f'{maskPath}/{_project}-mask{_thresh}.jpg',img_binary) 
+    imageio.imwrite(f'{maskPath}/{_project}_mask{_thresh}.jpg',img_binary) 
     _thresh = str(_thresh)
     _yaml = f'{confPath}/{_project}_mask{_thresh}.yaml'
     f = open(_yaml, "a")
     f.write(f"""#@package _global_
     scenes: {_scenes}
     file_namespace: {_project}-{_scenes}_mask{_thresh}
-    scene_suffix::0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
+    scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
     steps_per_scene: 2500
     save_every: 500
@@ -78,16 +78,9 @@ def draft(_scenes,_project,_style):
     cut_pow: 2.5
     pixel_size: 3
     gradient_accumulation_steps: 2""")
-    confs = f'{_project}_mask20,{_project}_mask80,{_project}_mask120,{_project}_mask140,{_project}_mask180,{_project}_mask220' 
     print(f'Made: {_yaml}')
     _confLs.append(_yaml)
     f.close()
-  _upRun='10'
-  upScale=True
-  _conf=' '.join(_confLs)
-  _settings=(f'-m pytti.workhorse --multirun conf={_conf}')
-  
-  return _settings
 
 def clone():
   sample_data=os.path.isdir('/content/sample_data')
