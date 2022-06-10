@@ -21,7 +21,7 @@ import pandas as pd
 import sys
 
 #TIME TAKEN
-def __timeTaken(start_time):
+def timeTaken(start_time):
   timeTakenFloat = "%s seconds" % (time.time() - start_time)
   timeTaken = timeTakenFloat
   timeTaken_str = str(timeTaken)
