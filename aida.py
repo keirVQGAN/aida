@@ -122,7 +122,7 @@ def draft(_scenes,_project,_style):
     #make masks
     maskPath=f'/content/in/mask/{_project}'
     confPath=f'/content/out/txt2img/config/conf'
-    img = cv2.imread('/content/in/init/init.tif')
+    img = cv2.imread(_init_image)
     os.makedirs(maskPath, exist_ok="True")
     ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
     imageio.imwrite(f'{maskPath}/{_project}_mask{_thresh}.jpg',img_binary) 
@@ -144,7 +144,7 @@ def draft(_scenes,_project,_style):
     _confLs.append(_yaml)
     f.close()
     
-def test(_scenes,_project,_style):
+def test(_scenes,_project,_style,_init_image):
   import imageio
   import csv
   _confLs=[]
@@ -152,7 +152,7 @@ def test(_scenes,_project,_style):
     #make masks
     maskPath=f'/content/in/mask/{_project}'
     confPath=f'/content/out/txt2img/config/conf'
-    img = cv2.imread('/content/in/init/init.tif')
+    img = cv2.imread(_init_image)
     os.makedirs(maskPath, exist_ok="True")
     ret, img_binary = cv2.threshold(img, _thresh, 255, cv2.THRESH_BINARY)
     imageio.imwrite(f'{maskPath}/{_project}_mask{_thresh}.jpg',img_binary) 
@@ -161,6 +161,7 @@ def test(_scenes,_project,_style):
     f = open(_yaml, "a")
     f.write(f"""#@package _global_
     scenes: {_scenes}
+    init_image: {_init_image}
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
