@@ -41,7 +41,7 @@ def txtY(action, details):
 def txtB(action, details):
     console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
 
-def merge(_imageSuperPath):
+def merge(_imageSuperPath, _project, _scenes):
   #-----------------------------------------------------------------------------
   #GET FILE LIST OF UPSCALES IMAGES
   _imageSuperLs = []
