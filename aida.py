@@ -20,14 +20,37 @@ import re
 import pandas as pd
 import sys
 
+def txtH(action):
+    console.print(f"[bright_white]{action}[/bright_white]")
+
+def txtL(action):
+    console.print(f"[r black]{action}[/r black]")
+
+def txt(action, details):
+    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
+
+def txtM(action, details):
+    console.print(f"[bright_magenta]{action}[/bright_magenta] -> [r black]{details}[/r black]")
+
+def txtC(action, details):
+    console.print(f"[bright_cyan]{action}[/bright_cyan] -> [r black]{details}[/r black]")
+
+def txtY(action, details):
+    console.print(f"[bright_yellow]{action}[/bright_yellow] -> [r black]{details}[/r black]")
+
+def txtB(action, details):
+    console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
+
+
 #TIME TAKEN
 def timeTaken(start_time):
+  import time
   timeTakenFloat = "%s seconds" % (time.time() - start_time)
   timeTaken = timeTakenFloat
   timeTaken_str = str(timeTaken)
   timeTaken_split = timeTaken_str.split('.')
   timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
-  aida.txtM('Rendered in:',f'{timeTakenShort} Seconds')
+  txtM('Rendered in:',f'{timeTakenShort} Seconds')
 
 def _preProcess(_project,_init_image,_scenes,_quality):
   #SAVE SETTING TO CSV
@@ -239,26 +262,6 @@ def confPrint(section):
 
 
 
-def txtH(action):
-    console.print(f"[bright_white]{action}[/bright_white]")
-
-def txtL(action):
-    console.print(f"[r black]{action}[/r black]")
-
-def txt(action, details):
-    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
-
-def txtM(action, details):
-    console.print(f"[bright_magenta]{action}[/bright_magenta] -> [r black]{details}[/r black]")
-
-def txtC(action, details):
-    console.print(f"[bright_cyan]{action}[/bright_cyan] -> [r black]{details}[/r black]")
-
-def txtY(action, details):
-    console.print(f"[bright_yellow]{action}[/bright_yellow] -> [r black]{details}[/r black]")
-
-def txtB(action, details):
-    console.print(f"[bright_black]{action}[/bright_black] -> [r black]{details}[/r black]")
 
 def mount():
     drive.mount('/mnt/drive')
