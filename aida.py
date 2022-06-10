@@ -101,8 +101,8 @@ def test(_scenes,_project,_style):
     file_namespace: {_project}-{_scenes}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 200
-    save_every: 200
+    steps_per_scene: 150
+    save_every: 150
     width: 200
     cutouts: 20
     cut_pow: 2.5
