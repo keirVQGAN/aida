@@ -218,10 +218,10 @@ def test(_scenes,_project,_style,_init_image):
     steps_per_scene: 150
     save_every: 150
     width: 200
-    cutouts: 220
-    cut_pow: 2.7
+    cutouts: 22
+    cut_pow: 2
     pixel_size: 3
-    gradient_accumulation_steps: 2""")
+    gradient_accumulation_steps: 1""")
     _confLs.append(_yaml)
     f.close()
 #-----------------------------------------------------------------------------
@@ -246,8 +246,8 @@ def draft(_scenes,_project,_style):
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 2500
-    save_every: 2500
+    steps_per_scene: 1500
+    save_every: 1500
     width: 200
     cutouts: 230
     cut_pow: 2.7
@@ -311,5 +311,5 @@ def mergeTest(_imageSuperPath, _project, _scenes):
   cutouts: 32
   cut_pow: 2.5
   pixel_size: 3
-  gradient_accumulation_steps: 21""")
+  gradient_accumulation_steps: 1""")
   f.close()
