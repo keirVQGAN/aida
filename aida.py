@@ -20,6 +20,15 @@ import re
 import pandas as pd
 import sys
 
+#TIME TAKEN
+def __timeTaken(start_time):
+  timeTakenFloat = "%s seconds" % (time.time() - start_time)
+  timeTaken = timeTakenFloat
+  timeTaken_str = str(timeTaken)
+  timeTaken_split = timeTaken_str.split('.')
+  timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
+  aida.txtM('Rendered in:',f'{timeTakenShort} Seconds')
+
 def _preProcess(_project,_init_image,_scenes,_quality):
   #SAVE SETTING TO CSV
   import csv
