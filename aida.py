@@ -290,8 +290,8 @@ def draft(_scenes, _project, _style, _init_image):
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 1000
-    save_every: 1000
+    steps_per_scene: 750
+    save_every: 750
     width: 200
     cutouts: 230
     cut_pow: 2.7
