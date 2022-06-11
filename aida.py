@@ -23,7 +23,8 @@ from dirsync import sync
 from google.colab import drive
 #CONSOLE
 import IPython
-from IPython.display import Image, clear_output
+from IPython.display import Image
+from IPython.display import clear_output
 from rich.console import Console
 console = Console()
 import cv2
