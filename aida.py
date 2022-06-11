@@ -225,7 +225,7 @@ def test(_scenes,_project,_style,_init_image):
     _confLs.append(_yaml)
     f.close()
 #-----------------------------------------------------------------------------
-def draft(_scenes,_project,_style, ):
+def draft(_scenes,_project,_style,_init_image):
 #-----------------------------------------------------------------------------
   import imageio
   import csv
@@ -256,7 +256,7 @@ def draft(_scenes,_project,_style, ):
     _confLs.append(_yaml)
     f.close()
 #-------------------------------------------------------------------------------
-def merge(_imageSuperPath, _project, _scenes, _init_image)):
+def merge(_imageSuperPath, _project, _scenes, _init_image):
 #-----------------------------------------------------------------------------
   #GET FILE LIST OF UPSCALES IMAGES
   _imageSuperLs = []
@@ -285,7 +285,7 @@ def merge(_imageSuperPath, _project, _scenes, _init_image)):
   gradient_accumulation_steps: 2""")
   f.close()
 #-------------------------------------------------------------------------------
-def mergeTest(_imageSuperPath, _project, _scenes):
+def mergeTest(_imageSuperPath, _project, _scenes, _init_image):
 #-----------------------------------------------------------------------------
   #GET FILE LIST OF UPSCALES IMAGES
   _imageSuperLs = []
