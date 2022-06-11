@@ -187,15 +187,17 @@ def preProcess(_project,_init_image,_scenes,_quality,_imageOut):
 #-----------------------------------------------------------------------------
 def syncOut(
 #-----------------------------------------------------------------------------
-  _imageRender,
-  _imageOut
+  localPath,
+  localOut,
+  driveOut,
   ):
-  for root, dirs, files in os.walk(_imageRender):
+  mk(localOut)
+  for root, dirs, files in os.walk(localPath):
       for name in files:
           if name.endswith(".png"):
-              shutil.copy(os.path.join(root, name), _imageOut)
-  syncDir('/content/out/images','/mnt/drive/MyDrive/aida/out/images/raw')
-  syncDir('/content/out/txt2img/config','/mnt/drive/MyDrive/aida/out/images/config')
+              shutil.copy(os.path.join(root, name), localOut)
+
+  syncDir(localOut,driveOut)
 #-----------------------------------------------------------------------------
 def test(_scenes,_project,_style,_init_image):
 #-----------------------------------------------------------------------------
