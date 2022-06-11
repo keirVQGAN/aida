@@ -225,7 +225,7 @@ def test(_scenes,_project,_style,_init_image):
     _confLs.append(_yaml)
     f.close()
 #-----------------------------------------------------------------------------
-def draft(_scenes,_project,_style):
+def draft(_scenes,_project,_style, ):
 #-----------------------------------------------------------------------------
   import imageio
   import csv
@@ -246,8 +246,8 @@ def draft(_scenes,_project,_style):
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.8
-    steps_per_scene: 1500
-    save_every: 1500
+    steps_per_scene: 1000
+    save_every: 1000
     width: 200
     cutouts: 230
     cut_pow: 2.7
@@ -256,7 +256,7 @@ def draft(_scenes,_project,_style):
     _confLs.append(_yaml)
     f.close()
 #-------------------------------------------------------------------------------
-def merge(_imageSuperPath, _project, _scenes):
+def merge(_imageSuperPath, _project, _scenes, _init_image)):
 #-----------------------------------------------------------------------------
   #GET FILE LIST OF UPSCALES IMAGES
   _imageSuperLs = []
@@ -276,10 +276,10 @@ def merge(_imageSuperPath, _project, _scenes):
   scenes: {_scenes}
   file_namespace: {_project}_merge
   direct_image_prompts: {_imageOutStr}
-  steps_per_scene: 2000
-  save_every: 2000
+  steps_per_scene: 1500
+  save_every: 1500
   width: 200
-  cutouts: 200
+  cutouts: 230
   cut_pow: 2.8
   pixel_size: 3
   gradient_accumulation_steps: 2""")
