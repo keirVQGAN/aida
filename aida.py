@@ -14,7 +14,8 @@ import tarfile
 #DATA
 import re
 import pandas as pd
-import cv2
+import numpy as np
+import csv
 import time
 #PATHS
 from glob import glob
@@ -25,6 +26,8 @@ import IPython
 from IPython.display import Image, clear_output
 from rich.console import Console
 console = Console()
+import cv2
+import imageio
 #--------------------------------------------------------------------FUNCTIONS
 #CONSOLE
 #-----------------------------------------------------------------------------
