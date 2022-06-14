@@ -20,6 +20,7 @@ from rich.console import Console
 import imageio
 console = Console()
 import cv2
+import openai
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
