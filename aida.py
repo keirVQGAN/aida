@@ -260,10 +260,10 @@ def test(_scenes, _project, _style, _init_image):
     direct_image_prompts: ''
     direct_init_weight: 0.8
     steps_per_scene: 1250
-    save_every: 25
+    save_every: 1250
     width: 200
-    cutouts: 220
-    cut_pow: 2.7
+    cutouts: 120
+    cut_pow: 2.5
     pixel_size: 3
     gradient_accumulation_steps: 2""")
         _confLs.append(_yaml)
