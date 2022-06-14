@@ -20,7 +20,6 @@ from rich.console import Console
 import imageio
 console = Console()
 import cv2
-import openai
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
@@ -185,34 +184,6 @@ def clone():
     if sample_data == 1:
         shutil.rmtree('/content/sample_data')
 
-        
-#-------------------------------------------------------------------------------
-def parrot(model, prompt, temperature, max_tokens, top_p, best_of):
-#-------------------------------------------------------------------------------
-  response = openai.Completion.create(
-  model=model,
-  #engine="text-davinci-002",
-  prompt=prompt,
-  temperature=temperature,
-  max_tokens=max_tokens,
-  top_p=top_p,
-  best_of=best_of,
-  n=1,
-  frequency_penalty=0.8,
-  presence_penalty=0.8,
-  stop=["END"],
-  echo=False
-)
-  parrotOutMaster = pd.DataFrame(columns=['text', 'response'])
-
-  parrotOut = pd.DataFrame({
-      'text': [_prompt],
-      'response': [response['choices'][0]['text']]
-  })
-  parrotOut.to_csv('/content/drive/MyDrive/aida/out/txt/parrotOut.csv', mode='a', index=False, header=False)
-
-  return parrotOut
-
 
 # -----------------------------------------------------------------------------
 def preProcess(_project, _init_image, _scenes, _quality, _imageOut):
@@ -284,11 +255,11 @@ def test(_scenes, _project, _style, _init_image):
     scenes: {_scenes}
     init_image: {_init_image}
     file_namespace: {_project}_mask{_thresh}
-    scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
-    direct_image_prompts: {_style}:0.6
-    direct_init_weight: 1.2
+    scene_suffix: :1.4_[{maskPath}/{_project}_mask{_thresh}.jpg]
+    direct_image_prompts: ''
+    direct_init_weight: 0.8
     steps_per_scene: 1250
-    save_every: 1250
+    save_every: 25
     width: 200
     cutouts: 220
     cut_pow: 2.7
@@ -385,9 +356,10 @@ def mergeTest(_imageSuperPath, _project, _scenes, _init_image):
   scenes: {_scenes}
   file_namespace: {_project}_merge
   direct_image_prompts: {_imageOutStr}
-  direct_init_weight: 2.4
-  steps_per_scene: 2000
-  save_every: 2000
+  scene_suffix: ''
+  direct_init_weight: 2
+  steps_per_scene: 1000
+  save_every: 100
   width: 200
   cutouts: 200
   cut_pow: 2.7
