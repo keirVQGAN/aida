@@ -312,8 +312,6 @@ def test(_scenes, _project, _style, _init_image):
     scene_suffix: :1.4_[{maskPath}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: ''
     direct_init_weight: 0.8
-    steps_per_scene: 1250
-    save_every: 1250
     width: 200
     cutouts: 120
     cut_pow: 2.5
@@ -346,8 +344,6 @@ def draft(_scenes, _project, _style, _init_image):
     scene_suffix: :0.8_[/content/in/mask/{_project}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: {_style}:0.6
     direct_init_weight: 1.2
-    steps_per_scene: 750
-    save_every: 750
     width: 200
     cutouts: 230
     cut_pow: 2.7
