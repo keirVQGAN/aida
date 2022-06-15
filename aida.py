@@ -7,13 +7,15 @@ AiDa.common v0.9 | Yeti - June 2022
 # SYSTEM
 import os
 import os.path
-import shutil
-import tarfile
 # DATA
 import pandas as pd
-# PATHS
+# PATHS & FILES
 from dirsync import sync
+from distutils.dir_util import copy_tree
 from google.colab import drive
+import glob
+import shutil
+import tarfile
 # CONSOLE
 from IPython.display import clear_output
 from rich.console import Console
@@ -21,6 +23,8 @@ import imageio
 console = Console()
 import cv2
 import csv
+import time
+
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
@@ -155,6 +159,7 @@ def zip(filename, source):
 # -----------------------------------------------------------------------------
 def uzip(filename, target):
     # -----------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------
     my_tar = tarfile.open(filename)
     my_tar.extract(target)
     my_tar.close()
@@ -177,10 +182,10 @@ def clone():
     # -----------------------------------------------------------------------------
     sample_data = os.path.isdir('/content/sample_data')
     drive.mount('/mnt/drive')
-    sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync', create=True)
+    sync('/mnt/drive/MyDrive/aida/in', '/content/in', 'sync')
     os.makedirs('/content/out/', exist_ok="True")
     os.makedirs('/content/aida/txt2img', exist_ok="True")
-    sync('/content/in/config', '/content/out/txt2img/config', 'sync', create=True)
+    copy_tree('/content/in/config', '/content/out/txt2img/config')
     shutil.rmtree('/content/in/config')
     if sample_data == 1:
         shutil.rmtree('/content/sample_data')
@@ -220,20 +225,74 @@ def preProcess(_project, _init_image, _scenes, _quality, _imageOut):
     mk(_imageOut)
 
 
-# -----------------------------------------------------------------------------
-def syncOut(
-        # -----------------------------------------------------------------------------
-        localPath,
-        localOut,
-        driveOut,
-):
-    mk(localOut)
-    for root, dirs, files in os.walk(localPath):
-        for name in files:
-            if name.endswith(".png"):
-                shutil.copy(os.path.join(root, name), localOut)
+#-------------------------------------------------------------------
+def copyExt(
+#-------------------------------------------------------------------
+    ext,
+    src,
+    dest):
+  #-----------------------------------------------------------------
+    for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
+        new_path = os.path.join(dest, os.path.basename(file_path))
+        shutil.copy(file_path, new_path)
 
-    syncDir(localOut, driveOut)
+
+#-----------------------------------------------------------------
+def syncPost(
+#----------------------------------------------------------------- 
+    _imageRender,
+    _init_image,
+    _style,
+    _project,
+    _steps
+):
+#-----------------------------------------------------------------
+    timeSlug = time.strftime("%H_%M_%S")
+    _drivePath='/mnt/drive/MyDrive/aida'
+    _driveOut=f'{_drivePath}/out/{_project}/{timeSlug}'
+    _driveInPath=f'{_driveOut}/in/'
+    _driveOutPath=f'{_driveOut}/out/'
+    configPath='/content/out/txt2img/config'
+    maskPath=f'/content/in/mask/{_project}'
+    outFrames=f'{_driveOutPath}frames'
+    outFinal=f'{_driveOutPath}/final/'
+
+
+    outInit=f'{_driveInPath}/init/'
+    outStyle=f'{_driveInPath}/style'
+    outConfig=f'{_driveInPath}config/'
+    outMask=f'{_driveInPath}/mask/' 
+    inPathList = ['init','style','config/conf','mask',]
+    outPathList = ['frames','final','super']
+
+    os.makedirs(_driveOut, exist_ok="True")
+    
+    for items in inPathList:
+        path = os.path.join(_driveInPath, items)
+        os.makedirs(path, exist_ok="True")
+
+    for items in outPathList:
+        path = os.path.join(_driveOutPath, items)
+        os.makedirs(path, exist_ok="True")
+
+    #-----------------------------------------------------------------
+    #SYNC // IN
+    shutil.copy(_init_image, f'{_driveInPath}/init/')
+    shutil.copy(_style, f'{_driveInPath}/style/')
+
+    copy_tree(configPath, outConfig)
+    copy_tree(maskPath, outMask) 
+
+    # #-----------------------------------------------------------------
+    # #SYNC // OUT
+
+    _ext=f'*.png'
+    copyExt(_ext,_imageRender,outFrames)
+
+    _ext=f'*{_steps}.png'
+    copyExt(_ext,_imageRender,outFinal)
+
+    rm(_imageRender)
 
 
 # -----------------------------------------------------------------------------
