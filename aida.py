@@ -279,19 +279,13 @@ def syncPost(
     #SYNC // IN
     shutil.copy(_init_image, f'{_driveInPath}/init/')
     shutil.copy(_style, f'{_driveInPath}/style/')
-
     copy_tree(configPath, outConfig)
     copy_tree(maskPath, outMask) 
-
-    # #-----------------------------------------------------------------
     # #SYNC // OUT
-
     _ext=f'*.png'
     copyExt(_ext,_imageRender,outFrames)
-
     _ext=f'*{_steps}.png'
     copyExt(_ext,_imageRender,outFinal)
-
     rm(_imageRender)
 
 
