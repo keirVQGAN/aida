@@ -247,7 +247,7 @@ def syncPost(
     _steps
 ):
 #-----------------------------------------------------------------
-    timeSlug = time.strftime("%H_%M_%S")
+    timeSlug = time.strftime("%H_%M")
     _drivePath='/mnt/drive/MyDrive/aida'
     _driveOut=f'{_drivePath}/out/{_project}/{timeSlug}'
     _driveInPath=f'{_driveOut}/in/'
