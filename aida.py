@@ -212,7 +212,7 @@ def parrot(model, prompt, temperature, max_tokens, top_p, best_of, csv='/mnt/dri
   parrotOutMaster = pd.DataFrame(columns=['text', 'response'])
 
   parrotOut = pd.DataFrame({
-      'text': [_prompt],
+      'text': [prompt],
       'response': [response['choices'][0]['text']]
   })
   parrotOut.to_csv(csv, mode='a', index=False, header=False)
