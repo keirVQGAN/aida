@@ -193,7 +193,7 @@ def clone():
 
         
 #-------------------------------------------------------------------------------      
-def parrot(model, prompt, temperature, max_tokens, top_p, best_of):
+def parrot(model, prompt, temperature, max_tokens, top_p, best_of, csv='/mnt/drive/MyDrive/aida/out/yeti-txt/'):
 #-------------------------------------------------------------------------------
   response = openai.Completion.create(
   model=model,
@@ -215,7 +215,7 @@ def parrot(model, prompt, temperature, max_tokens, top_p, best_of):
       'text': [_prompt],
       'response': [response['choices'][0]['text']]
   })
-  parrotOut.to_csv('/content/drive/MyDrive/aida/out/txt/parrotOut.csv', mode='a', index=False, header=False)
+  parrotOut.to_csv(csv, mode='a', index=False, header=False)
 
   return parrotOut
         
