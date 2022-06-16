@@ -24,6 +24,7 @@ console = Console()
 import cv2
 import csv
 import time
+import openai
 
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
