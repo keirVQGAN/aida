@@ -190,7 +190,35 @@ def clone():
     if sample_data == 1:
         shutil.rmtree('/content/sample_data')
 
+        
+#-------------------------------------------------------------------------------      
+def parrot(model, prompt, temperature, max_tokens, top_p, best_of):
+#-------------------------------------------------------------------------------
+  response = openai.Completion.create(
+  model=model,
+  #engine="text-davinci-002",
+  prompt=prompt,
+  temperature=temperature,
+  max_tokens=max_tokens,
+  top_p=top_p,
+  best_of=best_of,
+  n=1,
+  frequency_penalty=0.8,
+  presence_penalty=0.8,
+  stop=["END"],
+  echo=False
+)
+  parrotOutMaster = pd.DataFrame(columns=['text', 'response'])
 
+  parrotOut = pd.DataFrame({
+      'text': [_prompt],
+      'response': [response['choices'][0]['text']]
+  })
+  parrotOut.to_csv('/content/drive/MyDrive/aida/out/txt/parrotOut.csv', mode='a', index=False, header=False)
+
+  return parrotOut
+        
+    
 # -----------------------------------------------------------------------------
 def preProcess(_project, _init_image, _scenes, _quality, _imageOut):
     # -----------------------------------------------------------------------------
