@@ -193,7 +193,7 @@ def clone():
 
         
 #-------------------------------------------------------------------------------      
-def parrot(model, prompt, temperature, max_tokens, top_p, best_of, csv='/mnt/drive/MyDrive/aida/out/yeti-txt/'):
+def parrot(model, prompt, temperature, max_tokens, top_p, best_of, csv='/content/in/csv/inParrot.csv'):
 #-------------------------------------------------------------------------------
   response = openai.Completion.create(
   model=model,
