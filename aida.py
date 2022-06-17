@@ -340,7 +340,7 @@ def test(_scenes, _project, _style, _init_image):
     file_namespace: {_project}_mask{_thresh}
     scene_suffix: :1.4_[{maskPath}/{_project}_mask{_thresh}.jpg]
     direct_image_prompts: ''
-    direct_init_weight: 0.5
+    direct_init_weight: 0.3
     width: 200
     cutouts: 120
     cut_pow: 2.7
