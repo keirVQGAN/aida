@@ -143,6 +143,18 @@ def ls2str(ls):
 
 
 # -----------------------------------------------------------------------------
+def cvs2str(file_name):
+    # -----------------------------------------------------------------------------
+    with open(file_name, 'r') as file_obj:
+        csv_reader = csv.DictReader(file_obj)
+        string = ''
+        for row in csv_reader:
+            if row['project_id'] == row['project_id']:
+                string += '{}\n'.format(row['project_id'])
+        return string
+
+
+# -----------------------------------------------------------------------------
 def name(file_path):
     # -----------------------------------------------------------------------------
     basename = os.path.basename(file_path)
