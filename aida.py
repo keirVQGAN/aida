@@ -25,6 +25,8 @@ import cv2
 import csv
 import time
 import openai
+from PIL import Image
+from PIL import ImageFile
 
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
