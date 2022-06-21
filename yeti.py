@@ -97,7 +97,7 @@ def timeTaken(start_time) :
     txtM ( '>> Complete: ' , f'{timeTakenShort} Seconds' )
 
 
-def yeti(init_image , quality, gpu) :
+def yeti(init_image , quality, gpu, conf) :
     #-------------------------------------------------------------------------------
     #MOUNT // Drive
 
@@ -202,7 +202,7 @@ def yeti(init_image , quality, gpu) :
     txtC('>> Project', project)
     txtC('>> Image', init_image)
     txtC('>> Quality', quality)
+    txtC('>>Configs',conf)
     txtY('>> CUDA GPU ', gpu[1])
-    
     
     return montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
