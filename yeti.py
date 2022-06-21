@@ -24,7 +24,6 @@ import math
 
 console = Console ( )
 
-
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
@@ -196,7 +195,7 @@ def yeti(init_image , quality, gpu, conf, start_time) :
     drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
 
     for thresh in range ( 20 , 231 , 20 ) :
-        maskPath = maskPathOut
+        maskPath = f'{maskPathOut}/{project}'
         img = cv2.imread ( init_image )
         os.makedirs ( maskPath , exist_ok = "True" )
         ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
