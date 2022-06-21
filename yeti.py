@@ -99,7 +99,7 @@ def timeTaken(start_time) :
 
 
 #-------------------------------------------------------------------------------
-def yeti(init_image , quality, gpu, conf, start_time) :
+def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     #MOUNT // Drive
 
@@ -166,7 +166,7 @@ def yeti(init_image , quality, gpu, conf, start_time) :
     init_name = os.path.splitext ( init_file ) [ 0 ]
     maskPath = maskPathOut
     confPath = confPathOut
-    csv_file = '/content/in/prompt/made_of.csv'
+    csv_file = f'{promptPathIn}/{csv}.csv'
     project = init_name
     df = pd.read_csv ( csv_file )
     col_names = list ( df.columns.values )
