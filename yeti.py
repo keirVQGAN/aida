@@ -59,11 +59,26 @@ def imagePath(path):
     """display each image in a path at 25% scale"""
     from IPython.display import Image, display
     for file in os.listdir(path):
-        if file.endswith(".jpg"):
-            yeti.txtH(file)
+        if file.endswith("*.jpg"):
+            txtH(file)
             display(Image(filename=os.path.join(path, file), width=100))
 
-   
+
+#-------------------------------------------------------------------------------
+def montage(path,outpath):
+  #-------------------------------------------------------------------------------
+  file_paths = []
+  montPathOut = outpath
+  for root, directories, files in os.walk(path):
+    for filename in files:
+      filepath = os.path.join(root, filename)
+      file_paths.append(filepath)
+      montPaths=" ".join(file_paths)
+      montSettings=f"""-label '%f' -font Helvetica -pointsize 20 -background '#000000' -fill 'gray' -define jpeg:size=300x300 -geometry 300x300+2+2 -auto-orient {montPaths} {montPathOut}"""
+  return montSettings, montPaths
+
+
+
 # -----------------------------------------------------------------------------
 def timeTaken(start_time):
     # -----------------------------------------------------------------------------
@@ -172,4 +187,4 @@ def yeti(init_image, quality):
 
   shutil.copy(init_image,initPathOut)
   
-  return driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths,project
+  return init_image,driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths,project
