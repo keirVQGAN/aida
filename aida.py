@@ -55,7 +55,7 @@ def paths():
   maskPathDrive=f'{drivePathIn}/mask'
   promptPathDrive=f'{drivePathIn}/prompt'
   #-------------------------------------------------------------------------------
-  projectPaths=[driveMount,localPathIn,localPath,configPathIn,initPathIn,stylePathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,ivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive]
+  projectPaths=[driveMount,localPathIn,localPath,configPathIn,initPathIn,stylePathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive]
   # ----------------------------------------------------------------------------
   return driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths
 
