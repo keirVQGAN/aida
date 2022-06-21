@@ -14,6 +14,8 @@ seaborn
 adjustText
 bunch
 matplotlib-label-lines
+imageio
+openai
 git+https://github.com/pytti-tools/AdaBins.git
 git+https://github.com/pytti-tools/GMA.git
 git+https://github.com/pytti-tools/taming-transformers.git
