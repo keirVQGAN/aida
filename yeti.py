@@ -19,6 +19,8 @@ from PIL import Image
 from PIL import ImageFile
 from IPython.display import clear_output
 from rich.console import Console
+from omegaconf import OmegaConf
+import math
 
 console = Console ( )
 
@@ -97,7 +99,7 @@ def timeTaken(start_time) :
     txtM ( '>> Complete: ' , f'{timeTakenShort} Seconds' )
 
 
-def yeti(init_image , quality, gpu, conf) :
+def yeti(init_image , quality, gpu, conf, start_time) :
     #-------------------------------------------------------------------------------
     #MOUNT // Drive
 
@@ -204,5 +206,7 @@ def yeti(init_image , quality, gpu, conf) :
     txtC('>> Quality', quality)
     txtC('>>Configs',conf)
     txtY('>> CUDA GPU ', gpu[1])
+    
+    timeTaken(start_time)
     
     return montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
