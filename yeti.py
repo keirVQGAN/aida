@@ -201,7 +201,6 @@ def yeti(init_image , quality, gpu, conf, start_time) :
         os.makedirs ( maskPath , exist_ok = "True" )
         ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
         imageio.imwrite ( f'{maskPath}/{project}_mask{thresh}.jpg' , img_binary )
-    settingsConsole()
     clear_output()
     txtC('>> Project', project)
     txtC('>> Image', init_image)
