@@ -19,6 +19,17 @@ from PIL import Image
 from PIL import ImageFile
 from IPython.display import clear_output
 
+# -----------------------------------------------------------------------------
+def timeTaken(start_time):
+    # -----------------------------------------------------------------------------
+    import time
+    timeTakenFloat = "%s seconds" % (time.time() - start_time)
+    timeTaken = timeTakenFloat
+    timeTaken_str = str(timeTaken)
+    timeTaken_split = timeTaken_str.split('.')
+    timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
+    txtM('>> Complete: ', f'{timeTakenShort} Seconds')
+
 def yeti(init_image, quality):
   #-------------------------------------------------------------------------------
   #MOUNT // Drive
