@@ -18,7 +18,8 @@ import time
 from PIL import Image
 from PIL import ImageFile
 from IPython.display import clear_output
-console=Console()
+from rich.console import Console
+console = Console()
 
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
