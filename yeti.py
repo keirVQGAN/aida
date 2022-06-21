@@ -1,4 +1,4 @@
-#@markdown <---------- Yeti // Functions
+  #@markdown <---------- Yeti // Functions
 from dirsync import sync
 import os
 import os.path
@@ -19,172 +19,190 @@ from PIL import Image
 from PIL import ImageFile
 from IPython.display import clear_output
 from rich.console import Console
-console = Console()
+
+console = Console ( )
+
 
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
-def txtH(action):
+def txtH(action) :
     # -------------------------------------------------------------------------
-    console.print(f"[bright_white]{action}[/bright_white]")
+    console.print ( f"[bright_white]{action}[/bright_white]" )
+
 
 # -----------------------------------------------------------------------------
-def txtL(action):
+def txtL(action) :
     # -------------------------------------------------------------------------
-    console.print(f"[r black]{action}[/r black]")
+    console.print ( f"[r black]{action}[/r black]" )
+
 
 # -----------------------------------------------------------------------------
-def txt(action, details):
+def txt(action , details) :
     # -------------------------------------------------------------------------
-    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
+    console.print ( f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]" )
+
 
 # -----------------------------------------------------------------------------
-def txtC(action, details):
+def txtC(action , details) :
     # -------------------------------------------------------------------------
-    console.print(f"[bright_cyan]{action}[/bright_cyan] > [r black]{details}[/r black]")
+    console.print ( f"[bright_cyan]{action}[/bright_cyan] > [r black]{details}[/r black]" )
+
 
 # -----------------------------------------------------------------------------
-def txtM(action, details):
+def txtM(action , details) :
     # -------------------------------------------------------------------------
-    console.print(f"[bright_magenta]{action}[/bright_magenta] > [r black]{details}[/r black]")
+    console.print ( f"[bright_magenta]{action}[/bright_magenta] > [r black]{details}[/r black]" )
+
 
 # -----------------------------------------------------------------------------
-def txtY(action, details):
+def txtY(action , details) :
     # -------------------------------------------------------------------------
-    console.print(f"[bright_yellow]{action}[/bright_yellow] > [r black]{details}[/r black]")
+    console.print ( f"[bright_yellow]{action}[/bright_yellow] > [r black]{details}[/r black]" )
+
 
 # -----------------------------------------------------------------------------
-def imagePath(path):
+def imagePath(path) :
     # -------------------------------------------------------------------------
     """display each image in a path at 25% scale"""
-    from IPython.display import Image, display
-    for file in os.listdir(path):
-        if file.endswith("*.jpg"):
-            txtH(file)
-            display(Image(filename=os.path.join(path, file), width=100))
+    from IPython.display import Image , display
+    for file in os.listdir ( path ) :
+        if file.endswith ( "*.jpg" ) :
+            txtH ( file )
+            display ( Image ( filename = os.path.join ( path , file ) , width = 100 ) )
 
 
 #-------------------------------------------------------------------------------
-def montage(path,outpath):
-  #-------------------------------------------------------------------------------
-  file_paths = []
-  montPathOut = outpath
-  for root, directories, files in os.walk(path):
-    for filename in files:
-      filepath = os.path.join(root, filename)
-      file_paths.append(filepath)
-      montPaths=" ".join(file_paths)
-      montSettings=f"""-label '%f' -font Helvetica -pointsize 20 -background '#000000' -fill 'gray' -define jpeg:size=300x300 -geometry 300x300+2+2 -auto-orient {montPaths} {montPathOut}"""
-  return montSettings, montPaths
-
+def montage(path , outpath) :
+    #-------------------------------------------------------------------------------
+    file_paths = [ ]
+    for root , directories , files in os.walk ( path ) :
+        for filename in files :
+            filepath = os.path.join ( root , filename )
+            file_paths.append ( filepath )
+    montPaths = " ".join ( file_paths )
+    montSettings = f"""-label '%f' -font Helvetica -pointsize 20 -background '#000000' -fill 'gray' -define jpeg:size=300x300 -geometry 300x300+2+2 -auto-orient {montPaths} {outpath}"""
+    return montSettings , montPaths
 
 
 # -----------------------------------------------------------------------------
-def timeTaken(start_time):
+def timeTaken(start_time) :
     # -----------------------------------------------------------------------------
     import time
-    timeTakenFloat = "%s seconds" % (time.time() - start_time)
+    timeTakenFloat = "%s seconds" % (time.time ( ) - start_time)
     timeTaken = timeTakenFloat
-    timeTaken_str = str(timeTaken)
-    timeTaken_split = timeTaken_str.split('.')
-    timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
-    txtM('>> Complete: ', f'{timeTakenShort} Seconds')
+    timeTaken_str = str ( timeTaken )
+    timeTaken_split = timeTaken_str.split ( '.' )
+    timeTakenShort = timeTaken_split [ 0 ] + '' + timeTaken_split [ 1 ] [ :0 ]
+    txtM ( '>> Complete: ' , f'{timeTakenShort} Seconds' )
 
-def yeti(init_image, quality):
-  #-------------------------------------------------------------------------------
-  #MOUNT // Drive
-  driveMount='/mnt/drive'
-  drive.mount('/mnt/drive')
-  #-------------------------------------------------------------------------------
-  #VARIABLES // Master
-  localPath='/content'
-  localPathIn = f'{localPath}/in'
-  localPathAida = f'{localPath}/aida'
-  localPathTxt2Img = f'{localPathAida}/txt2img'
-  #-------------------------------------------------------------------------------
-  configPathIn = f'{localPathIn}/config'
-  initPathIn=f'{localPathIn}/init'
-  stylePathIn=f'{localPathIn}/style'
-  promptPathIn=f'{localPathIn}/prompt'
-  #-------------------------------------------------------------------------------
-  localPathOut = f'{localPath}/out'
-  #-------------------------------------------------------------------------------
-  configPathOut = f'{localPathOut}/txt2img/config'
-  confPathOut = f'{configPathOut}/conf'
-  initPathOut=f'{localPathOut}/init'
-  stylePathOut=f'{localPathOut}/style'
-  maskPathOut=f'{localPathOut}/mask'
-  localPathTxt2ImgOut = f'{localPathOut}/txt2img'
-  localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
-  #-------------------------------------------------------------------------------
-  drivePath=f'{driveMount}/MyDrive/aida'
-  drivePathIn = f'{drivePath}/in'
-  drivePathOut = f'{drivePath}/out'
-  #-------------------------------------------------------------------------------
-  configPathDrive = f'{drivePathIn}/config'
-  initPathDrive=f'{drivePathIn}/init'
-  stylePathDrive=f'{drivePathIn}/style'
-  maskPathDrive=f'{drivePathIn}/mask'
-  promptPathDrive=f'{drivePathIn}/prompt'
-  #-------------------------------------------------------------------------------
-  projectPaths=[driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive]
-  # ----------------------------------------------------------------------------
 
-  for path in projectPaths:
-    if not os.path.exists(path):
-        os.makedirs(path)
+def yeti(init_image , quality, gpu) :
+    #-------------------------------------------------------------------------------
+    #MOUNT // Drive
 
-  sample_data='/content/sample_data'
-  if os.path.isdir(sample_data):
-    shutil.rmtree(sample_data)
+    driveMount = '/mnt/drive'
+    drive.mount ( '/mnt/drive' )
+    #-------------------------------------------------------------------------------
+    #VARIABLES // Master
+    localPath = '/content'
+    localPathIn = f'{localPath}/in'
+    localPathAida = f'{localPath}/aida'
+    localPathTxt2Img = f'{localPathAida}/txt2img'
+    #-------------------------------------------------------------------------------
+    configPathIn = f'{localPathIn}/config'
+    initPathIn = f'{localPathIn}/init'
+    stylePathIn = f'{localPathIn}/style'
+    promptPathIn = f'{localPathIn}/prompt'
+    #-------------------------------------------------------------------------------
+    localPathOut = f'{localPath}/out'
+    #-------------------------------------------------------------------------------
+    configPathOut = f'{localPathOut}/txt2img/config'
+    confPathOut = f'{configPathOut}/conf'
+    initPathOut = f'{localPathOut}/init'
+    stylePathOut = f'{localPathOut}/style'
+    maskPathOut = f'{localPathOut}/mask'
+    montPathOut = f'{localPathOut}/contact'
+    localPathTxt2ImgOut = f'{localPathOut}/txt2img'
+    localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
+    #-------------------------------------------------------------------------------
+    drivePath = f'{driveMount}/MyDrive/aida'
+    drivePathIn = f'{drivePath}/in'
+    drivePathOut = f'{drivePath}/out'
+    #-------------------------------------------------------------------------------
+    configPathDrive = f'{drivePathIn}/config'
+    initPathDrive = f'{drivePathIn}/init'
+    stylePathDrive = f'{drivePathIn}/style'
+    maskPathDrive = f'{drivePathIn}/mask'
+    promptPathDrive = f'{drivePathIn}/prompt'
+    #-------------------------------------------------------------------------------
+    projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
+                     configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun ,
+                     localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut ,
+                     drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive ,
+                     maskPathDrive , promptPathDrive ]
+    # ----------------------------------------------------------------------------
+    #CREATE // Folders
+    for path in projectPaths :
+        if not os.path.exists ( path ) :
+            os.makedirs ( path )
 
-  #SYNC
-  sync(drivePathIn, localPathIn, 'sync')
-  sync(configPathIn,configPathOut, 'sync')
+    sample_data = '/content/sample_data'
+    if os.path.isdir ( sample_data ) :
+        shutil.rmtree ( sample_data )
 
-  
-# ------------------------------------------------------------------------------
-  # ----------------------------------------------------------------------------
-  timeSlug = time.strftime("%H_%M")
-  timeSlugConsole = time.strftime("%H:%M")
-  init_file = os.path.basename(init_image)
-  init_name = os.path.splitext(init_file)[0]
-  maskPath=maskPathOut
-  confPath=confPathOut
-  csv_file='/content/in/prompt/made_of.csv'
-  project=init_name
-  df = pd.read_csv(csv_file)
-  col_names = list(df.columns.values)
-  for col in col_names:
-    globals()[col] = []
-    for value in df[col]:
-        globals()[col].append(value)
-  for names,preffixs,scenes,suffixs,styles in zip(name,preffix,scene,suffix,style):
-      confPath='/content/out/txt2img/config/conf/'
-      if not os.path.exists(confPath):
-        os.makedirs(confPath)
-      yaml=f'{confPath}{project}-{names}.yaml'
-      f = open(yaml, 'w')
-      f.write("""#@package _global \n""")
-      f = open(yaml, "a")
-      f.write(f"filenamespace: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}")
-  
-  init_file = os.path.basename(init_image)
-  init_name = os.path.splitext(init_file)[0]
-  project=init_name
-  drivePathOutFrames = f'{drivePathOut}/{project}/{timeSlug}/frames'
-  drivePathOutFinal = f'{drivePathOut}/{project}/{timeSlug}/final'
-  drivePathOutSuper = f'{drivePathOut}/{project}/{timeSlug}/super'
-  drivePathOutMerged = f'{drivePathOut}/{project}/{timeSlug}/merged'
-  drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
+    # ------------------------------------------------------------------------------
+    #SYNC // drive/in local/in
+    sync ( drivePathIn , localPathIn , 'sync' )
+    sync ( configPathIn , configPathOut , 'sync' )
 
-  for thresh in range(20, 231, 20):
+    # ------------------------------------------------------------------------------
+    #WRITE Config //
+    timeSlug = time.strftime ( "%H_%M" )
+    timeSlugConsole = time.strftime ( "%H:%M" )
+    init_file = os.path.basename ( init_image )
+    init_name = os.path.splitext ( init_file ) [ 0 ]
     maskPath = maskPathOut
-    img = cv2.imread(init_image)
-    os.makedirs(maskPath, exist_ok="True")
-    ret, img_binary = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)
-    imageio.imwrite(f'{maskPath}/{project}_mask{thresh}.jpg', img_binary)
+    confPath = confPathOut
+    csv_file = '/content/in/prompt/made_of.csv'
+    project = init_name
+    df = pd.read_csv ( csv_file )
+    col_names = list ( df.columns.values )
+    for col in col_names :
+        globals ( ) [ col ] = [ ]
+        for value in df [ col ] :
+            globals ( ) [ col ].append ( value )
+    for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
+        confPath = '/content/out/txt2img/config/conf/'
+        if not os.path.exists ( confPath ) :
+            os.makedirs ( confPath )
+        yaml = f'{confPath}{project}-{names}.yaml'
+        f = open ( yaml , 'w' )
+        f.write ( """#@package _global \n""" )
+        f = open ( yaml , "a" )
+        f.write (
+            f"filenamespace: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
 
-  shutil.copy(init_image,initPathOut)
-  
-  return init_image,driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths,project
+    init_file = os.path.basename ( init_image )
+    init_name = os.path.splitext ( init_file ) [ 0 ]
+    project = init_name
+    drivePathOutFrames = f'{drivePathOut}/{project}/{timeSlug}/frames'
+    drivePathOutFinal = f'{drivePathOut}/{project}/{timeSlug}/final'
+    drivePathOutSuper = f'{drivePathOut}/{project}/{timeSlug}/super'
+    drivePathOutMerged = f'{drivePathOut}/{project}/{timeSlug}/merged'
+    drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
+
+    for thresh in range ( 20 , 231 , 20 ) :
+        maskPath = maskPathOut
+        img = cv2.imread ( init_image )
+        os.makedirs ( maskPath , exist_ok = "True" )
+        ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
+        imageio.imwrite ( f'{maskPath}/{project}_mask{thresh}.jpg' , img_binary )
+    clear_output()
+    txtC('>> Project', project)
+    txtC('>> Image', init_image)
+    txtC('>> Quality', quality)
+    txtY('>> CUDA GPU ', gpu[1])
+    
+    
+    return montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
