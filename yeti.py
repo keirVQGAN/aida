@@ -48,19 +48,19 @@ def txt(action , details) :
 # -----------------------------------------------------------------------------
 def txtC(action , details) :
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_cyan]{action}[/bright_cyan] > [r black]{details}[/r black]" )
+    console.print ( f"[bright_cyan]{action}[/bright_cyan] >> [r black]{details}[/r black]" )
 
 
 # -----------------------------------------------------------------------------
 def txtM(action , details) :
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_magenta]{action}[/bright_magenta] > [r black]{details}[/r black]" )
+    console.print ( f"[bright_magenta]{action}[/bright_magenta] >> [r black]{details}[/r black]" )
 
 
 # -----------------------------------------------------------------------------
 def txtY(action , details) :
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_yellow]{action}[/bright_yellow] > [r black]{details}[/r black]" )
+    console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
 
 
 # -----------------------------------------------------------------------------
@@ -96,29 +96,30 @@ def timeTaken(start_time) :
     timeTaken_str = str ( timeTaken )
     timeTaken_split = timeTaken_str.split ( '.' )
     timeTakenShort = timeTaken_split [ 0 ] + '' + timeTaken_split [ 1 ] [ :0 ]
-    txtM ( '>> Complete: ' , f'{timeTakenShort} Seconds' )
+    txtM ( '>> Complete:' , f'{timeTakenShort} Seconds' )
 
 
+#-------------------------------------------------------------------------------
 def yeti(init_image , quality, gpu, conf, start_time) :
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     #MOUNT // Drive
 
     driveMount = '/mnt/drive'
     drive.mount ( '/mnt/drive' )
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     #VARIABLES // Master
     localPath = '/content'
     localPathIn = f'{localPath}/in'
     localPathAida = f'{localPath}/aida'
     localPathTxt2Img = f'{localPathAida}/txt2img'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     configPathIn = f'{localPathIn}/config'
     initPathIn = f'{localPathIn}/init'
     stylePathIn = f'{localPathIn}/style'
     promptPathIn = f'{localPathIn}/prompt'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     localPathOut = f'{localPath}/out'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     configPathOut = f'{localPathOut}/txt2img/config'
     confPathOut = f'{configPathOut}/conf'
     initPathOut = f'{localPathOut}/init'
@@ -127,23 +128,23 @@ def yeti(init_image , quality, gpu, conf, start_time) :
     montPathOut = f'{localPathOut}/contact'
     localPathTxt2ImgOut = f'{localPathOut}/txt2img'
     localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     configPathDrive = f'{drivePathIn}/config'
     initPathDrive = f'{drivePathIn}/init'
     stylePathDrive = f'{drivePathIn}/style'
     maskPathDrive = f'{drivePathIn}/mask'
     promptPathDrive = f'{drivePathIn}/prompt'
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
                      configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun ,
                      localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut ,
                      drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive ,
                      maskPathDrive , promptPathDrive ]
-    # ----------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #CREATE // Folders
     for path in projectPaths :
         if not os.path.exists ( path ) :
@@ -153,12 +154,12 @@ def yeti(init_image , quality, gpu, conf, start_time) :
     if os.path.isdir ( sample_data ) :
         shutil.rmtree ( sample_data )
 
-    # ------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #SYNC // drive/in local/in
     sync ( drivePathIn , localPathIn , 'sync' )
     sync ( configPathIn , configPathOut , 'sync' )
 
-    # ------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #WRITE Config //
     timeSlug = time.strftime ( "%H_%M" )
     timeSlugConsole = time.strftime ( "%H:%M" )
@@ -200,13 +201,14 @@ def yeti(init_image , quality, gpu, conf, start_time) :
         os.makedirs ( maskPath , exist_ok = "True" )
         ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
         imageio.imwrite ( f'{maskPath}/{project}_mask{thresh}.jpg' , img_binary )
+    settingsConsole()
     clear_output()
     txtC('>> Project', project)
     txtC('>> Image', init_image)
     txtC('>> Quality', quality)
-    txtC('>>Configs',conf)
+    txtC('>> Configs',conf)
     txtY('>> CUDA GPU ', gpu[1])
-    
-    timeTaken(start_time)
-    
-    return montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
+    setupTime=timeTaken(start_time)
+    # --------------------------------------------------------------------------
+    return setupTime, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
+    # --------------------------------------------------------------------------
