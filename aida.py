@@ -1,4 +1,5 @@
 #@markdown <---------- Yeti // Functions
+from dirsync import sync
 import os
 import os.path
 import time
@@ -18,7 +19,7 @@ from PIL import Image
 from PIL import ImageFile
 from IPython.display import clear_output
 
-def paths():
+def yeti(init_image, quality):
   #-------------------------------------------------------------------------------
   #MOUNT // Drive
   driveMount='/mnt/drive'
@@ -57,9 +58,7 @@ def paths():
   #-------------------------------------------------------------------------------
   projectPaths=[driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive]
   # ----------------------------------------------------------------------------
-  return driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths
 
-def syncYeti():
   for path in projectPaths:
     if not os.path.exists(path):
         os.makedirs(path)
@@ -72,8 +71,8 @@ def syncYeti():
   sync(drivePathIn, localPathIn, 'sync')
   sync(configPathIn,configPathOut, 'sync')
 
+  
 # ------------------------------------------------------------------------------
-def setupYeti(init_image, quality):
   # ----------------------------------------------------------------------------
   timeSlug = time.strftime("%H_%M")
   timeSlugConsole = time.strftime("%H:%M")
@@ -117,4 +116,4 @@ def setupYeti(init_image, quality):
 
   shutil.copy(init_image,initPathOut)
   
-  return project
+  return driveMount,localPathIn,localPathAida,localPathTxt2Img,localPath,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,localPathMultirun,localPathTxt2ImgOut,confPathOut,configPathOut,initPathOut,stylePathOut,maskPathOut,drivePath,drivePathIn,drivePathOut,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive,promptPathDrive,projectPaths,project
