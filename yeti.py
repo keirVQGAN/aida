@@ -17,7 +17,7 @@ import re
 import time
 from PIL import Image
 from PIL import ImageFile
-from IPython.display import clear_output
+from IPython.display import display, Image
 from rich.console import Console
 from omegaconf import OmegaConf
 import math
@@ -81,6 +81,7 @@ def montage(path , outpath) :
         for filename in files :
             filepath = os.path.join ( root , filename )
             file_paths.append ( filepath )
+            sorted(file_paths)
     montPaths = " ".join ( file_paths )
     montSettings = f"""-label '%f' -font Helvetica -pointsize 20 -background '#000000' -fill 'gray' -define jpeg:size=300x300 -geometry 300x300+2+2 -auto-orient {montPaths} {outpath}"""
     return montSettings , montPaths
