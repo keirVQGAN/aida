@@ -20,7 +20,6 @@ from PIL import Image
 from PIL import ImageFile
 from IPython.display import display, Image
 from rich.console import Console
-from omegaconf import OmegaConf
 import math
 
 
