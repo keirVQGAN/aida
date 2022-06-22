@@ -1,10 +1,11 @@
   #@markdown <---------- Yeti // Functions
-from dirsync import sync
+
 import os
 import os.path
 import time
 import pandas as pd
 from distutils.dir_util import copy_tree
+from dirsync import sync
 from google.colab import drive
 import glob
 import shutil
