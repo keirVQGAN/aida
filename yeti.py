@@ -193,7 +193,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
             os.makedirs ( confPath )
         yaml = f'{confPath}{project}-{names}.yaml'
         f = open ( yaml , 'w' )
-        f.write ( """ #@package _global_ \n""" )
+        f.write ( """# @package _global_ \n""" )
         f = open ( yaml , "a" )
         f.write (
             f"filename_space: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
