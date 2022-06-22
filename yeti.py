@@ -168,7 +168,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #SYNC // drive/in local/in
     sync ( drivePathIn , localPathIn , 'sync' )
     sync ( configPathIn , configPathOut , 'sync' )
-
+    sync ( initPathIn, initPathOut , 'sync' )
     # --------------------------------------------------------------------------
     #WRITE Config //
     maskPath = maskPathOut
