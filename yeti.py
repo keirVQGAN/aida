@@ -128,8 +128,8 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     confPathOut = f'{configPathOut}/conf'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
-    maskPathOut = f'{localPathOut}/{project}/mask'
-    montPathOut = f'{localPathOut}/contact/{project}'
+    maskPathOut = f'{localPathOut}/mask'
+    montPathOut = f'{localPathOut}/contact'
     montPathMask = f'{montPathOut}/masks_contact.png'
     localPathTxt2ImgOut = f'{localPathOut}/txt2img'
     localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
@@ -193,11 +193,10 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
             f"filenamespace: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
 
     for thresh in range ( 20 , 231 , 20 ) :
-        maskPath = f'{maskPathOut}/{project}'
         img = cv2.imread ( init_image )
-        os.makedirs ( maskPath , exist_ok = "True" )
+        os.makedirs ( maskPathOut , exist_ok = "True" )
         ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
-        imageio.imwrite ( f'{maskPath}/{project}-{thresh}_mask.jpg' , img_binary )
+        imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
     clear_output()
     txtC('>> Project', project)
     txtC('>> Image', init_image)
