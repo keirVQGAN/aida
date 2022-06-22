@@ -22,6 +22,7 @@ from rich.console import Console
 from omegaconf import OmegaConf
 import math
 
+
 console = Console ( )
 
 # --------------------------------------------------------------------FUNCTIONS
@@ -148,6 +149,11 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     stylePathDrive = f'{drivePathIn}/style'
     maskPathDrive = f'{drivePathIn}/mask'
     promptPathDrive = f'{drivePathIn}/prompt'
+    model_default = None
+    random_seed = None
+    seed = random_seed
+    all  = math.inf
+    derive_from_init_aspect_ratio = -1
     #---------------------------------------------------------------------------
     projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
                      configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun ,
@@ -205,5 +211,5 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths
+    return model_default , random_seed , seed , all , derive_from_init_aspect_ratio, timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths
     # --------------------------------------------------------------------------
