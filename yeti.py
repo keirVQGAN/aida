@@ -130,7 +130,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     stylePathOut = f'{localPathOut}/style'
     maskPathOut = f'{localPathOut}/mask'
     montPathOut = f'{localPathOut}/contact'
-    montPathMask = f'{montPathOut}/masks_contact.png'
+    montPathMask = f'{montPathOut}/{project}-masks_contact.png'
     localPathTxt2ImgOut = f'{localPathOut}/txt2img'
     localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
     #---------------------------------------------------------------------------
