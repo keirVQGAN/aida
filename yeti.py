@@ -103,11 +103,15 @@ def timeTaken(start_time) :
 def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     #MOUNT // Drive
-
     driveMount = '/mnt/drive'
-    drive.mount ( '/mnt/drive' )
-    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------   
     #VARIABLES // Master
+    init_file = os.path.basename ( init_image )
+    init_name = os.path.splitext ( init_file ) [ 0 ]
+    project = init_name
+    timeSlug = time.strftime ( "%H_%M" )
+    timeSlugConsole = time.strftime ( "%H:%M" )
+    #---------------------------------------------------------------------------
     localPath = '/content'
     localPathIn = f'{localPath}/in'
     localPathAida = f'{localPath}/aida'
@@ -124,14 +128,20 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     confPathOut = f'{configPathOut}/conf'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
-    maskPathOut = f'{localPathOut}/mask'
-    montPathOut = f'{localPathOut}/contact'
+    maskPathOut = f'{localPathOut}/{project}/mask'
+    montPathOut = f'{localPathOut}/contact/{project}'
+    montPathMask = f'{montPathOut}//{project}/{project}_masks.png'
     localPathTxt2ImgOut = f'{localPathOut}/txt2img'
     localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
     #---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
+    drivePathOutFrames = f'{drivePathOut}/{project}/{timeSlug}/frames'
+    drivePathOutFinal = f'{drivePathOut}/{project}/{timeSlug}/final'
+    drivePathOutSuper = f'{drivePathOut}/{project}/{timeSlug}/super'
+    drivePathOutMerged = f'{drivePathOut}/{project}/{timeSlug}/merged'
+    drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
     #---------------------------------------------------------------------------
     configPathDrive = f'{drivePathIn}/config'
     initPathDrive = f'{drivePathIn}/init'
@@ -161,10 +171,6 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
 
     # --------------------------------------------------------------------------
     #WRITE Config //
-    timeSlug = time.strftime ( "%H_%M" )
-    timeSlugConsole = time.strftime ( "%H:%M" )
-    init_file = os.path.basename ( init_image )
-    init_name = os.path.splitext ( init_file ) [ 0 ]
     maskPath = maskPathOut
     confPath = confPathOut
     csv_file = f'{promptPathIn}/{csv}.csv'
@@ -186,15 +192,6 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
         f.write (
             f"filenamespace: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
 
-    init_file = os.path.basename ( init_image )
-    init_name = os.path.splitext ( init_file ) [ 0 ]
-    project = init_name
-    drivePathOutFrames = f'{drivePathOut}/{project}/{timeSlug}/frames'
-    drivePathOutFinal = f'{drivePathOut}/{project}/{timeSlug}/final'
-    drivePathOutSuper = f'{drivePathOut}/{project}/{timeSlug}/super'
-    drivePathOutMerged = f'{drivePathOut}/{project}/{timeSlug}/merged'
-    drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
-
     for thresh in range ( 20 , 231 , 20 ) :
         maskPath = f'{maskPathOut}/{project}'
         img = cv2.imread ( init_image )
@@ -209,5 +206,5 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return setupTime, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths , project
+    return timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths
     # --------------------------------------------------------------------------
