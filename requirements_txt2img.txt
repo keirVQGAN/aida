@@ -23,9 +23,3 @@ torch>=1.7
 torchvision
 tqdm
 transformers
-
-git+https://github.com/openai/CLIP.git
-git+https://github.com/pytti-tools/AdaBins.git
-git+https://github.com/pytti-tools/GMA.git
-git+https://github.com/pytti-tools/pytti-core.git
-git+https://github.com/pytti-tools/taming-transformers.git
