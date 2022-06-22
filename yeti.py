@@ -63,24 +63,13 @@ def txtY(action , details) :
     console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
 
 
-    
-################################################################################
-# RENDER
-# ------------------------------------------------------------------------------
-def render(conf) :
-# ------------------------------------------------------------------------------
-    renderSettings=f'-m pytti.workhorse --multirun conf={conf}'
-    return renderSettings
-  
-  
- 
 # -----------------------------------------------------------------------------
 def imagePath(path) :
     # -------------------------------------------------------------------------
     """display each image in a path at 25% scale"""
     from IPython.display import Image , display
     for file in os.listdir ( path ) :
-        if file.endswith ( "*.png" ) :
+        if file.endswith ( "*.jpg" ) :
             txtH ( file )
             display ( Image ( filename = os.path.join ( path , file ) , width = 100 ) )
 
@@ -204,7 +193,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
             os.makedirs ( confPath )
         yaml = f'{confPath}{project}-{names}.yaml'
         f = open ( yaml , 'w' )
-        f.write ( """# @package _global_ \n""" )
+        f.write ( """# @package _global_\n""" )
         f = open ( yaml , "a" )
         f.write (
             f"filename_space: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
