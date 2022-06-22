@@ -130,7 +130,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     stylePathOut = f'{localPathOut}/style'
     maskPathOut = f'{localPathOut}/{project}/mask'
     montPathOut = f'{localPathOut}/contact/{project}'
-    montPathMask = f'{montPathOut}//{project}/{project}_masks.png'
+    montPathMask = f'{montPathOut}/masks_contact.png'
     localPathTxt2ImgOut = f'{localPathOut}/txt2img'
     localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
     #---------------------------------------------------------------------------
@@ -168,7 +168,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #SYNC // drive/in local/in
     sync ( drivePathIn , localPathIn , 'sync' )
     sync ( configPathIn , configPathOut , 'sync' )
-    sync ( initPathIn, initPathOut , 'sync' )
+    shutil.copy(init_image, f'{initPathOut}/{init_file}')
     # --------------------------------------------------------------------------
     #WRITE Config //
     maskPath = maskPathOut
