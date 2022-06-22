@@ -63,13 +63,24 @@ def txtY(action , details) :
     console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
 
 
+    
+################################################################################
+# RENDER
+# ------------------------------------------------------------------------------
+def render(conf) :
+# ------------------------------------------------------------------------------
+    renderSettings=f'-m pytti.workhorse --multirun conf={conf}'
+    return renderSettings
+  
+  
+ 
 # -----------------------------------------------------------------------------
 def imagePath(path) :
     # -------------------------------------------------------------------------
     """display each image in a path at 25% scale"""
     from IPython.display import Image , display
     for file in os.listdir ( path ) :
-        if file.endswith ( "*.jpg" ) :
+        if file.endswith ( "*.png" ) :
             txtH ( file )
             display ( Image ( filename = os.path.join ( path , file ) , width = 100 ) )
 
