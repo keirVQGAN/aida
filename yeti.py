@@ -189,15 +189,15 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
         for value in df [ col ] :
             globals ( ) [ col ].append ( value )
     for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
-        confPath = '/content/out/txt2img/config/conf/'
+        confPath = configPathIn
         if not os.path.exists ( confPath ) :
             os.makedirs ( confPath )
-        yaml = f'{confPath}{project}-{names}.yaml'
+        yaml = f'{confPath}/{names}.yaml'
         f = open ( yaml , 'w' )
         f.write ( """# @package _global_\n""" )
         f = open ( yaml , "a" )
         f.write (
-            f"filename_space: {project}-{names}\ninit_image: {init_image}\nscene_preffix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nquality: {quality}" )
+            f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\n")
 
     for thresh in range ( 20 , 231 , 20 ) :
         img = cv2.imread ( init_image )
