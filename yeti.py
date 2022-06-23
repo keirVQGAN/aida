@@ -148,7 +148,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     initPathDrive = f'{drivePathIn}/init'
     stylePathDrive = f'{drivePathIn}/style'
     maskPathDrive = f'{drivePathIn}/mask'
-
+    promptPathDrive = f'{drivePathIn}/prompt'
     #---------------------------------------------------------------------------
     projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
                      configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun ,
