@@ -64,17 +64,13 @@ def txtY(action , details) :
 
     
 # -----------------------------------------------------------------------------    
-def csv2str(csv_file):
+def csv2ls(csv_file):
   # ---------------------------------------------------------------------------
-    """A function that converts the first column of a csv file to a comma delimitated string with each value in quotes."""
-    with open(csv_file, 'r') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        csv_list = list(csv_reader)
-        str_list = []
-        for row in csv_list:
-            str_list.append(row[0])
-        str_list = '"' + '","'.join(str_list) + '"'
-        return str_list
+    with open(csv_file, 'r', encoding='utf-8-sig') as f:
+        reader = csv.reader(f)
+        list1 = [rows[0] for rows in reader]
+
+    return list1[1:]
       
       
 # -----------------------------------------------------------------------------
