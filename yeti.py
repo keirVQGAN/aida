@@ -183,7 +183,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
         confPath = configPathIn
         if not os.path.exists ( confPath ) :
             os.makedirs ( confPath )
-        yaml = f'{confPath}/{names}.yaml'
+        yaml = f'{confPathOut}/{names}.yaml'
         f = open ( yaml , 'w' )
         f.write ( """# @package _global_\n""" )
         f = open ( yaml , "a" )
