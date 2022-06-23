@@ -181,8 +181,8 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
             globals ( ) [ col ].append ( value )
     for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
         confPath = configPathIn
-        if not os.path.exists ( confPath ) :
-            os.makedirs ( confPath )
+        if not os.path.exists ( confPathOut ) :
+            os.makedirs ( confPathOut )
         yaml = f'{confPathOut}/{names}.yaml'
         f = open ( yaml , 'w' )
         f.write ( """# @package _global_\n""" )
