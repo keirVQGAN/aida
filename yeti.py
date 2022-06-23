@@ -125,15 +125,13 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     localPathOut = f'{localPath}/out'
     #---------------------------------------------------------------------------
-    configPathOut = f'{localPathOut}/txt2img/config'
+    configPathOut = f'{localPathOut}/config'
     confPathOut = f'{configPathOut}/conf'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
     maskPathOut = f'{localPathOut}/mask'
     montPathOut = f'{localPathOut}/contact'
     montPathMask = f'{montPathOut}/{project}-masks_contact.png'
-    localPathTxt2ImgOut = f'{localPathOut}/txt2img'
-    localPathMultirun = f'{localPathTxt2ImgOut}/multirun'
     #---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'
     drivePathIn = f'{drivePath}/in'
@@ -148,13 +146,12 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     initPathDrive = f'{drivePathIn}/init'
     stylePathDrive = f'{drivePathIn}/style'
     maskPathDrive = f'{drivePathIn}/mask'
-    promptPathDrive = f'{drivePathIn}/prompt'
     #---------------------------------------------------------------------------
     projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
-                     configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun ,
-                     localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut ,
+                     configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , 
+                     confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut ,
                      drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive ,
-                     maskPathDrive , promptPathDrive ]
+                     maskPathDrive ]
     # --------------------------------------------------------------------------
     #CREATE // Folders
     for path in projectPaths :
@@ -206,5 +203,5 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , promptPathDrive , projectPaths
+    return timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , localPathMultirun , localPathTxt2ImgOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , projectPaths
     # --------------------------------------------------------------------------
