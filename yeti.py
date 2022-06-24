@@ -144,7 +144,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     stylePathIn = f'{localPathIn}/style'
     promptPathIn = f'{localPathIn}/prompt'
     #---------------------------------------------------------------------------
-    localPathOut = f'{localPath}/out'
+    localPathOut = f'{localPath}/out/{project}'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
     maskPathOut = f'{localPathOut}/mask'
@@ -173,7 +173,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     #FOLDERS // Make local and drive OUT folders
     #---------------------------------------------------------------------------  
-    otherPathsOut=[localPathIn,driveOutProject,confPath]
+    otherPathsOut=[localPathIn,driveOutProject,confPath,maskPathOut]
     for path in otherPathsOut:
       mk(path)
     for path in (localPathsOut):
