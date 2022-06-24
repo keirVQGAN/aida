@@ -156,13 +156,9 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     initPathDrive = f'{drivePathIn}/init'
     stylePathDrive = f'{drivePathIn}/style'
     maskPathDrive = f'{drivePathIn}/mask'
-    #---------------------------------------------------------------------------
-    projectPaths = [ montPathOut , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath ,
-                     configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , 
-                     confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut ,
-                     drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive ,
-                     maskPathDrive ]
-    # --------------------------------------------------------------------------
+    #----------------------------
+    # -------------------------------------------------------------------------------------------------------------------------
+    projectPaths = [driveMount,init_file,init_name,project,timeSlug,timeSlugConsole,localPath,localPathIn,localPathAida,localPathTxt2Img,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,montPathMask,drivePath,drivePathIn,drivePathOut,drivePathOutFrames,drivePathOutFinal,drivePathOutSuper,drivePathOutMerged,drivePathOutSettings,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive]
     #CREATE // Folders
     for path in projectPaths :
         if not os.path.exists ( path ) :
@@ -213,5 +209,13 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return timeSlug, timeSlugConsole, project, setupTime, montPathMask, montPathOut , init_image , driveMount , localPathIn , localPathAida , localPathTxt2Img , localPath , configPathIn , initPathIn , stylePathIn , promptPathIn , localPathOut , confPathOut , configPathOut , initPathOut , stylePathOut , maskPathOut , drivePath , drivePathIn , drivePathOut , configPathDrive , initPathDrive , stylePathDrive , maskPathDrive , projectPaths
+    return timeSlug,timeSlugConsole, \
+        init_file,init_name,project, \
+        localPath,localPathIn,localPathAida, \
+        configPathIn,initPathIn,stylePathIn,promptPathIn, \
+        localPathOut,configPathOut,confPathOut,initPathOut,stylePathOut,maskPathOut, \
+        montPathOut,montPathMask, \
+        drivePath,drivePathIn,drivePathOut,drivePathOutFrames,drivePathOutFinal, \
+        drivePathOutSuper,drivePathOutMerged,drivePathOutSettings,configPathDrive, \
+        initPathDrive,stylePathDrive,maskPathDrive
     # --------------------------------------------------------------------------
