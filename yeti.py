@@ -158,8 +158,9 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     driveOutProject = f'{drivePathOut}/{project}/{timeSlug}'
     #---------------------------------------------------------------------------
     configPath = f'{localPath}/config/'
+    confPath = f'{configPath}/conf'
     configPathIn = f'{localPathIn}/config'
-    confPathIn = f'{configPathIn}/config'
+    confPathIn = f'{configPathIn}/conf'
     configPathOut = f'{localPathOut}/config'
     confPathOut = f'{configPathOut}/conf'
     #---------------------------------------------------------------------------
