@@ -169,7 +169,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     montFileFinal = f'{montPathOut}/final-contact_{project}.png'
     montFileSuper = f'{montPathOut}/super-contact_{project}.png'
     #---------------------------------------------------------------------------
-    localPathsOut=['init','style','prompt','frames','final','super','config']
+    localPathsOut=['config','contact','init','prompt','frames','final','style','super']
     #---------------------------------------------------------------------------
     #FOLDERS // Make local and drive OUT folders
     #---------------------------------------------------------------------------  
