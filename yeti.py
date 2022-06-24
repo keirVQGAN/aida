@@ -210,6 +210,6 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
     return montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
-        configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
+        configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
         confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
