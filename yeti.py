@@ -212,11 +212,6 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
         ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
         imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
     clear_output()
-    txtC('>> Project', project)
-    txtC('>> Image', init_image)
-    txtC('>> Quality', quality)
-    txtC('>> Configs',conf)
-    txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
     return init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
