@@ -173,7 +173,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     #FOLDERS // Make local and drive OUT folders
     #---------------------------------------------------------------------------  
-    otherPathsOut=[driveOutProject,confPath,localPathIn]
+    otherPathsOut=[localPathIn,driveOutProject,confPath]
     for path in otherPathsOut:
       mk(path)
     for path in (localPathsOut):
@@ -185,7 +185,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     # --------------------------------------------------------------------------
     #SYNC // drive/in local/in
     sync(drivePathIn,localPathIn,'sync')
-    shutil.copy(initFile,initPathOut)
+    shutil.copy(init_image,initPathOut)
     # --------------------------------------------------------------------------
     #WRITE Config //
     # maskPath = maskPathOut
