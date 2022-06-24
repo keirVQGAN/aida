@@ -126,7 +126,7 @@ def timeTaken(start_time) :
 
 
 #-------------------------------------------------------------------------------
-def yeti(init_image , quality, gpu, conf, start_time, csv) :
+def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     #---------------------------------------------------------------------------   
     #VARIABLES // Master
     #---------------------------------------------------------------------------  
@@ -140,6 +140,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     driveMount = '/mnt/drive'
     #---------------------------------------------------------------------------
     localPathIn = f'{localPath}/in'
+    imagesOut = f'{localPath}/images_out'
     initPathIn = f'{localPathIn}/init'
     stylePathIn = f'{localPathIn}/style'
     promptPathIn = f'{localPathIn}/prompt'
@@ -147,7 +148,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     localPathOut = f'{localPath}/out/{project}'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
-    maskPathOut = f'{localPathOut}/mask/'
+    maskPathOut = f'{localPathOut}/mask'
     framesPathOut = f'{localPathOut}/frames'
     finalPathOut = f'{localPathOut}/final'
     superPathOut = f'{localPathOut}/super'
@@ -171,6 +172,10 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #---------------------------------------------------------------------------
     localPathsOut=['config','contact','init','prompt','frames','final','style','super']
     #---------------------------------------------------------------------------
+    threshMasked=[]
+    for i in threshMasks:
+      threshMasked.append(f'{maskPathOut}/{project}-{i}_mask.jpg')
+    
     #FOLDERS // Make local and drive OUT folders
     #---------------------------------------------------------------------------  
     otherPathsOut=[localPathIn,driveOutProject,confPath,maskPathOut]
@@ -215,7 +220,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     clear_output()
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
+    return imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
         configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
         confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
