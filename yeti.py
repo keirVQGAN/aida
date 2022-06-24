@@ -173,6 +173,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     #FOLDERS // Make local and drive OUT folders
     #---------------------------------------------------------------------------  
     mk(driveOutProject)
+    mk(localPathOut)
     for path in (localPathsOut):
       mk(f'{localPathIn}/{path}')
     #CLEAN // Folders
