@@ -61,11 +61,21 @@ def txtM(action , details) :
 def txtY(action , details) :
     # -------------------------------------------------------------------------
     console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
-  
+
+
+# -----------------------------------------------------------------------------
+def conSettings(project,init_image,quality,conf,gpu):
+  # ---------------------------------------------------------------------------- 
+    txtC('>> Project', project)
+    txtC('>> Image', init_image)
+    txtC('>> Quality', quality)
+    txtC('>> Configs',conf)
+    txtY('>> CUDA GPU ', gpu[1])
+
 
 # -----------------------------------------------------------------------------    
 def csv2ls(csv_file):
-    # ---------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     with open(csv_file, 'r', encoding='utf-8-sig') as f:
         reader = csv.reader(f)
         list1 = [rows[0] for rows in reader]
@@ -74,7 +84,7 @@ def csv2ls(csv_file):
       
 # -----------------------------------------------------------------------------
 def mk(path):
-    # -----------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     if not os.path.exists (path):
       os.makedirs (path)
 
@@ -91,7 +101,7 @@ def imagePath(path) :
 
 #-------------------------------------------------------------------------------
 def montage(path , outpath) :
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     file_paths = [ ]
     for root , directories , files in os.walk ( path ) :
         for filename in files :
@@ -209,7 +219,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
+    return init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
         configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
         confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
