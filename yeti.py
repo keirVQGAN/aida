@@ -147,7 +147,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     localPathOut = f'{localPath}/out/{project}'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
-    maskPathOut = f'{localPathOut}/mask'
+    maskPathOut = f'{localPathOut}/mask/'
     framesPathOut = f'{localPathOut}/frames'
     finalPathOut = f'{localPathOut}/final'
     superPathOut = f'{localPathOut}/super'
