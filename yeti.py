@@ -175,7 +175,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     mk(driveOutProject)
     mk(localPathOut)
     for path in (localPathsOut):
-      mk(f'{localPathIn}/{path}')
+      mk(f'{localPathOut}/{path}')
     #CLEAN // Folders
     sample_data = '/content/sample_data'
     if os.path.isdir(sample_data):
@@ -183,7 +183,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     # --------------------------------------------------------------------------
     #SYNC // drive/in local/in
     sync(drivePathIn,localPathIn,'sync')
-    shutil.copy(init_image,initPathOut)
+    shutil.copy(initFile,initPathOut)
     # --------------------------------------------------------------------------
     #WRITE Config //
     # maskPath = maskPathOut
