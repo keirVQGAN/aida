@@ -61,18 +61,23 @@ def txtM(action , details) :
 def txtY(action , details) :
     # -------------------------------------------------------------------------
     console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
+  
 
-    
 # -----------------------------------------------------------------------------    
 def csv2ls(csv_file):
-  # ---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     with open(csv_file, 'r', encoding='utf-8-sig') as f:
         reader = csv.reader(f)
         list1 = [rows[0] for rows in reader]
 
     return list1[1:]
       
-      
+# -----------------------------------------------------------------------------
+def mk(path):
+    # -----------------------------------------------------------------------------
+    if not os.path.exists (path):
+      os.makedirs (path)
+
 # -----------------------------------------------------------------------------
 def imagePath(path) :
     # -------------------------------------------------------------------------
@@ -94,7 +99,7 @@ def montage(path , outpath) :
             file_paths.append ( filepath )
             sorted(file_paths)
     montPaths = " ".join ( file_paths )
-    montSettings = f"""-label '%f' -font Helvetica -pointsize 20 -background '#000000' -fill 'gray' -define jpeg:size=300x300 -geometry 300x300+2+2 -auto-orient {montPaths} {outpath}"""
+    montSettings = f"""-label '%f' -font Helvetica -pointsize 12 -background '#000000' -fill 'gray' -define jpeg:size=175x175 -geometry 175x175+2+2 -auto-orient {montPaths} {outpath}"""
     return montSettings , montPaths
 
 
@@ -112,71 +117,66 @@ def timeTaken(start_time) :
 
 #-------------------------------------------------------------------------------
 def yeti(init_image , quality, gpu, conf, start_time, csv) :
-    #---------------------------------------------------------------------------
-    #MOUNT // Drive
-    driveMount = '/mnt/drive'
     #---------------------------------------------------------------------------   
     #VARIABLES // Master
-    init_file = os.path.basename ( init_image )
-    init_name = os.path.splitext ( init_file ) [ 0 ]
+    #---------------------------------------------------------------------------  
+    timeSlug = time.strftime("%H_%M")
+    timeSlugConsole = time.strftime("%H:%M")
+    init_file = os.path.basename(init_image)
+    init_name = os.path.splitext(init_file)[0]
+    #---------------------------------------------------------------------------
     project = init_name
-    timeSlug = time.strftime ( "%H_%M" )
-    timeSlugConsole = time.strftime ( "%H:%M" )
-    #---------------------------------------------------------------------------
     localPath = '/content'
-    localPathIn = f'{localPath}/in'
-    localPathAida = f'{localPath}/aida'
-    localPathTxt2Img = f'{localPathAida}/txt2img'
+    driveMount = '/mnt/drive'
     #---------------------------------------------------------------------------
-    configPathIn = f'{localPathIn}/config'
+    localPathIn = f'{localPath}/in'
     initPathIn = f'{localPathIn}/init'
     stylePathIn = f'{localPathIn}/style'
     promptPathIn = f'{localPathIn}/prompt'
     #---------------------------------------------------------------------------
     localPathOut = f'{localPath}/out'
-    #---------------------------------------------------------------------------
-    configPathOut = f'{localPathOut}/config'
-    confPathOut = f'{configPathOut}/conf'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
     maskPathOut = f'{localPathOut}/mask'
-    montPathOut = f'{localPathOut}/contact'
-    montPathMask = f'{montPathOut}/{project}-masks_contact.png'
+    framesPathOut = f'{localPathOut}/frames'
+    finalPathOut = f'{localPathOut}/final'
+    superPathOut = f'{localPathOut}/super'
     #---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
-    drivePathOutFrames = f'{drivePathOut}/{project}/{timeSlug}/frames'
-    drivePathOutFinal = f'{drivePathOut}/{project}/{timeSlug}/final'
-    drivePathOutSuper = f'{drivePathOut}/{project}/{timeSlug}/super'
-    drivePathOutMerged = f'{drivePathOut}/{project}/{timeSlug}/merged'
-    drivePathOutSettings = f'{drivePathOut}/{project}/{timeSlug}/settings'
+    driveOutProject = f'{drivePathOut}/{project}/{timeSlug}'
     #---------------------------------------------------------------------------
-    configPathDrive = f'{drivePathIn}/config'
-    initPathDrive = f'{drivePathIn}/init'
-    stylePathDrive = f'{drivePathIn}/style'
-    maskPathDrive = f'{drivePathIn}/mask'
-    #----------------------------
-    # -------------------------------------------------------------------------------------------------------------------------
-    projectPaths = [driveMount,init_file,init_name,project,timeSlug,timeSlugConsole,localPath,localPathIn,localPathAida,localPathTxt2Img,configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,montPathMask,drivePath,drivePathIn,drivePathOut,drivePathOutFrames,drivePathOutFinal,drivePathOutSuper,drivePathOutMerged,drivePathOutSettings,configPathDrive,initPathDrive,stylePathDrive,maskPathDrive]
-    #CREATE // Folders
-    for path in projectPaths :
-        if not os.path.exists ( path ) :
-            os.makedirs ( path )
-
+    configPath = f'{localPath}/config/'
+    configPathIn = f'{localPathIn}/config'
+    confPathIn = f'{configPathIn}/config'
+    configPathOut = f'{localPathOut}/config'
+    confPathOut = f'{configPathOut}/conf'
+    #---------------------------------------------------------------------------
+    montPathOut = f'{localPathOut}/contact'
+    montFileMask = f'{montPathOut}/mask-contact_{project}.png'
+    montFileFinal = f'{montPathOut}/final-contact_{project}.png'
+    montFileSuper = f'{montPathOut}/super-contact_{project}.png'
+    #---------------------------------------------------------------------------
+    localPathsOut=['init','style','prompt','frames','final','super','config']
+    #---------------------------------------------------------------------------
+    #FOLDERS // Make local and drive OUT folders
+    #---------------------------------------------------------------------------  
+    mk(driveOutProject)
+    for path in (localPathsOut):
+      mk(f'{localPathIn}/{path}')
+    #CLEAN // Folders
     sample_data = '/content/sample_data'
-    if os.path.isdir ( sample_data ) :
-        shutil.rmtree ( sample_data )
-
+    if os.path.isdir(sample_data):
+        shutil.rmtree(sample_data)
     # --------------------------------------------------------------------------
     #SYNC // drive/in local/in
-    sync ( drivePathIn , localPathIn , 'sync' )
-    sync ( configPathIn , configPathOut , 'sync' )
-    shutil.copy(init_image, f'{initPathOut}/{init_file}')
+    sync(drivePathIn,localPathIn,'sync')
+    shutil.copy(init_image,initPathOut)
     # --------------------------------------------------------------------------
     #WRITE Config //
-    maskPath = maskPathOut
-    confPath = confPathOut
+    # maskPath = maskPathOut
+    # confPath = confPathOut
     csv_file = f'{promptPathIn}/{csv}.csv'
     project = init_name
     df = pd.read_csv ( csv_file )
@@ -209,13 +209,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv) :
     txtY('>> CUDA GPU ', gpu[1])
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return timeSlug,timeSlugConsole, \
-        init_file,init_name,project, \
-        localPath,localPathIn,localPathAida, \
-        configPathIn,initPathIn,stylePathIn,promptPathIn, \
-        localPathOut,configPathOut,confPathOut,initPathOut,stylePathOut,maskPathOut, \
-        montPathOut,montPathMask, \
-        drivePath,drivePathIn,drivePathOut,drivePathOutFrames,drivePathOutFinal, \
-        drivePathOutSuper,drivePathOutMerged,drivePathOutSettings,configPathDrive, \
-        initPathDrive,stylePathDrive,maskPathDrive
+    return montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
+        configPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
+        confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
