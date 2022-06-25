@@ -220,16 +220,16 @@ def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
     if quality == 'test':
         _width = 200
         _cut_outs = 120
-        _cut_pow = 2.8
+        _cut_pow = 2.7
         _pixel_size = 3
-        _direct_init_weight = 1.2
+        _direct_init_weight = 1.5
         _gradient_accumulation_steps = 2
-        _steps_per_scene = 1250
-        _save_every = 50
+        _steps_per_scene = 2000
+        _save_every = 100
         _display_every = 50
         _clear_every = 100
         _scene_suffix = ':1'
-        _display_scale = 0.75
+        _display_scale = 1
 
         finalStep = _steps_per_scene / _save_every
         finalStep = int(finalStep)
@@ -251,7 +251,7 @@ def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
             f.write("""# @package _global_\n""")
             f = open(yaml, "a")
             f.write(
-                f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
+                f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes} \nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
         for thresh in range(20, 231, 20):
             img = cv2.imread(init_image)
             os.makedirs(maskPathOut, exist_ok="True")
