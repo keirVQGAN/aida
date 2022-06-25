@@ -124,6 +124,16 @@ def timeTaken(start_time) :
     timeTakenShort = timeTaken_split [ 0 ] + '' + timeTaken_split [ 1 ] [ :0 ]
     txtM ( '>> Complete:' , f'{timeTakenShort} Seconds' )
 
+#-------------------------------------------------------------------
+def copyExt(
+#-------------------------------------------------------------------
+    ext,
+    src,
+    dest):
+  #-----------------------------------------------------------------
+    for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
+        new_path = os.path.join(dest, os.path.basename(file_path))
+        shutil.copy(file_path, new_path)
 
 #-------------------------------------------------------------------------------
 def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
