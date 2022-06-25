@@ -135,6 +135,7 @@ def copyExt(
         new_path = os.path.join(dest, os.path.basename(file_path))
         shutil.copy(file_path, new_path)
 
+
 #-------------------------------------------------------------------------------
 def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     #---------------------------------------------------------------------------   
@@ -206,6 +207,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     #SYNC // drive/in local/in
     sync(drivePathIn,localPathIn,'sync')
     shutil.copy(init_image,initPathOut)
+    
     # --------------------------------------------------------------------------
     #WRITE Config //
     if quality=='test':
@@ -215,8 +217,8 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
       _pixel_size=3
       _direct_init_weight=1
       _gradient_accumulation_steps=1
-      _steps_per_scene=250
-      _save_every=250
+      _steps_per_scene=25
+      _save_every=25
       _display_every=25
       _clear_every=50
       _scene_suffix=':1'
@@ -245,8 +247,10 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
           ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
           imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
     
+    sync(configPathOut,configPath,'sync')
     clear_output()
     setupTime=timeTaken(start_time)
+    
     # --------------------------------------------------------------------------
     return CONFIG_BASE_PATH,CONFIG_DEFAULTS,null,true,false,imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
         configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
