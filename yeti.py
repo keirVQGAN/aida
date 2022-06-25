@@ -193,21 +193,21 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     shutil.copy(init_image,initPathOut)
     # --------------------------------------------------------------------------
     #WRITE Config //
-if quality=='test':
-    _width=200
-    _cutouts=120
-    _cut_pow=2.5
-    _pixel_size=3
-    _direct_init_weight=1
-    _gradient_accumulation_steps=1
-    _steps_per_scene=250
-    _save_every=250
-    _display_every=25
-    _clear_every=50
-    _scene_suffix=':1'
-    _display_scale=1
+    if quality=='test':
+      _width=200
+      _cutouts=120
+      _cut_pow=2.5
+      _pixel_size=3
+      _direct_init_weight=1
+      _gradient_accumulation_steps=1
+      _steps_per_scene=250
+      _save_every=250
+      _display_every=25
+      _clear_every=50
+      _scene_suffix=':1'
+      _display_scale=1
 
-    csv_file = f'{promptPathIn}/{csv}.csv'
+      csv_file = f'{promptPathIn}/{csv}.csv'
       project = init_name
       df = pd.read_csv ( csv_file )
       col_names = list ( df.columns.values )
