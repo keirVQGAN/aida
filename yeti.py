@@ -184,6 +184,7 @@ def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
     # ---------------------------------------------------------------------------
     montPathOut = f'{localPathOut}/contact'
     montFileMask = f'{montPathOut}/mask-contact_{project}.png'
+    montFileFrames = f'{montPathOut}/frames-contact_{project}.png'
     montFileFinal = f'{montPathOut}/final-contact_{project}.png'
     montFileSuper = f'{montPathOut}/super-contact_{project}.png'
     # ---------------------------------------------------------------------------
@@ -262,5 +263,5 @@ def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
     setupTime = timeTaken(start_time)
 
     # --------------------------------------------------------------------------
-    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, false, finalPathOut, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileMask, montPathOut, null, project, promptPathIn, stylePathIn, stylePathOut, threshMasked, timeSlug, timeSlugConsole, true
+    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, false, finalPathOut, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileFrames, montFileMask, montPathOut, null, project, promptPathIn, stylePathIn, stylePathOut, threshMasked, timeSlug, timeSlugConsole, true
     # --------------------------------------------------------------------------
