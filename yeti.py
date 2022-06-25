@@ -217,12 +217,16 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
       _pixel_size=3
       _direct_init_weight=1
       _gradient_accumulation_steps=1
-      _steps_per_scene=25
+      _steps_per_scene=250
       _save_every=25
       _display_every=25
       _clear_every=50
       _scene_suffix=':1'
       _display_scale=1
+
+
+      finalStep=_steps_per_scene/_save_every
+      finalStep=int(finalStep)
 
       csv_file = f'{promptPathIn}/{csv}.csv'
       project = init_name
@@ -252,7 +256,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     setupTime=timeTaken(start_time)
     
     # --------------------------------------------------------------------------
-    return CONFIG_BASE_PATH,CONFIG_DEFAULTS,null,true,false,imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
+    return finalPathOut,finalStep,CONFIG_BASE_PATH,CONFIG_DEFAULTS,null,true,false,imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
         configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
         confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
