@@ -193,30 +193,43 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     shutil.copy(init_image,initPathOut)
     # --------------------------------------------------------------------------
     #WRITE Config //
-    # maskPath = maskPathOut
-    # confPath = confPathOut
-    csv_file = f'{promptPathIn}/{csv}.csv'
-    project = init_name
-    df = pd.read_csv ( csv_file )
-    col_names = list ( df.columns.values )
-    for col in col_names :
-        globals ( ) [ col ] = [ ]
-        for value in df [ col ] :
-            globals ( ) [ col ].append ( value )
-    for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
-        confPath = confPathIn
-        yaml = f'{confPathIn }/{names}.yaml'
-        f = open ( yaml , 'w' )
-        f.write ( """# @package _global_\n""" )
-        f = open ( yaml , "a" )
-        f.write (
-            f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\n")
+if quality=='test':
+    _width=200
+    _cutouts=120
+    _cut_pow=2.5
+    _pixel_size=3
+    _direct_init_weight=1
+    _gradient_accumulation_steps=1
+    _steps_per_scene=250
+    _save_every=250
+    _display_every=25
+    _clear_every=50
+    _scene_suffix=':1'
+    _display_scale=1
 
-    for thresh in range ( 20 , 231 , 20 ) :
-        img = cv2.imread ( init_image )
-        os.makedirs ( maskPathOut , exist_ok = "True" )
-        ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
-        imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
+    csv_file = f'{promptPathIn}/{csv}.csv'
+      project = init_name
+      df = pd.read_csv ( csv_file )
+      col_names = list ( df.columns.values )
+      for col in col_names :
+          globals ( ) [ col ] = [ ]
+          for value in df [ col ] :
+              globals ( ) [ col ].append ( value )
+      for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
+          confPath = configPathIn
+          if not os.path.exists ( confPathOut ) :
+              os.makedirs ( confPathOut )
+          yaml = f'{confPathOut}/{names}.yaml'
+          f = open ( yaml , 'w' )
+          f.write ( """# @package _global_\n""" )
+          f = open ( yaml , "a" )
+          f.write (f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nwidth: {_width}\ncutouts: {_cutOuts}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}direct_init_weight: {direct_init_weight}\ngradient_accumulation_steps: {gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
+      for thresh in range ( 20 , 231 , 20 ) :
+          img = cv2.imread ( init_image )
+          os.makedirs ( maskPathOut , exist_ok = "True" )
+          ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
+          imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
+    
     clear_output()
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
