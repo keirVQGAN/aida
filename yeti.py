@@ -3,6 +3,7 @@ import csv
 import glob
 import os
 import os.path
+import glob
 import shutil
 import time
 import cv2
@@ -127,6 +128,18 @@ def copyExt(
     for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
         new_path = os.path.join(dest, os.path.basename(file_path))
         shutil.copy(file_path, new_path)
+
+
+# -------------------------------------------------------------------
+def moveExt(
+        # -------------------------------------------------------------------
+        ext,
+        src,
+        dest):
+    # -----------------------------------------------------------------
+    for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
+        new_path = os.path.join(dest, os.path.basename(file_path))
+        shutil.move(file_path, new_path)
 
 
 # -------------------------------------------------------------------------------
