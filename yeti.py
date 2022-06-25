@@ -256,7 +256,5 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     setupTime=timeTaken(start_time)
     
     # --------------------------------------------------------------------------
-    return finalPathOut,finalStep,CONFIG_BASE_PATH,CONFIG_DEFAULTS,null,true,false,imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
-        configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
-        confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
+    return CONFIG_BASE_PATH,CONFIG_DEFAULTS,confPath,confPathIn,confPathOut,configPath,configPathIn,configPathOut,drivePath,drivePathIn,drivePathOut,false,finalPathOut,finalStep,framesPathOut,imagesOut,initPathIn,initPathOut,init_file,init_image,init_name,localPath,localPathIn,localPathOut,maskPathOut,montFileFinal,montFileMask,montPathOut,null,project,promptPathIn,stylePathIn,stylePathOut,threshMasked,timeSlug,timeSlugConsole,true
     # --------------------------------------------------------------------------
