@@ -220,16 +220,16 @@ def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
     if quality == 'test':
         _width = 200
         _cut_outs = 120
-        _cut_pow = 2.5
+        _cut_pow = 2.8
         _pixel_size = 3
-        _direct_init_weight = 1
-        _gradient_accumulation_steps = 1
-        _steps_per_scene = 250
-        _save_every = 25
-        _display_every = 25
-        _clear_every = 50
+        _direct_init_weight = 1.2
+        _gradient_accumulation_steps = 2
+        _steps_per_scene = 1250
+        _save_every = 50
+        _display_every = 50
+        _clear_every = 100
         _scene_suffix = ':1'
-        _display_scale = 1
+        _display_scale = 0.75
 
         finalStep = _steps_per_scene / _save_every
         finalStep = int(finalStep)
