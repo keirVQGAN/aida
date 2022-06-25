@@ -223,7 +223,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
           f = open ( yaml , 'w' )
           f.write ( """# @package _global_\n""" )
           f = open ( yaml , "a" )
-          f.write (f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nscene_suffix: {suffixs}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
+          f.write (f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
       for thresh in range ( 20 , 231 , 20 ) :
           img = cv2.imread ( init_image )
           os.makedirs ( maskPathOut , exist_ok = "True" )
