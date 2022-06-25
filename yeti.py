@@ -180,6 +180,11 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     montFileFinal = f'{montPathOut}/final-contact_{project}.png'
     montFileSuper = f'{montPathOut}/super-contact_{project}.png'
     #---------------------------------------------------------------------------
+    CONFIG_BASE_PATH = "config"
+    CONFIG_DEFAULTS = "default.yaml"
+    null=None
+    true=True
+    false=False
     localPathsOut=['config','contact','init','prompt','frames','final','style','super']
     #---------------------------------------------------------------------------
     threshMasked=[]
@@ -243,7 +248,7 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     clear_output()
     setupTime=timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
+    return CONFIG_BASE_PATH,CONFIG_DEFAULTS,null,true,false,imagesOut,framesPathOut, threshMasked,configPath,confPath,init_image,montFileMask,timeSlug,timeSlugConsole,init_file,init_name,project,localPath,localPathIn, \
         configPathIn,confPathIn,initPathIn,stylePathIn,promptPathIn,localPathOut,configPathOut,\
         confPathOut,initPathOut,stylePathOut,maskPathOut,montPathOut,drivePath,drivePathIn,drivePathOut
     # --------------------------------------------------------------------------
