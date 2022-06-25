@@ -1,75 +1,65 @@
-  #@markdown <---------- Yeti // Functions
-
+# Yeti // Functions
+import csv
+import glob
 import os
 import os.path
-import time
-import pandas as pd
-from distutils.dir_util import copy_tree
-from dirsync import sync
-from google.colab import drive
-import glob
 import shutil
-import tarfile
-from IPython.display import clear_output
-import imageio
-import cv2
-import csv
-import re
 import time
-from PIL import Image
-from PIL import ImageFile
-from IPython.display import display, Image
+import cv2
+import imageio
+import pandas as pd
+from IPython.display import clear_output
+from dirsync import sync
 from rich.console import Console
-import math
 
+console = Console()
 
-console = Console ( )
 
 # --------------------------------------------------------------------FUNCTIONS
 # CONSOLE
 # -----------------------------------------------------------------------------
-def txtH(action) :
+def txtH(action):
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_white]{action}[/bright_white]" )
+    console.print(f"[bright_white]{action}[/bright_white]")
 
 
 # -----------------------------------------------------------------------------
-def txtL(action) :
+def txtL(action):
     # -------------------------------------------------------------------------
-    console.print ( f"[r black]{action}[/r black]" )
+    console.print(f"[r black]{action}[/r black]")
 
 
 # -----------------------------------------------------------------------------
-def txt(action , details) :
+def txt(action, details):
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]" )
+    console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
 
 
 # -----------------------------------------------------------------------------
-def txtC(action , details) :
+def txtC(action, details):
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_cyan]{action}[/bright_cyan] >> [r black]{details}[/r black]" )
+    console.print(f"[bright_cyan]{action}[/bright_cyan] >> [r black]{details}[/r black]")
 
 
 # -----------------------------------------------------------------------------
-def txtM(action , details) :
+def txtM(action, details):
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_magenta]{action}[/bright_magenta] >> [r black]{details}[/r black]" )
+    console.print(f"[bright_magenta]{action}[/bright_magenta] >> [r black]{details}[/r black]")
 
 
 # -----------------------------------------------------------------------------
-def txtY(action , details) :
+def txtY(action, details):
     # -------------------------------------------------------------------------
-    console.print ( f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]" )
+    console.print(f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]")
 
 
 # -----------------------------------------------------------------------------
-def conSettings(project,init_image,quality,conf,gpu):
-  # ---------------------------------------------------------------------------- 
+def conSettings(project, init_image, quality, conf, gpu):
+    # ---------------------------------------------------------------------------- 
     txtC('>> Project', project)
     txtC('>> Image', init_image)
     txtC('>> Quality', quality)
-    txtC('>> Configs',conf)
+    txtC('>> Configs', conf)
     txtY('>> CUDA GPU ', gpu[1])
 
 
@@ -81,81 +71,84 @@ def csv2ls(csv_file):
         list1 = [rows[0] for rows in reader]
 
     return list1[1:]
-      
+
+
 # -----------------------------------------------------------------------------
 def mk(path):
     # --------------------------------------------------------------------------
-    if not os.path.exists (path):
-      os.makedirs (path)
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 
 # -----------------------------------------------------------------------------
-def imagePath(path) :
+def imagePath(path):
     # -------------------------------------------------------------------------
     """display each image in a path at 25% scale"""
-    from IPython.display import Image , display
-    for file in os.listdir ( path ) :
-        if file.endswith ( "*.jpg" ) :
-            txtH ( file )
-            display ( Image ( filename = os.path.join ( path , file ) , width = 100 ) )
+    from IPython.display import Image, display
+    for file in os.listdir(path):
+        if file.endswith("*.jpg"):
+            txtH(file)
+            display(Image(filename=os.path.join(path, file), width=100))
 
 
-#-------------------------------------------------------------------------------
-def montage(path , outpath) :
-    #---------------------------------------------------------------------------
-    file_paths = [ ]
-    for root , directories , files in os.walk ( path ) :
-        for filename in files :
-            filepath = os.path.join ( root , filename )
-            file_paths.append ( filepath )
+# -------------------------------------------------------------------------------
+def montage(path, outpath):
+    # ---------------------------------------------------------------------------
+    file_paths = []
+    for root, directories, files in os.walk(path):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            file_paths.append(filepath)
             sorted(file_paths)
-    montPaths = " ".join ( file_paths )
+    montPaths = " ".join(file_paths)
     montSettings = f"""-label '%f' -font Helvetica -pointsize 12 -background '#000000' -fill 'gray' -define jpeg:size=175x175 -geometry 175x175+2+2 -auto-orient {montPaths} {outpath}"""
-    return montSettings , montPaths
+    return montSettings, montPaths
 
 
 # -----------------------------------------------------------------------------
-def timeTaken(start_time) :
+def timeTaken(start_time):
     # -----------------------------------------------------------------------------
     import time
-    timeTakenFloat = "%s seconds" % (time.time ( ) - start_time)
+    timeTakenFloat = "%s seconds" % (time.time() - start_time)
     timeTaken = timeTakenFloat
-    timeTaken_str = str ( timeTaken )
-    timeTaken_split = timeTaken_str.split ( '.' )
-    timeTakenShort = timeTaken_split [ 0 ] + '' + timeTaken_split [ 1 ] [ :0 ]
-    txtM ( '>> Complete:' , f'{timeTakenShort} Seconds' )
+    timeTaken_str = str(timeTaken)
+    timeTaken_split = timeTaken_str.split('.')
+    timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
+    txtM('>> Complete:', f'{timeTakenShort} Seconds')
 
-#-------------------------------------------------------------------
+
+# -------------------------------------------------------------------
 def copyExt(
-#-------------------------------------------------------------------
-    ext,
-    src,
-    dest):
-  #-----------------------------------------------------------------
+        # -------------------------------------------------------------------
+        ext,
+        src,
+        dest):
+    # -----------------------------------------------------------------
     for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
         new_path = os.path.join(dest, os.path.basename(file_path))
         shutil.copy(file_path, new_path)
 
 
-#-------------------------------------------------------------------------------
-def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
-    #---------------------------------------------------------------------------   
-    #VARIABLES // Master
-    #---------------------------------------------------------------------------  
+# -------------------------------------------------------------------------------
+def yeti(init_image, quality, gpu, conf, start_time, csv, threshMasks):
+    # ---------------------------------------------------------------------------   
+    # VARIABLES // Master
+    # ---------------------------------------------------------------------------  
     timeSlug = time.strftime("%H_%M")
     timeSlugConsole = time.strftime("%H:%M")
     init_file = os.path.basename(init_image)
     init_name = os.path.splitext(init_file)[0]
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     project = init_name
     localPath = '/content'
     driveMount = '/mnt/drive'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     localPathIn = f'{localPath}/in'
     imagesOut = f'{localPath}/images_out'
     initPathIn = f'{localPathIn}/init'
     stylePathIn = f'{localPathIn}/style'
     promptPathIn = f'{localPathIn}/prompt'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     localPathOut = f'{localPath}/out/{project}'
     initPathOut = f'{localPathOut}/init'
     stylePathOut = f'{localPathOut}/style'
@@ -163,98 +156,98 @@ def yeti(init_image , quality, gpu, conf, start_time, csv, threshMasks) :
     framesPathOut = f'{localPathOut}/frames'
     finalPathOut = f'{localPathOut}/final'
     superPathOut = f'{localPathOut}/super'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
     driveOutProject = f'{drivePathOut}/{project}/{timeSlug}'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     configPath = f'{localPath}/config/'
     confPath = f'{configPath}/conf'
     configPathIn = f'{localPathIn}/config'
     confPathIn = f'{configPathIn}/conf'
     configPathOut = f'{localPathOut}/config'
     confPathOut = f'{configPathOut}/conf'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     montPathOut = f'{localPathOut}/contact'
     montFileMask = f'{montPathOut}/mask-contact_{project}.png'
     montFileFinal = f'{montPathOut}/final-contact_{project}.png'
     montFileSuper = f'{montPathOut}/super-contact_{project}.png'
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     CONFIG_BASE_PATH = "config"
     CONFIG_DEFAULTS = "default.yaml"
-    null=None
-    true=True
-    false=False
-    localPathsOut=['config','contact','init','prompt','frames','final','style','super']
-    #---------------------------------------------------------------------------
-    threshMasked=[]
+    null = None
+    true = True
+    false = False
+    localPathsOut = ['config', 'contact', 'init', 'prompt', 'frames', 'final', 'style', 'super']
+    # ---------------------------------------------------------------------------
+    threshMasked = []
     for i in threshMasks:
-      threshMasked.append(f'{maskPathOut}/{project}-{i}_mask.jpg')
-    
-    #FOLDERS // Make local and drive OUT folders
-    #---------------------------------------------------------------------------  
-    otherPathsOut=[localPathIn,driveOutProject,confPath,maskPathOut]
+        threshMasked.append(f'{maskPathOut}/{project}-{i}_mask.jpg')
+
+    # FOLDERS // Make local and drive OUT folders
+    # ---------------------------------------------------------------------------  
+    otherPathsOut = [localPathIn, driveOutProject, confPath, maskPathOut]
     for path in otherPathsOut:
-      mk(path)
+        mk(path)
     for path in (localPathsOut):
-      mk(f'{localPathOut}/{path}')
-    #CLEAN // Folders
+        mk(f'{localPathOut}/{path}')
+    # CLEAN // Folders
     sample_data = '/content/sample_data'
     if os.path.isdir(sample_data):
         shutil.rmtree(sample_data)
     # --------------------------------------------------------------------------
-    #SYNC // drive/in local/in
-    sync(drivePathIn,localPathIn,'sync')
-    shutil.copy(init_image,initPathOut)
-    
+    # SYNC // drive/in local/in
+    sync(drivePathIn, localPathIn, 'sync')
+    shutil.copy(init_image, initPathOut)
+
     # --------------------------------------------------------------------------
-    #WRITE Config //
-    if quality=='test':
-      _width=200
-      _cut_outs=120
-      _cut_pow=2.5
-      _pixel_size=3
-      _direct_init_weight=1
-      _gradient_accumulation_steps=1
-      _steps_per_scene=250
-      _save_every=25
-      _display_every=25
-      _clear_every=50
-      _scene_suffix=':1'
-      _display_scale=1
+    # WRITE Config //
+    if quality == 'test':
+        _width = 200
+        _cut_outs = 120
+        _cut_pow = 2.5
+        _pixel_size = 3
+        _direct_init_weight = 1
+        _gradient_accumulation_steps = 1
+        _steps_per_scene = 250
+        _save_every = 25
+        _display_every = 25
+        _clear_every = 50
+        _scene_suffix = ':1'
+        _display_scale = 1
 
+        finalStep = _steps_per_scene / _save_every
+        finalStep = int(finalStep)
 
-      finalStep=_steps_per_scene/_save_every
-      finalStep=int(finalStep)
+        csv_file = f'{promptPathIn}/{csv}.csv'
+        project = init_name
+        df = pd.read_csv(csv_file)
+        col_names = list(df.columns.values)
+        for col in col_names:
+            globals()[col] = []
+            for value in df[col]:
+                globals()[col].append(value)
+        for names, preffixs, scenes, suffixs, styles in zip(name, preffix, scene, suffix, style):
+            confPath = configPathIn
+            if not os.path.exists(confPathOut):
+                os.makedirs(confPathOut)
+            yaml = f'{confPathOut}/{names}.yaml'
+            f = open(yaml, 'w')
+            f.write("""# @package _global_\n""")
+            f = open(yaml, "a")
+            f.write(
+                f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
+        for thresh in range(20, 231, 20):
+            img = cv2.imread(init_image)
+            os.makedirs(maskPathOut, exist_ok="True")
+            ret, img_binary = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)
+            imageio.imwrite(f'{maskPathOut}/{project}-{thresh}_mask.jpg', img_binary)
 
-      csv_file = f'{promptPathIn}/{csv}.csv'
-      project = init_name
-      df = pd.read_csv ( csv_file )
-      col_names = list ( df.columns.values )
-      for col in col_names :
-          globals ( ) [ col ] = [ ]
-          for value in df [ col ] :
-              globals ( ) [ col ].append ( value )
-      for names , preffixs , scenes , suffixs , styles in zip ( name , preffix , scene , suffix , style ) :
-          confPath = configPathIn
-          if not os.path.exists ( confPathOut ) :
-              os.makedirs ( confPathOut )
-          yaml = f'{confPathOut}/{names}.yaml'
-          f = open ( yaml , 'w' )
-          f.write ( """# @package _global_\n""" )
-          f = open ( yaml , "a" )
-          f.write (f"file_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\n")
-      for thresh in range ( 20 , 231 , 20 ) :
-          img = cv2.imread ( init_image )
-          os.makedirs ( maskPathOut , exist_ok = "True" )
-          ret , img_binary = cv2.threshold ( img , thresh , 255 , cv2.THRESH_BINARY )
-          imageio.imwrite ( f'{maskPathOut}/{project}-{thresh}_mask.jpg' , img_binary )
-    
-    sync(configPathOut,configPath,'sync')
+    sync(configPathOut, configPath, 'sync')
     clear_output()
-    setupTime=timeTaken(start_time)
-    
+    setupTime = timeTaken(start_time)
+
     # --------------------------------------------------------------------------
-    return CONFIG_BASE_PATH,CONFIG_DEFAULTS,confPath,confPathIn,confPathOut,configPath,configPathIn,configPathOut,drivePath,drivePathIn,drivePathOut,false,finalPathOut,finalStep,framesPathOut,imagesOut,initPathIn,initPathOut,init_file,init_image,init_name,localPath,localPathIn,localPathOut,maskPathOut,montFileFinal,montFileMask,montPathOut,null,project,promptPathIn,stylePathIn,stylePathOut,threshMasked,timeSlug,timeSlugConsole,true
+    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, false, finalPathOut, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileMask, montPathOut, null, project, promptPathIn, stylePathIn, stylePathOut, threshMasked, timeSlug, timeSlugConsole, true
     # --------------------------------------------------------------------------
