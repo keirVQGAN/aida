@@ -143,7 +143,7 @@ def moveExt(
 
 
 # -------------------------------------------------------------------------------
-def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, csv, threshMasks):
+def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, start_time, csv, threshMasks):
     # ---------------------------------------------------------------------------   
     # VARIABLES // Master
     # ---------------------------------------------------------------------------  
@@ -236,11 +236,10 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, cs
         _pixel_size = 3
         _direct_init_weight = 1.5
         _gradient_accumulation_steps = 2
-        _steps_per_scene = 750
-        _save_every = 25
+        _steps_per_scene = 2000
+        _save_every = 2000
         _display_every = 1000
-        _clear_every = 2001
-        _scene_suffix = ':1'
+        _clear_every = 2000
         _display_scale = 0.75
 
     if yetiVideo:
@@ -257,6 +256,8 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, cs
         _scene_suffix = ':1'
         _display_scale = 1
 
+    if useMasks:
+        _scene_suffix = ':2_[/content/out/gove/mask/{project}-{thresh}_mask.jpg]'
         
     finalStep = _steps_per_scene / _save_every
     finalStep = int(finalStep)
@@ -276,8 +277,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, cs
         img = cv2.imread(init_image)
         ret, img_binary = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)
         imageio.imwrite(f'{maskPathOut}/{project}-{thresh}_mask.jpg', img_binary)
-    for i in threshMasks:
-        threshMasked.append(f'{maskPathOut}/{project}-{i}_mask.jpg')
+        threshMasked.append(f'{maskPathOut}/{project}-{thresh}_mask.jpg')
         
     # --------------------------------------------------------------------------
     # MAKE yaml from csv
