@@ -177,7 +177,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, cs
     drivePath = f'{driveMount}/MyDrive/aida'                #VARIABLE // driveOUT
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
-    driveOutProject = f'{drivePathOut}/{timeSlug}{project}/'
+    driveOutProject = f'{drivePathOut}/{timeSlug}-00/{project}/'
     # ---------------------------------------------------------------------------
     configPath = f'{localPath}/config/'                  #VARIABLE // configPaths
     confPath = f'{configPath}/conf'
