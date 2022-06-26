@@ -257,7 +257,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         _display_scale = 1
 
     if useMasks:
-        _scene_suffix = ':2_[/content/out/gove/mask/{project}-{thresh}_mask.jpg]'
+        _scene_suffix = f':2_[/content/out/gove/mask/{project}-{threshMasks}_mask.jpg]'
         
     finalStep = _steps_per_scene / _save_every
     finalStep = int(finalStep)
