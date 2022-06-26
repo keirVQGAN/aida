@@ -143,7 +143,7 @@ def moveExt(
 
 
 # -------------------------------------------------------------------------------
-def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, csv, threshMasks):
+def yeti(init_image, initVid, yetiVideo, yetiMerge, quality, gpu, start_time, csv, threshMasks):
     # ---------------------------------------------------------------------------   
     # VARIABLES // Master
     # ---------------------------------------------------------------------------  
@@ -155,6 +155,9 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     # ---------------------------------------------------------------------------
     localPath = '/content'                                #VARIABLE // root paths
     driveMount = '/mnt/drive'
+    init_file = os.path.basename(init_image)
+    init_name = os.path.splitext(init_file)[0]
+    project = init_name
     # ---------------------------------------------------------------------------
     localPathIn = f'{localPath}/in'                          #VARIABLE // localIN
     imagesOut = f'{localPath}/images_out'
@@ -174,7 +177,7 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     drivePath = f'{driveMount}/MyDrive/aida'                #VARIABLE // driveOUT
     drivePathIn = f'{drivePath}/in'
     drivePathOut = f'{drivePath}/out'
-    driveOutProject = f'{drivePathOut}/{timeSLug}{project}/'
+    driveOutProject = f'{drivePathOut}/{timeSlug}{project}/'
     # ---------------------------------------------------------------------------
     configPath = f'{localPath}/config/'                  #VARIABLE // configPaths
     confPath = f'{configPath}/conf'
@@ -191,19 +194,11 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     # ---------------------------------------------------------------------------
     localPathsOut = ['config', 'contact', 'init', 'prompt', 'frames', 'final', 'style', 'super','mask']
     otherPathsOut = [localPathIn, driveOutProject, confPath, maskPathOut]
-    finalList = os.listdir(f'{localPathOut}/final')
     # --------------------------------------------------------------------------
     csv_file = f'{promptPathIn}/{csv}.csv'
-    init_image=f'/content/in/{initial_image}.tif'
-    init_file = os.path.basename(init_image)
-    init_name = os.path.splitext(init_file)[0]
-    project = init_name
+
     CONFIG_BASE_PATH = "config"
     CONFIG_DEFAULTS = "default.yaml"
-    finalList = os.listdir('/content/sample_data')
-    finalListNum=len(finalList)
-    mergeWeight=10/finalListNum
-    mergeImages=f':{mergeWeight} | '.join(finalList)
     # --------------------------------------------------------------------------
     #QUALITY SETTINGS
     if quality == 'test':
@@ -250,19 +245,14 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
         
     finalStep = _steps_per_scene / _save_every
     finalStep = int(finalStep)
-
+    finalList=''
     
     # ---------------------------------------------------------------------------   
     # FOLDERS // Make local and drive OUT folders
-    for path in otherPathsOut:
-        mk(path)
-    for path in (localPathsOut):
-        mk(f'{localPathOut}/{path}')
-    
+    for path in otherPathsOut: mk(path)
+    for path in (localPathsOut): mk(f'{localPathOut}/{path}')
     sample_data = '/content/sample_data'
-    if os.path.isdir(sample_data):
-        shutil.rmtree(sample_data)
-
+    if os.path.isdir(sample_data): shutil.rmtree(sample_data)
         
     # --------------------------------------------------------------------------
     # WRITE // Threshold Masks
@@ -274,7 +264,6 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     for i in threshMasks:
         threshMasked.append(f'{maskPathOut}/{project}-{i}_mask.jpg')
         
-        
     # --------------------------------------------------------------------------
     # MAKE yaml from csv
     df = pd.read_csv(csv_file)
@@ -282,115 +271,53 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     for col in col_names:
         globals()[col] = []
         for value in df[col]:
-            globals()[col].append(value)
-            
+            globals()[col].append(value)            
     for names, preffixs, scenes, suffixs, styles in zip(name, preffix, scene, suffix, style):
-        yaml = f'{confPath}/{names}-{quality}.yaml'
+        yaml = f'{confPath}/{names}.yaml'
         if yetiVideo:
-            yaml = f'{confPath}/{names}-video-{quality}.yaml'
-            names = f'{names}-video-{quality}.yaml'
-        if yetiMerge:
-            yaml = f'{confPath}/merge-{quality}.yaml'
-            names = f'{names}-merged-{quality}.yaml'
+            yaml_settings = f"""# @package _global_\nfile_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\nanimation_mode: Video Source\nvideo_path: '{initVidPathIn}/{initVid}'\ndirect_stabilization_weight: 1\nframe_stride: 1\ndirect_image_prompt: ''\ninit_image: ''"""
+        else:
+            yaml_settings = f"""# @package _global_\nfile_namespace: {names}-{quality}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\ninit_image: {init_image}"""
 
-        yaml_settings = f'''\
-                file_namespace: {names}-{quality}
-                scene_prefix: {preffixs}
-                scenes: {scenes} 
-                width: {_width}
-                cutouts: {_cut_outs}
-                cut_pow: {_cut_pow}
-                pixel_size: {_pixel_size}
-                direct_init_weight: {_direct_init_weight}
-                gradient_accumulation_steps: {_gradient_accumulation_steps}
-                steps_per_scene: {_steps_per_scene}
-                save_every: {_save_every}
-                display_every: {_display_every}
-                clear_every: {_clear_every}
-                scene_suffix: {_scene_suffix}
-                display_scale: {_display_scale}"
-                init_image= {init_image}
-                '''
-        f = open(yaml, 'w')
+        f = open(yaml, 'w')        
         f.write(yaml_settings)
 
-        if yetiVideo:
-            yaml_settingsVid = f'''\
-                file_namespace: {names}
-                scene_prefix: {preffixs}
-                scenes: {scenes} 
-                width: {_width}
-                cutouts: {_cut_outs}
-                cut_pow: {_cut_pow}
-                pixel_size: {_pixel_size}
-                direct_init_weight: {_direct_init_weight}
-                gradient_accumulation_steps: {_gradient_accumulation_steps}
-                steps_per_scene: {_steps_per_scene}
-                save_every: {_save_every}
-                display_every: {_display_every}
-                clear_every: {_clear_every}
-                scene_suffix: {_scene_suffix}
-                display_scale: {_display_scale}
-                animation_mode=Video Source
-                video_path=f'{initVidPathIn}/{initVid}'
-                direct_stabilization_weight=1
-                frame_stride=1
-                direct_image_prompt=''
-                init_image=''
-                '''
-            f = open(yaml, 'w')
-            f.write(yaml_settingsVid)
-
-
-        if yetiMerge:
-            yaml_settingsMerge = f'''\
-                file_namespace: {names}
-                scene_prefix: ''
-                scenes: ''
-                width: {_width}
-                cutouts: {_cut_outs}
-                cut_pow: {_cut_pow}
-                pixel_size: {_pixel_size}
-                direct_init_weight: 10
-                gradient_accumulation_steps: {_gradient_accumulation_steps}
-                steps_per_scene: {_steps_per_scene}
-                save_every: {_save_every}
-                display_every: {_display_every}
-                clear_every: {_clear_every}
-                scene_suffix: {_scene_suffix}
-                display_scale: {_display_scale}
-                init_image: {init_image}
-                direct_image_prompts: {mergeImages}
-                
-                '''
-            f = open(yaml, 'w')
-            f.write(yaml_settings)
-
-    # --------------------------------------------------------------------------
-    # SYNC // drive/in local/in
-    sync(drivePathIn, localPathIn, 'sync')
-    shutil.copy(init_image, initPathOut)
-
-    
-    # --------------------------------------------------------------------------
-    #RETURN
     clear_output()
     txtC('>> Created YAML',f'yetiVideo={yetiVideo} > yetiMerge={yetiMerge}')
     txtC('>> Created Threshhold Masks',project)
     setupTime = timeTaken(start_time)
-
-    
     # --------------------------------------------------------------------------
-    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut,
-    configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut,
-    initVidPathIn, false, finalPathOut, finalList, finalStep, framesPathOut,
-    imagesOut, initPathIn, initPathOut, init_file, init_image, init_name,
-    localPath, localPathIn, localPathOut, maskPathOut, montFileFinal,
-    montFileFrames, montFileMask, montPathOut, null, project, promptPathIn,
-    stylePathIn, stylePathOut, threshMasked, timeSlug, true
-
+    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, initVidPathIn, false, finalPathOut, finalList, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileFrames, montFileMask, montPathOut, null, project, promptPathIn, stylePathIn, stylePathOut, threshMasked, timeSlug, true
     # --------------------------------------------------------------------------
     ############################################################################
     #END OF SCRIPT##############################################################
     ############################################################################
     ####################################################################yeti2022
+    
+    # if yetiMerge:
+        #     finalList = os.listdir('/content/sample_data')
+        #     finalListNum=len(finalList)
+        #     mergeWeight=10/finalListNum
+        #     mergeImages=f':{mergeWeight}\n | '.join(finalList)
+        #     yaml_settingsMerge = f'''\
+        #         file_namespace: {names}
+        #         scene_prefix: ''
+        #         scenes: ''
+        #         width: {_width}
+        #         cutouts: {_cut_outs}
+        #         cut_pow: {_cut_pow}
+        #         pixel_size: {_pixel_size}
+        #         direct_init_weight: 10
+        #         gradient_accumulation_steps: {_gradient_accumulation_steps}
+        #         steps_per_scene: {_steps_per_scene}
+        #         save_every: {_save_every}
+        #         display_every: {_display_every}
+        #         clear_every: {_clear_every}
+        #         scene_suffix: {_scene_suffix}
+        #         display_scale: {_display_scale}
+        #         init_image: {init_image}
+        #         direct_image_prompts: {mergeImages}
+                
+        #         '''
+        #     f = open(yaml, 'w')
+        #     f.write(yaml_settings)
