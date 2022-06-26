@@ -389,14 +389,6 @@ def yeti(initial_image, yetiVideo, yetiMerge, quality, gpu, conf, start_time, cs
     montFileFrames, montFileMask, montPathOut, null, project, promptPathIn,
     stylePathIn, stylePathOut, threshMasked, timeSlug, true
 
-def postSync(configPathOut,driveOutProject,finalPathOut,framesPathOut,imagesOut,
-             localPathOut,monFileFinal):
-    txtC('Syncing',{monFileFinal})
-
-    
-    txtC('Making final contact sheet'{monFileFinal})
-    return finalMontage
-
     # --------------------------------------------------------------------------
     ############################################################################
     #END OF SCRIPT##############################################################
