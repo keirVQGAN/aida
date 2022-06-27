@@ -240,7 +240,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         _display_every = 10
         _clear_every = 10
         _scene_suffix = ':0.7'
-        _display_scale = 3
+        _display_scale = 0.75
         _interpolation_steps = 0
         _video_path = f'{initVid}'
         _direct_stabilization_weight = 1.5
