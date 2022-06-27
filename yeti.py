@@ -23,36 +23,30 @@ def txtH(action):
     # -------------------------------------------------------------------------
     console.print(f"[bright_white]{action}[/bright_white]")
 
-
 # -----------------------------------------------------------------------------
 def txtL(action):
     # -------------------------------------------------------------------------
     console.print(f"[r black]{action}[/r black]")
-
 
 # -----------------------------------------------------------------------------
 def txt(action, details):
     # -------------------------------------------------------------------------
     console.print(f"[bright_white]{action}[/bright_white] [r black]{details}[/r black]")
 
-
 # -----------------------------------------------------------------------------
 def txtC(action, details):
     # -------------------------------------------------------------------------
     console.print(f"[bright_cyan]{action}[/bright_cyan] >> [r black]{details}[/r black]")
-
 
 # -----------------------------------------------------------------------------
 def txtM(action, details):
     # -------------------------------------------------------------------------
     console.print(f"[bright_magenta]{action}[/bright_magenta] >> [r black]{details}[/r black]")
 
-
 # -----------------------------------------------------------------------------
 def txtY(action, details):
     # -------------------------------------------------------------------------
     console.print(f"[bright_yellow]{action}[/bright_yellow] >> [r black]{details}[/r black]")
-
 
 # -----------------------------------------------------------------------------
 def conSettings(project, init_image, quality, conf, gpu):
@@ -63,7 +57,6 @@ def conSettings(project, init_image, quality, conf, gpu):
     txtC('>> Configs', conf)
     txtY('>> CUDA GPU ', gpu[1])
 
-
 # -----------------------------------------------------------------------------    
 def csv2ls(csv_file):
     # --------------------------------------------------------------------------
@@ -73,13 +66,11 @@ def csv2ls(csv_file):
 
     return list1[1:]
 
-
 # -----------------------------------------------------------------------------
 def mk(path):
     # --------------------------------------------------------------------------
     if not os.path.exists(path):
         os.makedirs(path)
-
 
 # -----------------------------------------------------------------------------
 def imagePath(path):
@@ -90,7 +81,6 @@ def imagePath(path):
         if file.endswith("*.jpg"):
             txtH(file)
             display(Image(filename=os.path.join(path, file), width=100))
-
 
 # -------------------------------------------------------------------------------
 def montage(path, outpath):
@@ -105,7 +95,6 @@ def montage(path, outpath):
     montSettings = f"""-label '%f' -font Helvetica -pointsize 12 -background '#000000' -fill 'gray' -define jpeg:size=175x175 -geometry 175x175+2+2 -auto-orient {montPaths} {outpath}"""
     return montSettings, montPaths
 
-
 # -----------------------------------------------------------------------------
 def timeTaken(start_time):
     # -----------------------------------------------------------------------------
@@ -117,35 +106,29 @@ def timeTaken(start_time):
     timeTakenShort = timeTaken_split[0] + '' + timeTaken_split[1][:0]
     txtM('>> Complete:', f'{timeTakenShort} Seconds')
 
-
 # -------------------------------------------------------------------
-def copyExt(
-        # -------------------------------------------------------------------
-        ext,
-        src,
-        dest):
+def copyExt(ext,src,dest):
     # -----------------------------------------------------------------
     for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
         new_path = os.path.join(dest, os.path.basename(file_path))
         shutil.copy(file_path, new_path)
 
-
 # -------------------------------------------------------------------
-def moveExt(
-        # -------------------------------------------------------------------
-        ext,
-        src,
-        dest):
+def moveExt(ext,src,dest):
     # -----------------------------------------------------------------
     for file_path in glob.glob(os.path.join(src, '**', ext), recursive=True):
         new_path = os.path.join(dest, os.path.basename(file_path))
         shutil.move(file_path, new_path)
 
+# -------------------------------------------------------------------
+def fps(video_file):
+  # -------------------------------------------------------------------
+    cap = cv2.VideoCapture(video_file)
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    return frame_count
 
 # -------------------------------------------------------------------------------
 def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, start_time, csv, threshMasks):
-    # ---------------------------------------------------------------------------   
-    # VARIABLES // Master
     # ---------------------------------------------------------------------------  
     timeSlug = time.strftime("%H")                     #VARIABLE // timeSlug
     timeSlugConsole = time.strftime("%H:%M")
@@ -246,25 +229,25 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
 
     if yetiVideo:
         _animation_mode= 'Video Source'
-        _width = 250
-        _cut_outs = 10
-        _cut_pow = 2
+        _width = 400
+        _cut_outs = 220
+        _cut_pow = 2.5
         _pixel_size = 1
         _direct_init_weight = 1
         _gradient_accumulation_steps = 1
-        _steps_per_scene = 1000
-        _save_every = 30
-        _display_every = 30
-        _clear_every = 1000
+        _steps_per_scene = fps(initVid)
+        _save_every = 1
+        _display_every = 10
+        _clear_every = 10
         _scene_suffix = ':1'
-        _display_scale = 2
-        _interpolation_steps = 1000
+        _display_scale = 0.7
+        _interpolation_steps = _steps_per_scene
         _video_path = f'{initVid}'
         _direct_stabilization_weight = 1.5
         _frame_stride = 1
         _reencode_each_frame = true
         _frames_per_second = 30
-        _flow_long_term_samples=0
+        # _flow_long_term_samples=0
 
 
     if useMasks:
@@ -272,8 +255,8 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         
     finalStep = _steps_per_scene / _save_every
     finalStep = int(finalStep)
-    finalList=''
-    
+    finalList=[]
+
     # ---------------------------------------------------------------------------   
     # FOLDERS // Make local and drive OUT folders
     for path in otherPathsOut: mk(path)
