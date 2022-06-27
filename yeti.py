@@ -173,6 +173,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     framesPathOut = f'{localPathOut}/frames'
     finalPathOut = f'{localPathOut}/final'
     superPathOut = f'{localPathOut}/super'
+    settingsPathOut = f'{localPathOut}/super'
     # ---------------------------------------------------------------------------
     drivePath = f'{driveMount}/MyDrive/aida'                #VARIABLE // driveOUT
     drivePathIn = f'{drivePath}/in'
@@ -191,8 +192,9 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     montFileFrames = f'{montPathOut}/frames-contact_{project}.png'
     montFileFinal = f'{montPathOut}/final-contact_{project}.png'
     montFileSuper = f'{montPathOut}/super-contact_{project}.png'
+
     # ---------------------------------------------------------------------------
-    localPathsOut = ['config', 'contact', 'init', 'prompt', 'frames', 'final', 'style', 'super','mask']
+    localPathsOut = ['config', 'contact', 'init', 'prompt', 'frames', 'final', 'style', 'super','mask','settings']
     otherPathsOut = [localPathIn, driveOutProject, confPath, maskPathOut]
     # --------------------------------------------------------------------------
     csv_file = f'{promptPathIn}/{csv}.csv'
@@ -243,18 +245,27 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         _display_scale = 0.75
 
     if yetiVideo:
-        _width = 848
-        _cut_outs = 120
-        _cut_pow = 2.8
+        _animation_mode= 'Video Source'
+        _width = 250
+        _cut_outs = 10
+        _cut_pow = 2
         _pixel_size = 1
-        _direct_init_weight = 1.5
+        _direct_init_weight = 1
         _gradient_accumulation_steps = 1
         _steps_per_scene = 1000
-        _save_every = 25
-        _display_every = 25
-        _clear_every = 50
+        _save_every = 30
+        _display_every = 30
+        _clear_every = 1000
         _scene_suffix = ':1'
-        _display_scale = 1
+        _display_scale = 2
+        _interpolation_steps = 1000
+        _video_path = f'{initVid}'
+        _direct_stabilization_weight = 1.5
+        _frame_stride = 1
+        _reencode_each_frame = true
+        _frames_per_second = 30
+        _flow_long_term_samples=0
+
 
     if useMasks:
         _scene_suffix = f':2_[/content/out/{project}/mask/{project}-{threshMasks}_mask.jpg]'
@@ -290,7 +301,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     for names, preffixs, scenes, suffixs, styles in zip(name, preffix, scene, suffix, style):
         yaml = f'{confPath}/{names}.yaml'
         if yetiVideo:
-            yaml_settings = f"""# @package _global_\nfile_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\nanimation_mode: Video Source\nvideo_path: '{initVid}'\ndirect_stabilization_weight: 1\nframe_stride: 1\ndirect_image_prompt: ''\ninit_image: ''"""
+            yaml_settings = f"""# @package _global_\nfile_namespace: {names}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\nanimation_mode: {_animation_mode}\nvideo_path: '{_video_path}'\ndirect_stabilization_weight: {_direct_stabilization_weight}\nframe_stride: {_frame_stride}\ndirect_image_prompt: ''\ninit_image: ''\nframes_per_second: {_frames_per_second}"""
         else:
             yaml_settings = f"""# @package _global_\nfile_namespace: {names}-{quality}\nscene_prefix: {preffixs}\nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\ninit_image: {init_image}"""
 
@@ -302,7 +313,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     txtC('>> Created Threshhold Masks',project)
     setupTime = timeTaken(start_time)
     # --------------------------------------------------------------------------
-    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, driveOutProject, initVidPathIn, false, finalPathOut, finalList, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileFrames, montFileMask, montPathOut, null, project, promptPathIn, stylePathIn, stylePathOut, threshMasked, timeSlug, true
+    return CONFIG_BASE_PATH, CONFIG_DEFAULTS, confPath, confPathIn, confPathOut, configPath, configPathIn, configPathOut, drivePath, drivePathIn, drivePathOut, driveOutProject, initVidPathIn, false, finalPathOut, finalList, finalStep, framesPathOut, imagesOut, initPathIn, initPathOut, init_file, init_image, init_name, localPath, localPathIn, localPathOut, maskPathOut, montFileFinal, montFileFrames, montFileMask, montPathOut, null, project, promptPathIn, settingsPathOut, stylePathIn, stylePathOut, threshMasked, timeSlug, true
     # --------------------------------------------------------------------------
     ############################################################################
     #END OF SCRIPT##############################################################
