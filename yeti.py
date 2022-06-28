@@ -208,7 +208,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         _direct_init_weight = 1.5
         _gradient_accumulation_steps = 2
         _steps_per_scene = 2000
-        _save_every = 100
+        _save_every = 10
         _display_every = 50
         _clear_every = 100
         _scene_suffix = ':1'
