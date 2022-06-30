@@ -187,17 +187,16 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     # --------------------------------------------------------------------------
     #QUALITY SETTINGS
     if quality == 'test':
-        _width = 175
-        _cut_outs = 20
+        _width = 200
+        _cut_outs = 60
         _cut_pow = 2
         _pixel_size = 3
-        _direct_init_weight = 1.5
+        _direct_init_weight = 1
         _gradient_accumulation_steps = 1
         _steps_per_scene = 500
         _save_every = 500
-        _display_every = 50
+        _display_every = 25
         _clear_every = 100
-        _scene_suffix = ':1'
         _display_scale = 0.75
         
     if quality == 'draft':
@@ -283,7 +282,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     for names, preffixs, scenes, suffixs, styles in zip(name, preffix, scene, suffix, style):
         yaml = f'{confPath}/{names}.yaml'
         if yetiVideo:
-            yaml_settings = f"""# @package _global_\nfile_namespace: {names}\nscene_prefix: {preffixs} \nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\nanimation_mode: {_animation_mode}\nvideo_path: '{_video_path}'\nframe_stride: {_frame_stride}\ndirect_image_prompt: ''\ninit_image: ''\nframes_per_second: {_frames_per_second}"""
+            yaml_settings = f"""# @package _global_\nfile_namespace: {names}\nscene_prefix: {preffixs} \nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}z\nscene_suffix: {suffix}\ndisplay_scale: {_display_scale}\nanimation_mode: {_animation_mode}\nvideo_path: '{_video_path}'\nframe_stride: {_frame_stride}\ndirect_image_prompt: ''\ninit_image: ''\nframes_per_second: {_frames_per_second}"""
         else:
             yaml_settings = f"""# @package _global_\nfile_namespace: {names}-{quality}\nscene_prefix: {preffixs} \nscenes: {scenes}\nwidth: {_width}\ncutouts: {_cut_outs}\ncut_pow: {_cut_pow}\npixel_size: {_pixel_size}\ndirect_init_weight: {_direct_init_weight}\ngradient_accumulation_steps: {_gradient_accumulation_steps}\nsteps_per_scene: {_steps_per_scene}\nsave_every: {_save_every}\ndisplay_every: {_display_every}\nclear_every: {_clear_every}\nscene_suffix: {_scene_suffix}\ndisplay_scale: {_display_scale}\ninit_image: {init_image}"""
 
