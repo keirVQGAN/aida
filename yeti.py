@@ -188,7 +188,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     #QUALITY SETTINGS
     if quality == 'test':
         _width = 250
-        _cut_outs = 180
+        _cut_outs = 160
         _cut_pow = 2.6
         _pixel_size = 2
         _direct_init_weight = 0.4
