@@ -191,7 +191,7 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
         _cut_outs = 160
         _cut_pow = 2.6
         _pixel_size = 2
-        _direct_init_weight = 0.4
+        _direct_init_weight = 0.75
         _gradient_accumulation_steps = 2
         _steps_per_scene = 1250
         _save_every = 25
