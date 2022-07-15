@@ -187,17 +187,17 @@ def yeti(init_image, initVid, yetiVideo, yetiMerge, useMasks, quality, gpu, star
     # --------------------------------------------------------------------------
     #QUALITY SETTINGS
     if quality == 'test':
-        _width = 250
-        _cut_outs = 160
+        _width = 200
+        _cut_outs = 220
         _cut_pow = 2.6
-        _pixel_size = 2
+        _pixel_size = 3
         _direct_init_weight = 0.75
         _gradient_accumulation_steps = 2
-        _steps_per_scene = 1250
-        _save_every = 25
-        _display_every = 25
-        _clear_every = 50
-        _display_scale = 1
+        _steps_per_scene = 2000
+        _save_every = 200
+        _display_every = 200
+        _clear_every = 601
+        _display_scale = 0.8
         
     if quality == 'draft':
         _width = 200
